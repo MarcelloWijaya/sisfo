@@ -15,4 +15,52 @@ class AuthController extends Controller
     {
         return view('auth.login');
     }
+
+    public function loginAction(Request $request)
+    {
+        $rules = [
+            'email' => 'required|email:rfc,dns|ends_with:anaku.com',
+            'password' => 'required|min:6',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password
+        ];
+
+        if ($request->remember != null) {
+            Cookie::queue('emailCookie', $request->email, 30);
+        }
+
+        if (Auth::attempt($credentials, true)) {
+            $user = DB::table('users')->where('email', '=', $request->email)->first();
+
+            if ($user->is_active == 0) {
+                return back()->withErrors(['message' => 'Tidak ada akses login']);
+            }
+
+            session()->put('currUserSession', $user);
+
+            return redirect(route('homepage'))->with('message', 'Berhasil login sebagai ' . $user->username . '.');
+        }
+
+        return back()->withErrors(['message' => 'Email belum terdaftar!']);
+    }
+
+    public function logout()
+    {
+        $user = Auth::user();
+
+        Auth::logout();
+
+        session()->flush();
+
+        return redirect(route('login.page'))->with('message', 'Berhasil logout dari ' . $user->username . '.');
+    }
 }

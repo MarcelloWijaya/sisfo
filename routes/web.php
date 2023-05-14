@@ -2,6 +2,7 @@
 
 use App\Events\HelloEvent;
 use App\Events\PlaygroundEvent;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
@@ -17,11 +18,7 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('homepage');
-});
-
-Route::get('/login/page', [AuthController::class, 'loginPage'])->name('login.page');
+Route::get('/loginpage', [AuthController::class, 'loginPage'])->name('login.page');
 
 Route::get('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
 
@@ -30,3 +27,6 @@ Route::get('/register/page', [AuthController::class, 'registerPage'])->name('reg
 Route::post('/register/action', [AuthController::class, 'registerAction'])->name('register.action');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+Route::get('/homepage', [AdminController::class, 'indexHome'])->name('homepage');

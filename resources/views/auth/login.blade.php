@@ -27,10 +27,10 @@
                                     <div>
                                         @error('message')
                                             <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                                {{ $message }}
                                                 <button type="button" class="close" data-dismiss="alert"
                                                     aria-label="Close"><span aria-hidden="true">&times;</span>
                                                 </button>
-                                                <b>{{ $message }}</b>
                                             </div>
                                         @enderror
                                     </div>
@@ -38,10 +38,10 @@
                                         @if (\Session::has('message'))
                                             <div class="alert alert-success alert-dismissible fade show mb-3"
                                                 role="alert">
+                                                <b>{{ \Session::get('message') }}</b>
                                                 <button type="button" class="close" data-dismiss="alert"
                                                     aria-label="Close"><span aria-hidden="true">&times;</span>
                                                 </button>
-                                                <b>{{ \Session::get('message') }}</b>
                                             </div>
                                         @endif
                                     </div>
@@ -74,10 +74,6 @@
                                             Login
                                         </button>
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('register.page') }}">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
