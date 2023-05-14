@@ -1,6 +1,10 @@
 <?php
 
+use App\Events\HelloEvent;
+use App\Events\PlaygroundEvent;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
