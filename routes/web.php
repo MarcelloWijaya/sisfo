@@ -35,4 +35,14 @@ Route::post('/register/action', [AuthController::class, 'registerAction'])->name
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::get('/admin/role', [AdminController::class, 'indexRole'])->name('admin.role');
 
+Route::post('/admin/createRole', [AdminController::class, 'createRole'])->name('admin.createrole');
+
+Route::put('/admin/updateUser/{user_id}', [AdminController::class, 'updateUser'])->name('admin.updateuser');
+
+Route::delete('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUser'])->name('admin.deleteuser');
+
+Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess'])->name('admin.giveaccess');
+
+Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');

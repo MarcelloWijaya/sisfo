@@ -18,11 +18,28 @@
     </div>
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('homepage') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTC"
+            aria-expanded="true" aria-controls="collapseTC">
+            <i class="fas fa-fw fa-building"></i>
+            <span>TC</span>
+        </a>
+        <div id="collapseTC" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="buttons.html">Data TC</a>
+                <a class="collapse-item" href="{{ route('homepage') }}">Dasboard</a>
+            </div>
+        </div>
     </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('admin.role') }}">
+            <i class="fas fa-fw fa-user-tie"></i>
+            <span>Role</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
@@ -111,7 +128,8 @@
 
     <!-- Sidebar Message -->
     <div class="sidebar-card d-none d-lg-flex">
-        <img class="sidebar-card-illustration mb-2" src="{{ asset('template/img/undraw_rocket.svg') }}" alt="...">
+        <img class="sidebar-card-illustration mb-2" src="{{ asset('template/img/undraw_rocket.svg') }}"
+            alt="...">
         <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components,
             and more!</p>
         <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to

@@ -19,11 +19,19 @@ class AuthController extends Controller
     public function loginAction(Request $request)
     {
         $rules = [
-            'email' => 'required|email:rfc,dns|ends_with:anaku.com',
+            'email' => 'required|email|ends_with:anaku.com',
             'password' => 'required|min:6',
         ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $messages = [
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email harus dalam format yang valid.',
+            'email.ends_with' => 'Email harus menggunakan domain "anaku.com".',
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal harus terdiri dari :min karakter.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -50,7 +58,7 @@ class AuthController extends Controller
             return redirect(route('homepage'))->with('message', 'Berhasil login sebagai ' . $user->username . '.');
         }
 
-        return back()->withErrors(['message' => 'Email belum terdaftar!']);
+        return back()->withErrors(['message' => 'Email belum terdaftar!'])->withInput();
     }
 
     public function logout()
