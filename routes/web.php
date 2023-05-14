@@ -18,6 +18,12 @@ use App\Http\Controllers\AuthController;
 |
 */
 
+Route::get('/', function () {
+    return redirect(route('login.page'));
+});
+
+Route::get('/homepage', [AdminController::class, 'indexHome'])->name('homepage');
+
 Route::get('/loginpage', [AuthController::class, 'loginPage'])->name('login.page');
 
 Route::get('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
@@ -29,4 +35,4 @@ Route::post('/register/action', [AuthController::class, 'registerAction'])->name
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
-Route::get('/homepage', [AdminController::class, 'indexHome'])->name('homepage');
+
