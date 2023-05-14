@@ -16,3 +16,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('homepage');
 });
+
+Route::get('/login/page', [AuthController::class, 'loginPage'])->name('login.page');
+
+Route::get('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
+
+Route::get('/register/page', [AuthController::class, 'registerPage'])->name('register.page');
+
+Route::post('/register/action', [AuthController::class, 'registerAction'])->name('register.action');
+
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
