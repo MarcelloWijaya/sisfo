@@ -2,10 +2,10 @@
 
 use App\Events\HelloEvent;
 use App\Events\PlaygroundEvent;
-use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BranchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +46,6 @@ Route::delete('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUse
 Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess'])->name('admin.giveaccess');
 
 Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');
+
+
+Route::get('/center/detail', [BranchController::class, 'indexCenter'])->name('branch.detail');
