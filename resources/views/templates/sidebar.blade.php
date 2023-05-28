@@ -9,6 +9,12 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('homepage') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -22,13 +28,12 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTC"
             aria-expanded="true" aria-controls="collapseTC">
             <i class="fas fa-fw fa-building"></i>
-            <span>TC</span>
+            <span>Center</span>
         </a>
         <div id="collapseTC" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('branch.detail') }}">Data TC</a>
-                <a class="collapse-item" href="{{ route('homepage') }}">Dasboard</a>
-            </div>
+                <a class="collapse-item" href="{{ route('branch.detail') }}">Data Center</a>
+            </div>  
         </div>
     </li>
 
@@ -46,7 +51,7 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
+            <span></span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
