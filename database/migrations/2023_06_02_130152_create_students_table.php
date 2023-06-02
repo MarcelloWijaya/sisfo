@@ -14,20 +14,20 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branch_id');
-            $table->string('nama_siswa');
-            $table->string('jenis_kelamin');
-            $table->string('alamat');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('agama');
-            $table->string('nomer_telp');
-            $table->string('nama_sekolah');
-            $table->string('nama_orangtua');
-            $table->date('tanggal_masuk');
-            $table->date('tanggal_daftar');
-            $table->string('tingkatan');
-            $table->string('start_buku');
-            $table->string('email_orangtua');
+            $table->string('student_name');
+            $table->string('gender');
+            $table->string('address');
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
+            $table->string('religion');
+            $table->string('phone_number');
+            $table->string('school_name');
+            $table->string('parent_name');
+            $table->date('entry_date');
+            $table->date('registration_date');
+            $table->string('level');
+            $table->string('book_start');
+            $table->string('parent_email');
             $table->timestamps();
         });
     }

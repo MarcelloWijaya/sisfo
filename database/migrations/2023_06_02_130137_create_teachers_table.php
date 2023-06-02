@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('branch_id');
-            $table->string('nama_guru');
-            $table->string('nama_panggilan');
-            $table->string('jenis_kelamin');
-            $table->string('alamat');
-            $table->string('tempat_lahir');
-            $table->date('tanggal_lahir');
-            $table->string('agama');
-            $table->string('no_telp');
-            $table->string('pendidikan_terakhir');
-            $table->string('email_guru');
-            $table->date('tanggal_training');
+            $table->string('teacher_name');
+            $table->string('nickname');
+            $table->string('gender');
+            $table->string('address');
+            $table->string('place_of_birth');
+            $table->date('date_of_birth');
+            $table->string('religion');
+            $table->string('phone_number');
+            $table->string('last_education');
+            $table->string('teacher_email');
+            $table->date('training_date');
             $table->timestamps();
         });
     }

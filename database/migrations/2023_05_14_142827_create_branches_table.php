@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('owner');
             $table->string('address');
             $table->string('phone_number');
-            $table->string('email_center');
+            $table->string('email_center')->nullable();
             $table->timestamps();
         });
     }

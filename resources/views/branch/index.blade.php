@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Role</title>
+    <title>{{ $title }}</title>
     @include('templates.header')
 </head>
 
@@ -45,7 +45,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <h6 class="m-0 mt-1 font-weight-bold text-primary">Center Data</h6>
-                            <a href="" class="btn btn-sm btn-primary">Add Data Center</a>
+                            <a href="{{ route('branch.create') }}" class="btn btn-sm btn-primary">Add Data Center</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

@@ -51,3 +51,13 @@ Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAcces
 Route::get('/center', [BranchController::class, 'indexCenter'])->name('branch.index');
 
 Route::get('/center/detail', [BranchController::class, 'detailCenter'])->name('branch.detail');
+
+Route::get('/center/create', [BranchController::class, 'createCenter'])->name('branch.create');
+
+Route::post('/center/store', [BranchController::class, 'storeCenter'])->name('branch.store');
+
+Route::get('/center/edit/{branch_id}', [BranchController::class, 'editCenter'])->name('branch.edit');
+
+Route::post('/center/update/{branch_id}', [BranchController::class, 'updateCenter'])->name('branch.update');
+
+Route::get('/center/delete/{branch_id}', [BranchController::class, 'deleteCenter'])->name('branch.delete');
