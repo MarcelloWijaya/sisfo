@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>SB Admin 2 - Blank</title>
+    <title>{{ $title }}</title>
     @include('templates.header')
 </head>
 
@@ -28,33 +28,32 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-3 text-gray-800"> </h1>
-                    <table class="table table-bordered">
-                        <tr>
-                        <tr>
-                            <td class="fw-bold" style="width: 20%;"> Center </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"> Owner </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"> Alamat </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"> No. Telp </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td class="fw-bold"> Email </td>
-                            <td></td>
-                        </tr>
-                        </tr>
-                    </table>
+                    @foreach ($centers as $center)
+                        @if ($center->id === auth()->user()->branch_id)
+                            <h1 class="h3 mb-3 text-gray-800">{{ $center->center_name }}</h1>
+                            <table class="table table-striped text-dark">
+                                <tr>
+                                    <td class="fw-bold"> Owner </td>
+                                    <td>{{ $center->owner }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold"> Alamat </td>
+                                    <td>{{ $center->address }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold"> No. Telp </td>
+                                    <td>{{ $center->phone_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="fw-bold"> Email </td>
+                                    <td>{{ $center->email_center }}</td>
+                                </tr>
+                            </table>
+                        @endif
+                    @endforeach
                 </div>
                 <!-- /.container-fluid -->
+
 
             </div>
             <!-- End of Main Content -->

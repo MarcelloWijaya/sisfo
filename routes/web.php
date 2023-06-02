@@ -48,4 +48,6 @@ Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess']
 Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');
 
 
-Route::get('/center/detail', [BranchController::class, 'indexCenter'])->name('branch.detail');
+Route::get('/center', [BranchController::class, 'indexCenter'])->name('branch.index');
+
+Route::get('/center/detail', [BranchController::class, 'detailCenter'])->name('branch.detail');

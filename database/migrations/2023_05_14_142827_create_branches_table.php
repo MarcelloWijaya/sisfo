@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('owner');
             $table->string('address');
             $table->string('phone_number');
+            $table->string('email_center');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('branchs');
+        Schema::dropIfExists('branches');
     }
 };

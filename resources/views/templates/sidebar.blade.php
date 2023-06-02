@@ -15,6 +15,34 @@
             <span>Dashboard</span></a>
     </li>
 
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ route('admin.role') }}">
+            <i class="fas fa-fw fa-user-tie"></i>
+            <span>Role</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Data Control
+    </div>
+
+    <!-- Data Management -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseData"
+            aria-expanded="true" aria-controls="collapseData">
+            <i class="fas fa-fw fa-building"></i>
+            <span>Data Management</span>
+        </a>
+        <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('branch.index') }}">Data Center</a>
+            </div>
+        </div>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -23,25 +51,35 @@
         Main Navigation
     </div>
 
-    <!-- Nav Item - Dashboard -->
+    <!-- Data Center -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTC"
-            aria-expanded="true" aria-controls="collapseTC">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCenter"
+            aria-expanded="true" aria-controls="collapseCenter">
             <i class="fas fa-fw fa-building"></i>
             <span>Center</span>
         </a>
-        <div id="collapseTC" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseCenter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('branch.detail') }}">Data Center</a>
-            </div>  
+            </div>
         </div>
     </li>
 
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ route('admin.role') }}">
-            <i class="fas fa-fw fa-user-tie"></i>
-            <span>Role</span></a>
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBiaya"
+            aria-expanded="true" aria-controls="collapseBiaya">
+            <i class="fas fa-fw fa-money-bill-alt"></i>
+            <span>Biaya</span>
+        </a>
+        <div id="collapseBiaya" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="">Data Biaya Center</a>
+            </div>
+        </div>
     </li>
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider">
