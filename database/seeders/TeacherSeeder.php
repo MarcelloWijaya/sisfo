@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +24,7 @@ class TeacherSeeder extends Seeder
                 'date_of_birth' => '1980-01-01',
                 'religion' => 'Christian',
                 'phone_number' => '123456789',
-                'education' => 'Bachelor Degree',
+                'last_education' => 'Bachelor Degree',
                 'teacher_email' => 'john@example.com',
                 'training_date' => '2022-01-01',
             ],
@@ -36,7 +38,7 @@ class TeacherSeeder extends Seeder
                 'date_of_birth' => '1985-05-05',
                 'religion' => 'Muslim',
                 'phone_number' => '987654321',
-                'education' => 'Master Degree',
+                'last_education' => 'Master Degree',
                 'teacher_email' => 'jane@example.com',
                 'training_date' => '2022-02-01',
             ],

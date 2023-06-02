@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BranchController;
+use App\Http\Controllers\BranchPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,21 @@ Route::post('/center/store', [BranchController::class, 'storeCenter'])->name('br
 
 Route::get('/center/edit/{branch_id}', [BranchController::class, 'editCenter'])->name('branch.edit');
 
-Route::post('/center/update/{branch_id}', [BranchController::class, 'updateCenter'])->name('branch.update');
+Route::put('/center/update/{branch_id}', [BranchController::class, 'updateCenter'])->name('branch.update');
 
-Route::get('/center/delete/{branch_id}', [BranchController::class, 'deleteCenter'])->name('branch.delete');
+Route::delete('/center/delete/{branch_id}', [BranchController::class, 'destroy'])->name('branch.delete');
+
+
+Route::get('/centerPayment', [BranchPaymentController::class, 'index'])->name('branchPayment.index');
+
+Route::get('/centerPayment/detail', [BranchPaymentController::class, 'detail'])->name('branchPayment.detail');
+
+Route::get('/centerPayment/create', [BranchPaymentController::class, 'create'])->name('branchPayment.create');
+
+Route::post('/centerPayment/store', [BranchPaymentController::class, 'store'])->name('branchPayment.store');
+
+Route::get('/centerPayment/edit/{branch_id}', [BranchPaymentController::class, 'edit'])->name('branchPayment.edit');
+
+Route::put('/centerPayment/update/{branch_id}', [BranchPaymentController::class, 'update'])->name('branchPayment.update');
+
+Route::delete('/centerPayment/delete/{branch_id}', [BranchController::class, 'destroy'])->name('branchPayment.delete');

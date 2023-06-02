@@ -39,6 +39,7 @@
         <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('branch.index') }}">Data Center</a>
+                <a class="collapse-item" href="{{ route('branchPayment.index') }}">Data Biaya Center</a>
             </div>
         </div>
     </li>

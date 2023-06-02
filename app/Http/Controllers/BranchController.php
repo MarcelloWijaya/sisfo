@@ -107,10 +107,10 @@ class BranchController extends Controller
         $center->email_center = $request->input('email_center');
         $center->save();
 
-        return redirect()->route('branch.index')->with('success', 'Center updated successfully.');
+        return redirect()->route('branch.index')->with('message', 'Center updated successfully.');
     }
 
-    public function deleteCenter($id)
+    public function destroy($id)
     {
         $center = Branch::find($id);
 
@@ -120,6 +120,6 @@ class BranchController extends Controller
 
         $center->delete();
 
-        return redirect()->route('branch.index')->with('success', 'Center deleted successfully.');
+        return redirect()->route('branch.index')->with('message', 'Center deleted successfully.');
     }
 }

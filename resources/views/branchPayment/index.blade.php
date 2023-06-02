@@ -27,7 +27,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Center Data</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Data Biaya Center</h1>
                     <div>
                         @if (\Session::has('message'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -42,8 +42,9 @@
                     <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Center Data</h6>
-                            <a href="{{ route('branch.create') }}" class="btn btn-sm btn-primary">Add Center</a>
+                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Biaya Center Data</h6>
+                            <a href="{{ route('branchPayment.create') }}" class="btn btn-sm btn-primary">Add Biaya
+                                Center</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -52,6 +53,9 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Regristration Fee</th>
+                                            <th>Equipment Fee</th>
+                                            <th>Course Fee</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -59,21 +63,27 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Registration Fee</th>
+                                            <th>Equipment Fee</th>
+                                            <th>Course Fee</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($centers as $center)
+                                        @foreach ($payments as $payment)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $center->center_name }}</td>
+                                                <td>{{ $payment->branch->center_name }}</td>
+                                                <td>{{ $payment->registration_fee }}</td>
+                                                <td>{{ $payment->equipment_fee }}</td>
+                                                <td>{{ $payment->course_fee }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('branch.edit', $center->id) }}"
+                                                        <a href="{{ route('branchPayment.edit', $payment->id) }}"
                                                             class="btn btn-sm btn-primary mx-1"><i
                                                                 class="fas fa-pen"></i></a>
-                                                        <form id="delete-form-{{ $center->id }}"
-                                                            action="{{ route('branch.delete', $center->id) }}"
+                                                        <form id="delete-form-{{ $payment->id }}"
+                                                            action="{{ route('branchPayment.delete', $payment->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

@@ -27,41 +27,42 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Edit Center</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Edit Biaya Center</h1>
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('branch.update', $center->id) }}" method="POST">
+                            <form action="{{ route('branchPayment.update', $payment->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="center_name">Center Name</label>
-                                    <input type="text" class="form-control" id="center_name" name="center_name"
-                                        required value="{{ old('center_name', $center->center_name) }}">
+                                    <label for="center_id">Center</label>
+                                    <select class="form-control" id="center_id" name="center_id" required>
+                                        @foreach ($centers as $center)
+                                            <option value="{{ $center->id }}"
+                                                {{ old('center_id', $payment->center_id) == $center->id ? 'selected' : '' }}>
+                                                {{ $center->center_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="owner">Owner</label>
-                                    <input type="text" class="form-control" id="owner" name="owner" required
-                                        value="{{ old('owner', $center->owner) }}">
+                                    <label for="registration_fee">Registration Fee</label>
+                                    <input type="text" class="form-control" id="registration_fee"
+                                        name="registration_fee" required
+                                        value="{{ old('registration_fee', $payment->registration_fee) }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" required
-                                        value="{{ old('address', $center->address) }}">
+                                    <label for="equipment_fee">Equipment Fee</label>
+                                    <input type="text" class="form-control" id="equipment_fee" name="equipment_fee"
+                                        required value="{{ old('equipment_fee', $payment->equipment_fee) }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="phone_number">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone_number" name="phone_number"
-                                        required value="{{ old('phone_number', $center->phone_number) }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email_center">Email Center</label>
-                                    <input type="email" class="form-control" id="email_center" name="email_center"
-                                        required value="{{ old('email_center', $center->email_center) }}">
+                                    <label for="course_fee">Course Fee</label>
+                                    <input type="text" class="form-control" id="course_fee" name="course_fee"
+                                        required value="{{ old('course_fee', $payment->course_fee) }}">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Update</button>
