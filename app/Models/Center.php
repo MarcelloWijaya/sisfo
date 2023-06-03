@@ -18,4 +18,9 @@ class Center extends Model
     {
         return $this->hasMany(CenterPayment::class);
     }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
 }

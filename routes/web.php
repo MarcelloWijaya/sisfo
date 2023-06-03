@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,8 +73,24 @@ Route::get('/centerPayment/create', [CenterPaymentController::class, 'create'])-
 
 Route::post('/centerPayment/store', [CenterPaymentController::class, 'store'])->name('centerPayment.store');
 
-Route::get('/centerPayment/edit/{center_id}', [CenterPaymentController::class, 'edit'])->name('centerPayment.edit');
+Route::get('/centerPayment/edit/{payment_id}', [CenterPaymentController::class, 'edit'])->name('centerPayment.edit');
 
-Route::put('/centerPayment/update/{center_id}', [CenterPaymentController::class, 'update'])->name('centerPayment.update');
+Route::put('/centerPayment/update/{payment_id}', [CenterPaymentController::class, 'update'])->name('centerPayment.update');
 
-Route::delete('/centerPayment/delete/{center_id}', [CenterController::class, 'destroy'])->name('centerPayment.delete');
+Route::delete('/centerPayment/delete/{payment_id}', [CenterPaymentController::class, 'destroy'])->name('centerPayment.delete');
+
+
+
+Route::get('/student', [StudentController::class, 'index'])->name('student.index');
+
+Route::get('/student/detail', [StudentController::class, 'detail'])->name('student.detail');
+
+Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
+
+Route::post('/student/store', [StudentController::class, 'store'])->name('student.store');
+
+Route::get('/student/edit/{student_id}', [StudentController::class, 'edit'])->name('student.edit');
+
+Route::put('/student/update/{student_id}', [StudentController::class, 'update'])->name('student.update');
+
+Route::delete('/student/delete/{student_id}', [StudentController::class, 'destroy'])->name('student.delete');

@@ -3,82 +3,88 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Teacher;
 
 class TeacherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        // Kode logika untuk menampilkan data
+        $teachers = Teacher::all();
+
+        $data = [
+            'teachers' => $teachers,
+            'title' => 'Teacher List'
+        ];
+
+        return view('teacher.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        // Kode logika untuk menampilkan form create
+        $data = [
+            'title' => 'Create Teacher'
+        ];
+
+        return view('teacher.create', $data);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        // Kode logika untuk menyimpan data baru
+        $teacher = new Teacher;
+        $teacher->center_id = $request->center_id;
+        $teacher->teacher_name = $request->teacher_name;
+        $teacher->nickname = $request->nickname;
+        $teacher->gender = $request->gender;
+        $teacher->address = $request->address;
+        $teacher->place_of_birth = $request->place_of_birth;
+        $teacher->date_of_birth = $request->date_of_birth;
+        $teacher->religion = $request->religion;
+        $teacher->phone_number = $request->phone_number;
+        $teacher->last_education = $request->last_education;
+        $teacher->teacher_email = $request->teacher_email;
+        $teacher->training_date = $request->training_date;
+        $teacher->save();
+
+        return redirect()->route('teacher.index')->with('success', 'Teacher created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Kode logika untuk menampilkan data berdasarkan ID
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        // Kode logika untuk menampilkan form edit
+        $teacher = Teacher::find($id);
+
+        $data = [
+            'teacher' => $teacher,
+            'title' => 'Edit Teacher'
+        ];
+
+        return view('teacher.edit', $data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        // Kode logika untuk memperbarui data berdasarkan ID
+        $teacher = Teacher::find($id);
+        $teacher->center_id = $request->center_id;
+        $teacher->teacher_name = $request->teacher_name;
+        $teacher->nickname = $request->nickname;
+        $teacher->gender = $request->gender;
+        $teacher->address = $request->address;
+        $teacher->place_of_birth = $request->place_of_birth;
+        $teacher->date_of_birth = $request->date_of_birth;
+        $teacher->religion = $request->religion;
+        $teacher->phone_number = $request->phone_number;
+        $teacher->last_education = $request->last_education;
+        $teacher->teacher_email = $request->teacher_email;
+        $teacher->training_date = $request->training_date;
+        $teacher->save();
+
+        return redirect()->route('teacher.index')->with('success', 'Teacher updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        // Kode logika untuk menghapus data berdasarkan ID
+        $teacher = Teacher::find($id);
+        $teacher->delete();
+
+        return redirect()->route('teacher.index')->with('delete', 'Teacher deleted successfully.');
     }
 }

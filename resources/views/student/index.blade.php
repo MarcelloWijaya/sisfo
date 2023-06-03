@@ -27,7 +27,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Center Data</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Data Student</h1>
                     <div>
                         @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -49,8 +49,8 @@
                     <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Center Data</h6>
-                            <a href="{{ route('center.create') }}" class="btn btn-sm btn-primary">Add Center</a>
+                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Student Data</h6>
+                            <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary">Add Student</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -59,6 +59,20 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Student Name</th>
+                                            <th>Gender</th>
+                                            <th>Address</th>
+                                            <th>Place of Birth</th>
+                                            <th>Date of Birth</th>
+                                            <th>Religion</th>
+                                            <th>Phone Number</th>
+                                            <th>School Name</th>
+                                            <th>Parent Name</th>
+                                            <th>Entry Date</th>
+                                            <th>Registration Date</th>
+                                            <th>Level</th>
+                                            <th>Book Start</th>
+                                            <th>Parent Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -66,21 +80,49 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Student Name</th>
+                                            <th>Gender</th>
+                                            <th>Address</th>
+                                            <th>Place of Birth</th>
+                                            <th>Date of Birth</th>
+                                            <th>Religion</th>
+                                            <th>Phone Number</th>
+                                            <th>School Name</th>
+                                            <th>Parent Name</th>
+                                            <th>Entry Date</th>
+                                            <th>Registration Date</th>
+                                            <th>Level</th>
+                                            <th>Book Start</th>
+                                            <th>Parent Email</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($centers as $center)
+                                        @foreach ($students as $student)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $center->center_name }}</td>
+                                                <td>{{ $student->center->center_name }}</td>
+                                                <td>{{ $student->student_name }}</td>
+                                                <td>{{ $student->gender }}</td>
+                                                <td>{{ $student->address }}</td>
+                                                <td>{{ $student->place_of_birth }}</td>
+                                                <td>{{ $student->date_of_birth }}</td>
+                                                <td>{{ $student->religion }}</td>
+                                                <td>{{ $student->phone_number }}</td>
+                                                <td>{{ $student->school_name }}</td>
+                                                <td>{{ $student->parent_name }}</td>
+                                                <td>{{ $student->entry_date }}</td>
+                                                <td>{{ $student->registration_date }}</td>
+                                                <td>{{ $student->level }}</td>
+                                                <td>{{ $student->book_start }}</td>
+                                                <td>{{ $student->parent_email }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('center.edit', $center->id) }}"
+                                                        <a href="{{ route('student.edit', $student->id) }}"
                                                             class="btn btn-sm btn-primary mx-1"><i
                                                                 class="fas fa-pen"></i></a>
-                                                        <form id="delete-form-{{ $center->id }}"
-                                                            action="{{ route('center.delete', $center->id) }}"
+                                                        <form id="delete-form-{{ $student->id }}"
+                                                            action="{{ route('student.delete', $student->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -90,6 +132,7 @@
                                                         </form>
                                                     </div>
                                                 </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>

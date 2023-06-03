@@ -107,7 +107,7 @@ class CenterController extends Controller
         $center->email_center = $request->input('email_center');
         $center->save();
 
-        return redirect()->route('center.index')->with('message', 'Center updated successfully.');
+        return redirect()->route('center.index')->with('success', 'Center updated successfully.');
     }
 
     public function destroy($id)
@@ -120,6 +120,6 @@ class CenterController extends Controller
 
         $center->delete();
 
-        return redirect()->route('center.index')->with('message', 'Center deleted successfully.');
+        return redirect()->route('center.index')->with('delete', 'Center deleted successfully.');
     }
 }

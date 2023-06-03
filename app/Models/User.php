@@ -47,8 +47,8 @@ class User extends Authenticatable
         return $this->belongsTo(User_role::class);
     }
 
-    public function branch()
+    public function center()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Center::class);
     }
 }

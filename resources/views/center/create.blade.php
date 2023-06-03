@@ -31,7 +31,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('branch.store') }}" method="POST">
+                            <form action="{{ route('center.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="center_name">Center Name</label>

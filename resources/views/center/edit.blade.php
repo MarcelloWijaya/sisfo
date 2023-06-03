@@ -31,7 +31,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('branch.update', $center->id) }}" method="POST">
+                            <form action="{{ route('center.update', $center->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">

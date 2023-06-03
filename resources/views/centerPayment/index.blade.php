@@ -29,9 +29,16 @@
                 <div class="container-fluid">
                     <h1 class="h3 mb-2 text-gray-800">Data Biaya Center</h1>
                     <div>
-                        @if (\Session::has('message'))
+                        @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                                <b>{{ \Session::get('message') }}</b>
+                                <b>{{ \Session::get('success') }}</b>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @elseif (\Session::has('delete'))
+                            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
+                                <b>{{ \Session::get('delete') }}</b>
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                         aria-hidden="true">&times;</span>
                                 </button>
@@ -43,7 +50,7 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <h6 class="m-0 mt-1 font-weight-bold text-primary">Biaya Center Data</h6>
-                            <a href="{{ route('branchPayment.create') }}" class="btn btn-sm btn-primary">Add Biaya
+                            <a href="{{ route('centerPayment.create') }}" class="btn btn-sm btn-primary">Add Biaya
                                 Center</a>
                         </div>
                         <div class="card-body">
@@ -73,17 +80,17 @@
                                         @foreach ($payments as $payment)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $payment->branch->center_name }}</td>
+                                                <td>{{ $payment->center->center_name }}</td>
                                                 <td>{{ $payment->registration_fee }}</td>
                                                 <td>{{ $payment->equipment_fee }}</td>
                                                 <td>{{ $payment->course_fee }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('branchPayment.edit', $payment->id) }}"
+                                                        <a href="{{ route('centerPayment.edit', $payment->id) }}"
                                                             class="btn btn-sm btn-primary mx-1"><i
                                                                 class="fas fa-pen"></i></a>
                                                         <form id="delete-form-{{ $payment->id }}"
-                                                            action="{{ route('branchPayment.delete', $payment->id) }}"
+                                                            action="{{ route('centerPayment.delete', $payment->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

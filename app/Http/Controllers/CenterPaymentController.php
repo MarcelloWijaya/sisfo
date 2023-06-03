@@ -35,13 +35,13 @@ class CenterPaymentController extends Controller
     public function store(Request $request)
     {
         $payment = new CenterPayment;
-        $payment->branch_id = $request->branch_id;
+        $payment->center_id = $request->center_id;
         $payment->registration_fee = $request->registration_fee;
         $payment->equipment_fee = $request->equipment_fee;
         $payment->course_fee = $request->course_fee;
         $payment->save();
 
-        return redirect()->route('payment.index')->with('success', 'Payment created successfully.');
+        return redirect()->route('centerPayment.index')->with('success', 'Payment created successfully.');
     }
 
     public function edit($id)
@@ -61,20 +61,21 @@ class CenterPaymentController extends Controller
     public function update(Request $request, $id)
     {
         $payment = CenterPayment::find($id);
-        $payment->branch_id = $request->branch_id;
+        $payment->center_id = $request->center_id;
         $payment->registration_fee = $request->registration_fee;
         $payment->equipment_fee = $request->equipment_fee;
         $payment->course_fee = $request->course_fee;
         $payment->save();
 
-        return redirect()->route('centerPayment.index')->with('message', 'Payment updated successfully.');
+        return redirect()->route('centerPayment.index')->with('success', 'Payment updated successfully.');
     }
 
     public function destroy($id)
     {
         $payment = CenterPayment::find($id);
+
         $payment->delete();
 
-        return redirect()->route('centerPayment.index')->with('message', 'Payment deleted successfully.');
+        return redirect()->route('centerPayment.index')->with('delete', 'Payment deleted successfully.');
     }
 }

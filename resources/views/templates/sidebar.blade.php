@@ -38,8 +38,9 @@
         </a>
         <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('branch.index') }}">Data Center</a>
-                <a class="collapse-item" href="{{ route('branchPayment.index') }}">Data Biaya Center</a>
+                <a class="collapse-item" href="{{ route('center.index') }}">Data Center</a>
+                <a class="collapse-item" href="{{ route('centerPayment.index') }}">Data Biaya Center</a>
+                <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
             </div>
         </div>
     </li>
@@ -61,7 +62,7 @@
         </a>
         <div id="collapseCenter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('branch.detail') }}">Data Center</a>
+                <a class="collapse-item" href="{{ route('center.detail') }}">Data Center</a>
             </div>
         </div>
     </li>
