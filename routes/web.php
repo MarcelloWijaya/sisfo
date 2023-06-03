@@ -7,7 +7,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,3 +96,33 @@ Route::get('/student/edit/{student_id}', [StudentController::class, 'edit'])->na
 Route::put('/student/update/{student_id}', [StudentController::class, 'update'])->name('student.update');
 
 Route::delete('/student/delete/{student_id}', [StudentController::class, 'destroy'])->name('student.delete');
+
+
+Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
+
+Route::get('/teacher/detail', [TeacherController::class, 'detail'])->name('teacher.detail');
+
+Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
+
+Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+
+Route::get('/teacher/edit/{teacher_id}', [TeacherController::class, 'edit'])->name('teacher.edit');
+
+Route::put('/teacher/update/{teacher_id}', [TeacherController::class, 'update'])->name('teacher.update');
+
+Route::delete('/teacher/delete/{teacher_id}', [TeacherController::class, 'destroy'])->name('teacher.delete');
+
+
+Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
+
+Route::get('/classroom/detail', [ClassroomController::class, 'detail'])->name('classroom.detail');
+
+Route::get('/classroom/create', [ClassroomController::class, 'create'])->name('classroom.create');
+
+Route::post('/classroom/store', [ClassroomController::class, 'store'])->name('classroom.store');
+
+Route::get('/classroom/edit/{classroom_id}', [ClassroomController::class, 'edit'])->name('classroom.edit');
+
+Route::put('/classroom/update/{classroom_id}', [ClassroomController::class, 'update'])->name('classroom.update');
+
+Route::delete('/classroom/delete/{classroom_id}', [ClassroomController::class, 'destroy'])->name('classroom.delete');

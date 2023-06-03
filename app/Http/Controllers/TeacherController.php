@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Center;
 use App\Models\Teacher;
 
 class TeacherController extends Controller
@@ -13,7 +14,7 @@ class TeacherController extends Controller
 
         $data = [
             'teachers' => $teachers,
-            'title' => 'Teacher List'
+            'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('teacher.index', $data);
@@ -21,8 +22,11 @@ class TeacherController extends Controller
 
     public function create()
     {
+        $centers = Center::all();
+
         $data = [
-            'title' => 'Create Teacher'
+            'centers' => $centers,
+            'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('teacher.create', $data);
@@ -51,10 +55,12 @@ class TeacherController extends Controller
     public function edit($id)
     {
         $teacher = Teacher::find($id);
+        $centers = Center::all();
 
         $data = [
             'teacher' => $teacher,
-            'title' => 'Edit Teacher'
+            'centers' => $centers,
+            'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('teacher.edit', $data);

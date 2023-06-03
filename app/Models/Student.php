@@ -13,4 +13,9 @@ class Student extends Model
     {
         return $this->belongsTo(Center::class);
     }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
+    }
 }

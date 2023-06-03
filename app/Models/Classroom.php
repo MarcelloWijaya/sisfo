@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teacher extends Model
+class Classroom extends Model
 {
     use HasFactory;
 
@@ -14,8 +14,13 @@ class Teacher extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function classroom()
+    public function teacher()
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->hasOne(Teacher::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(Student::class);
     }
 }

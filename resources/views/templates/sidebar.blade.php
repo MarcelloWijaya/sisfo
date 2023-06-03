@@ -40,7 +40,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('center.index') }}">Data Center</a>
                 <a class="collapse-item" href="{{ route('centerPayment.index') }}">Data Biaya Center</a>
+                <a class="collapse-item" href="{{ route('teacher.index') }}">Data Guru</a>
                 <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
+                <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
             </div>
         </div>
     </li>
@@ -109,7 +111,8 @@
             <i class="fas fa-fw fa-wrench"></i>
             <span>Utilities</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Custom Utilities:</h6>
                 <a class="collapse-item" href="utilities-color.html">Colors</a>

@@ -27,16 +27,16 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Create Data Student</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Create Teacher Data</h1>
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('student.store') }}" method="POST">
+                            <form action="{{ route('teacher.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="center_id">Center</label>
                                     <select class="form-control" id="center_id" name="center_id" required>
-                                        <option value="">-- select Center --</option>
+                                        <option value="">-- Select Center --</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id') == $center->id ? 'selected' : '' }}>
@@ -47,9 +47,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="student_name">Student Name</label>
-                                    <input type="text" class="form-control" id="student_name" name="student_name"
-                                        required value="{{ old('student_name') }}">
+                                    <label for="teacher_name">Teacher Name</label>
+                                    <input type="text" class="form-control" id="teacher_name" name="teacher_name"
+                                        required value="{{ old('teacher_name') }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nickname">Nickname</label>
+                                    <input type="text" class="form-control" id="nickname" name="nickname" required
+                                        value="{{ old('nickname') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -105,45 +111,21 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="school_name">School Name</label>
-                                    <input type="text" class="form-control" id="school_name" name="school_name"
-                                        required value="{{ old('school_name') }}">
+                                    <label for="last_education">Last Education</label>
+                                    <input type="text" class="form-control" id="last_education" name="last_education"
+                                        required value="{{ old('last_education') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="parent_name">Parent Name</label>
-                                    <input type="text" class="form-control" id="parent_name" name="parent_name"
-                                        required value="{{ old('parent_name') }}">
+                                    <label for="teacher_email">Teacher Email</label>
+                                    <input type="email" class="form-control" id="teacher_email" name="teacher_email"
+                                        required value="{{ old('teacher_email') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="entry_date">Entry Date</label>
-                                    <input type="date" class="form-control" id="entry_date" name="entry_date"
-                                        required value="{{ old('entry_date') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="registration_date">Registration Date</label>
-                                    <input type="date" class="form-control" id="registration_date"
-                                        name="registration_date" required value="{{ old('registration_date') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="level">Level</label>
-                                    <input type="text" class="form-control" id="level" name="level"
-                                        required value="{{ old('level') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="book_start">Book Start</label>
-                                    <input type="text" class="form-control" id="book_start" name="book_start"
-                                        required value="{{ old('book_start') }}">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="parent_email">Parent Email</label>
-                                    <input type="email" class="form-control" id="parent_email" name="parent_email"
-                                        required value="{{ old('parent_email') }}">
+                                    <label for="training_date">Training Date</label>
+                                    <input type="date" class="form-control" id="training_date" name="training_date"
+                                        required value="{{ old('training_date') }}">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>
