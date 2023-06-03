@@ -2,39 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
+use App\Models\Center;
 use Illuminate\Http\Request;
-use App\Models\BranchPayment;
+use App\Models\CenterPayment;
 
-class BranchPaymentController extends Controller
+class CenterPaymentController extends Controller
 {
     public function index()
     {
-        $payments = BranchPayment::all();
+        $payments = CenterPayment::all();
 
         $data = [
             'payments' => $payments,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branchPayment.index', $data);
+        return view('centerPayment.index', $data);
     }
 
     public function create()
     {
-        $centers = Branch::all();
+        $centers = Center::all();
 
         $data = [
             'centers' => $centers,
-            'title' => 'Create Branch Payment - Anaku Educare Management Information System (MIS)'
+            'title' => 'Create Center Payment - Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branchPayment.create', $data);
+        return view('centerPayment.create', $data);
     }
 
     public function store(Request $request)
     {
-        $payment = new BranchPayment;
+        $payment = new CenterPayment;
         $payment->branch_id = $request->branch_id;
         $payment->registration_fee = $request->registration_fee;
         $payment->equipment_fee = $request->equipment_fee;
@@ -46,8 +46,8 @@ class BranchPaymentController extends Controller
 
     public function edit($id)
     {
-        $payment = BranchPayment::find($id);
-        $centers = Branch::all();
+        $payment = CenterPayment::find($id);
+        $centers = Center::all();
 
         $data = [
             'payment' => $payment,
@@ -55,26 +55,26 @@ class BranchPaymentController extends Controller
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branchPayment.edit', $data);
+        return view('centerPayment.edit', $data);
     }
 
     public function update(Request $request, $id)
     {
-        $payment = BranchPayment::find($id);
+        $payment = CenterPayment::find($id);
         $payment->branch_id = $request->branch_id;
         $payment->registration_fee = $request->registration_fee;
         $payment->equipment_fee = $request->equipment_fee;
         $payment->course_fee = $request->course_fee;
         $payment->save();
 
-        return redirect()->route('branchPayment.index')->with('message', 'Payment updated successfully.');
+        return redirect()->route('centerPayment.index')->with('message', 'Payment updated successfully.');
     }
 
     public function destroy($id)
     {
-        $payment = BranchPayment::find($id);
+        $payment = CenterPayment::find($id);
         $payment->delete();
 
-        return redirect()->route('branchPayment.index')->with('message', 'Payment deleted successfully.');
+        return redirect()->route('centerPayment.index')->with('message', 'Payment deleted successfully.');
     }
 }

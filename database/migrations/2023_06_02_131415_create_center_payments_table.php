@@ -4,16 +4,16 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBranchPaymentsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('branch_payments', function (Blueprint $table) {
+        Schema::create('center_payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('branch_id');
+            $table->foreignId('center_id');
             $table->unsignedInteger('registration_fee');
             $table->unsignedInteger('equipment_fee');
             $table->unsignedInteger('course_fee');
@@ -26,6 +26,6 @@ class CreateBranchPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('branch_payments');
+        Schema::dropIfExists('center_payments');
     }
-}
+};

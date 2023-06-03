@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role_id' => 2,
-                'branch_id' => 1,
+                'center_id' => 1,
                 'username' => 'Taman Semanan Indah',
                 'email' => 'taman_semanan_indah@anaku.com',
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role_id' => 2,
-                'branch_id' => 2,
+                'center_id' => 2,
                 'username' => 'Taman Permata Buana',
                 'email' => 'taman_permata_buana@anaku.com',
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role_id' => 2,
-                'branch_id' => 3,
+                'center_id' => 3,
                 'username' => 'Perumahan Kosambi Baru',
                 'email' => 'perumaha_kosambi_baru@anaku.com',
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role_id' => 2,
-                'branch_id' => 4,
+                'center_id' => 4,
                 'username' => 'Green Lake City',
                 'email' => 'green_lake_city@anaku.com',
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -66,7 +66,7 @@ class UserSeeder extends Seeder
             ],
             [
                 'role_id' => 2,
-                'branch_id' => 5,
+                'center_id' => 5,
                 'username' => 'Lippo Mall Puri',
                 'email' => 'lippo_mall_puri@anaku.com',
                 'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s'),

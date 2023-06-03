@@ -38,8 +38,8 @@
                                     <select class="form-control" id="center_id" name="center_id" required>
                                         <option value="">-- select Center --</option>
                                         @foreach ($centers as $center)
-                                            <option value="{{ $branch->id }}"
-                                                {{ old('center_id') == $branch->id ? 'selected' : '' }}>
+                                            <option value="{{ $center->id }}"
+                                                {{ old('center_id') == $center->id ? 'selected' : '' }}>
                                                 {{ $center->center_name }}
                                             </option>
                                         @endforeach

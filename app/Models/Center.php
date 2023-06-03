@@ -14,8 +14,8 @@ class Branch extends Model
         return $this->hasMany(User::class);
     }
 
-    public function branchPayments()
+    public function centerPayments()
     {
-        return $this->hasMany(BranchPayment::class);
+        return $this->hasMany(CenterPayment::class);
     }
 }

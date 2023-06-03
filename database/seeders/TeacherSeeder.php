@@ -15,7 +15,7 @@ class TeacherSeeder extends Seeder
     {
         $teachers = [
             [
-                'branch_id' => 1,
+                'center_id' => 1,
                 'teacher_name' => 'John Doe',
                 'nickname' => 'John',
                 'gender' => 'Male',
@@ -29,7 +29,7 @@ class TeacherSeeder extends Seeder
                 'training_date' => '2022-01-01',
             ],
             [
-                'branch_id' => 2,
+                'center_id' => 2,
                 'teacher_name' => 'Jane Smith',
                 'nickname' => 'Jane',
                 'gender' => 'Female',

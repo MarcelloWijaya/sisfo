@@ -2,34 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Branch;
+use App\Models\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BranchController extends Controller
+class CenterController extends Controller
 {
     public function indexCenter()
     {
-        $centers = Branch::all();
+        $centers = Center::all();
 
         $data = [
             'centers' => $centers,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branch.index', $data);
+        return view('center.index', $data);
     }
 
     public function detailCenter()
     {
-        $centers = Branch::all();
+        $centers = Center::all();
 
         $data = [
             'centers' => $centers,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branch.detail', $data);
+        return view('center.detail', $data);
     }
 
     public function createCenter()
@@ -38,7 +38,7 @@ class BranchController extends Controller
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branch.create', $data);
+        return view('center.create', $data);
     }
 
     public function storeCenter(Request $request)
@@ -54,22 +54,22 @@ class BranchController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = new Branch();
+        $center = new Center();
         $center->center_name = $request->input('center_name');
         $center->owner = $request->input('owner');
         $center->address = $request->input('address');
         $center->phone_number = $request->input('phone_number');
         $center->save();
 
-        return redirect()->route('branch.index')->with('success', 'Center created successfully.');
+        return redirect()->route('center.index')->with('success', 'Center created successfully.');
     }
 
     public function editCenter($id)
     {
-        $center = Branch::find($id);
+        $center = Center::find($id);
 
         if (!$center) {
-            return redirect()->route('branch.index')->withErrors('Center not found.');
+            return redirect()->route('center.index')->withErrors('Center not found.');
         }
 
         $data = [
@@ -77,7 +77,7 @@ class BranchController extends Controller
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('branch.edit', $data);
+        return view('center.edit', $data);
     }
 
     public function updateCenter(Request $request, $id)
@@ -94,10 +94,10 @@ class BranchController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = Branch::find($id);
+        $center = Center::find($id);
 
         if (!$center) {
-            return redirect()->route('branch.index')->withErrors('Center not found.');
+            return redirect()->route('center.index')->withErrors('Center not found.');
         }
 
         $center->center_name = $request->input('center_name');
@@ -107,19 +107,19 @@ class BranchController extends Controller
         $center->email_center = $request->input('email_center');
         $center->save();
 
-        return redirect()->route('branch.index')->with('message', 'Center updated successfully.');
+        return redirect()->route('center.index')->with('message', 'Center updated successfully.');
     }
 
     public function destroy($id)
     {
-        $center = Branch::find($id);
+        $center = Center::find($id);
 
         if (!$center) {
-            return redirect()->route('branch.index')->withErrors('Center not found.');
+            return redirect()->route('center.index')->withErrors('Center not found.');
         }
 
         $center->delete();
 
-        return redirect()->route('branch.index')->with('message', 'Center deleted successfully.');
+        return redirect()->route('center.index')->with('message', 'Center deleted successfully.');
     }
 }

@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BranchPayment extends Model
+class CenterPayment extends Model
 {
     use HasFactory;
 
-    public function branch()
+    public function center()
     {
-        return $this->belongsTo(Branch::class);
+        return $this->belongsTo(Center::class);
     }
 }

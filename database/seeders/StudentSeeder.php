@@ -15,7 +15,7 @@ class StudentSeeder extends Seeder
     {
         $students = [
             [
-                'branch_id' => 1,
+                'center_id' => 1,
                 'student_name' => 'John Smith',
                 'gender' => 'Male',
                 'address' => '123 Main Street',
@@ -32,7 +32,7 @@ class StudentSeeder extends Seeder
                 'parent_email' => 'john@example.com',
             ],
             [
-                'branch_id' => 2,
+                'center_id' => 2,
                 'student_name' => 'Jane Doe',
                 'gender' => 'Female',
                 'address' => '456 Elm Street',
