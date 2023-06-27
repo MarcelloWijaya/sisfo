@@ -40,16 +40,16 @@
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id') == $center->id ? 'selected' : '' }}>
-                                                {{ $center->center_name }}
+                                                {{ $center->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="teacher_name">Teacher Name</label>
-                                    <input type="text" class="form-control" id="teacher_name" name="teacher_name"
-                                        required value="{{ old('teacher_name') }}">
+                                    <label for="name">Teacher Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        required value="{{ old('name') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -117,9 +117,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="teacher_email">Teacher Email</label>
-                                    <input type="email" class="form-control" id="teacher_email" name="teacher_email"
-                                        required value="{{ old('teacher_email') }}">
+                                    <label for="email">Teacher Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        required value="{{ old('email') }}">
                                 </div>
 
                                 <div class="form-group">

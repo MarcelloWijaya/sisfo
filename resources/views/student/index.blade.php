@@ -101,8 +101,8 @@
                                         @foreach ($students as $student)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $student->center->center_name }}</td>
-                                                <td>{{ $student->student_name }}</td>
+                                                <td>{{ $student->center->name }}</td>
+                                                <td>{{ $student->name }}</td>
                                                 <td>{{ $student->gender }}</td>
                                                 <td>{{ $student->address }}</td>
                                                 <td>{{ $student->place_of_birth }}</td>

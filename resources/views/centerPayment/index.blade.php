@@ -80,7 +80,7 @@
                                         @foreach ($payments as $payment)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $payment->center->center_name }}</td>
+                                                <td>{{ $payment->center->name }}</td>
                                                 <td>{{ $payment->registration_fee }}</td>
                                                 <td>{{ $payment->equipment_fee }}</td>
                                                 <td>{{ $payment->course_fee }}</td>

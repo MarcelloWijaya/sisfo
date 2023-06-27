@@ -27,11 +27,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Create Data Center</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Create Data Classroom</h1>
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('centerPayment.store') }}" method="POST">
+                            <form action="{{ route('classroom.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="center_id">Center</label>
@@ -40,28 +40,71 @@
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id') == $center->id ? 'selected' : '' }}>
-                                                {{ $center->center_name }}
+                                                {{ $center->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="registration_fee">Registration Fee</label>
-                                    <input type="text" class="form-control" id="registration_fee"
-                                        name="registration_fee" required value="{{ old('registration_fee') }}">
+                                    <label for="day">Hari</label>
+                                    <select class="form-control" id="day" name="day" required>
+                                        <option value="">-- Pilih Hari --</option>
+                                        <option value="Senin" {{ old('day') == 'Senin' ? 'selected' : '' }}>Senin
+                                        </option>
+                                        <option value="Selasa" {{ old('day') == 'Selasa' ? 'selected' : '' }}>Selasa
+                                        </option>
+                                        <option value="Rabu" {{ old('day') == 'Rabu' ? 'selected' : '' }}>Rabu
+                                        </option>
+                                        <option value="Kamis" {{ old('day') == 'Kamis' ? 'selected' : '' }}>Kamis
+                                        </option>
+                                        <option value="Jumat" {{ old('day') == 'Jumat' ? 'selected' : '' }}>Jumat
+                                        </option>
+                                        <option value="Sabtu" {{ old('day') == 'Sabtu' ? 'selected' : '' }}>Sabtu
+                                        </option>
+                                        <option value="Minggu" {{ old('day') == 'Minggu' ? 'selected' : '' }}>Minggu
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="equipment_fee">Equipment Fee</label>
-                                    <input type="text" class="form-control" id="equipment_fee" name="equipment_fee"
-                                        required value="{{ old('equipment_fee') }}">
+                                    <label for="start_time">Start Time</label>
+                                    <input type="time" class="form-control" id="start_time" name="start_time"
+                                        required value="{{ old('start_time') }}">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="course_fee">Course Fee</label>
-                                    <input type="text" class="form-control" id="course_fee" name="course_fee"
-                                        required value="{{ old('course_fee') }}">
+                                    <label for="end_time">End Time</label>
+                                    <input type="time" class="form-control" id="end_time" name="end_time" required
+                                        value="{{ old('end_time') }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="teacher_id">Teacher</label>
+                                    <select class="form-control" id="teacher_id" name="teacher_id" required>
+                                        <option value="">-- Select Teacher --</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                                {{ $teacher->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="class_name">Class Name</label>
+                                    <input type="text" class="form-control" id="class_name" name="class_name"
+                                        required value="{{ old('class_name') }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="aktif">Aktif</label>
+                                    <select class="form-control" id="aktif" name="aktif" required>
+                                        <option value="1" {{ old('aktif') == 1 ? 'selected' : '' }}>Aktif</option>
+                                        <option value="0" {{ old('aktif') == 0 ? 'selected' : '' }}>Non-Aktif
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>

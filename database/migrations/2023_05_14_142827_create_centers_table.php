@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('centers', function (Blueprint $table) {
             $table->id();
-            $table->string('center_name');
+            $table->string('name');
             $table->string('owner');
             $table->string('address');
             $table->string('phone_number');
-            $table->string('email_center')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }

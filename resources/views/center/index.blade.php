@@ -73,7 +73,7 @@
                                         @foreach ($centers as $center)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $center->center_name }}</td>
+                                                <td>{{ $center->name }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('center.edit', $center->id) }}"

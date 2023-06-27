@@ -35,9 +35,9 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="form-group">
-                                    <label for="center_name">Center Name</label>
-                                    <input type="text" class="form-control" id="center_name" name="center_name"
-                                        required value="{{ old('center_name', $center->center_name) }}">
+                                    <label for="name">Center Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        required value="{{ old('name', $center->name) }}">
                                 </div>
 
                                 <div class="form-group">
@@ -59,9 +59,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="email_center">Email Center</label>
-                                    <input type="email" class="form-control" id="email_center" name="email_center"
-                                        required value="{{ old('email_center', $center->email_center) }}">
+                                    <label for="email">Email Center</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        required value="{{ old('email', $center->email) }}">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Update</button>

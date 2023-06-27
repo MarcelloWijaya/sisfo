@@ -95,8 +95,8 @@
                                         @foreach ($teachers as $teacher)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $teacher->center->center_name }}</td>
-                                                <td>{{ $teacher->teacher_name }}</td>
+                                                <td>{{ $teacher->center->name }}</td>
+                                                <td>{{ $teacher->name }}</td>
                                                 <td>{{ $teacher->nickname }}</td>
                                                 <td>{{ $teacher->gender }}</td>
                                                 <td>{{ $teacher->address }}</td>
@@ -105,7 +105,7 @@
                                                 <td>{{ $teacher->religion }}</td>
                                                 <td>{{ $teacher->phone_number }}</td>
                                                 <td>{{ $teacher->last_education }}</td>
-                                                <td>{{ $teacher->teacher_email }}</td>
+                                                <td>{{ $teacher->email }}</td>
                                                 <td>{{ $teacher->training_date }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">

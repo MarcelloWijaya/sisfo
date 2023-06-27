@@ -16,7 +16,7 @@ class TeacherSeeder extends Seeder
         $teachers = [
             [
                 'center_id' => 1,
-                'teacher_name' => 'John Doe',
+                'name' => 'John Doe',
                 'nickname' => 'John',
                 'gender' => 'Male',
                 'address' => '123 Main Street',
@@ -25,12 +25,12 @@ class TeacherSeeder extends Seeder
                 'religion' => 'Christian',
                 'phone_number' => '123456789',
                 'last_education' => 'Bachelor Degree',
-                'teacher_email' => 'john@example.com',
+                'email' => 'john@example.com',
                 'training_date' => '2022-01-01',
             ],
             [
                 'center_id' => 2,
-                'teacher_name' => 'Jane Smith',
+                'name' => 'Jane Smith',
                 'nickname' => 'Jane',
                 'gender' => 'Female',
                 'address' => '456 Elm Street',
@@ -39,7 +39,7 @@ class TeacherSeeder extends Seeder
                 'religion' => 'Muslim',
                 'phone_number' => '987654321',
                 'last_education' => 'Master Degree',
-                'teacher_email' => 'jane@example.com',
+                'email' => 'jane@example.com',
                 'training_date' => '2022-02-01',
             ],
         ];

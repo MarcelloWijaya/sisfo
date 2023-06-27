@@ -59,10 +59,12 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Day</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
                                             <th>Teacher Name</th>
-                                            <th>Student Name</th>
                                             <th>Class Name</th>
-                                            <th>Class Code</th>
+                                            <th>Active</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,10 +72,12 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
+                                            <th>Day</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
                                             <th>Teacher Name</th>
-                                            <th>Student Name</th>
                                             <th>Class Name</th>
-                                            <th>Class Code</th>
+                                            <th>Active</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -81,11 +85,13 @@
                                         @foreach ($classrooms as $classroom)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $classroom->center->center_name }}</td>
-                                                <td>{{ $classroom->teacher->teacher_name }}</td>
-                                                <td>{{ $classroom->student->student_name }}</td>
+                                                <td>{{ $classroom->center->name }}</td>
+                                                <td>{{ $classroom->day }}</td>
+                                                <td>{{ $classroom->start_time }}</td>
+                                                <td>{{ $classroom->end_time }}</td>
+                                                <td>{{ $classroom->teacher->name }}</td>
                                                 <td>{{ $classroom->class_name }}</td>
-                                                <td>{{ $classroom->class_code }}</td>
+                                                <td>{{ $classroom->aktif }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('classroom.edit', $classroom->id) }}"

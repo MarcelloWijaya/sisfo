@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->string('teacher_name');
+            $table->string('name');
             $table->string('nickname');
             $table->string('gender');
             $table->string('address');
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('religion');
             $table->string('phone_number');
             $table->string('last_education');
-            $table->string('teacher_email');
+            $table->string('email');
             $table->date('training_date');
             $table->timestamps();
         });

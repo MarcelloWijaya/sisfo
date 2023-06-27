@@ -30,7 +30,7 @@
                     <!-- Page Heading -->
                     @foreach ($centers as $center)
                         @if ($center->id === auth()->user()->center_id)
-                            <h1 class="h3 mb-3 text-gray-800">{{ $center->center_name }}</h1>
+                            <h1 class="h3 mb-3 text-gray-800">{{ $center->name }}</h1>
                             <table class="table table-striped text-dark">
                                 <tr>
                                     <td class="fw-bold"> Owner </td>
@@ -46,7 +46,7 @@
                                 </tr>
                                 <tr>
                                     <td class="fw-bold"> Email </td>
-                                    <td>{{ $center->email_center }}</td>
+                                    <td>{{ $center->email }}</td>
                                 </tr>
                             </table>
                         @endif

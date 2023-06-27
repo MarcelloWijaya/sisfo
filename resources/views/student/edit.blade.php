@@ -40,16 +40,16 @@
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id', $student->center_id) == $center->id ? 'selected' : '' }}>
-                                                {{ $center->center_name }}
+                                                {{ $center->name }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="student_name">Student Name</label>
-                                    <input type="text" class="form-control" id="student_name" name="student_name"
-                                        required value="{{ old('student_name', $student->student_name) }}">
+                                    <label for="name">Student Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        required value="{{ old('name', $student->name) }}">
                                 </div>
 
                                 <div class="form-group">

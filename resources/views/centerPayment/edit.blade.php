@@ -40,7 +40,7 @@
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id', $payment->center_id) == $center->id ? 'selected' : '' }}>
-                                                {{ $center->center_name }}
+                                                {{ $center->name }}
                                             </option>
                                         @endforeach
                                     </select>
