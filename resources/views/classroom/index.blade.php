@@ -91,7 +91,14 @@
                                                 <td>{{ $classroom->end_time }}</td>
                                                 <td>{{ $classroom->teacher->name }}</td>
                                                 <td>{{ $classroom->class_name }}</td>
-                                                <td>{{ $classroom->aktif }}</td>
+                                                <td>
+                                                    @if ($classroom->aktif == 0)
+                                                        Tidak Aktif
+                                                    @else
+                                                        Aktif
+                                                    @endif
+                                                </td>
+
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('classroom.edit', $classroom->id) }}"

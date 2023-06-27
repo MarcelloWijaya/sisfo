@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ManageClassroomController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 
@@ -114,6 +115,8 @@ Route::delete('/teacher/delete/{teacher_id}', [TeacherController::class, 'destro
 
 
 Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
+
+Route::get('/classroom/manage', [ManageClassroomController::class, 'index'])->name('classroom.manage');
 
 Route::get('/classroom/detail', [ClassroomController::class, 'detail'])->name('classroom.detail');
 
