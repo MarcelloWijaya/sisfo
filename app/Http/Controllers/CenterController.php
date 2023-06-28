@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Exports\CentersExport;
+use App\Exports\;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CenterController extends Controller
