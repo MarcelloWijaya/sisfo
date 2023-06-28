@@ -49,8 +49,7 @@
                     <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Data Pembayaran</h6>
-                            <a href="{{ route('payment.create') }}" class="btn btn-sm btn-primary">Add Payment</a>
+                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Iuran Bulanan</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-hover">

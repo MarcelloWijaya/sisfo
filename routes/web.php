@@ -140,7 +140,7 @@ Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index
 
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
 
-Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+Route::post('/payment/student/{student_id}/store', [PaymentController::class, 'store'])->name('payment.store');
 
 Route::get('/payment/detail/{payment_id}', [PaymentController::class, 'detail'])->name('payment.detail');
 

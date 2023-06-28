@@ -50,7 +50,6 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <h6 class="m-0 mt-1 font-weight-bold text-primary">Data Pembayaran</h6>
-                            <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary">Add Payment</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-hover">
@@ -78,7 +77,7 @@
                                     <tbody>
                                         @foreach ($students as $student)
                                             <tr class="text-center"
-                                                onclick="window.location='{{ route('student.detail', $student->id) }}';">
+                                                onclick="window.location='{{ route('payment.student.detail', $student->id) }}';">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $student->center->name }}</td>
                                                 <td>{{ $student->name }}</td>

@@ -80,28 +80,28 @@
                                 <tbody>
                                     <tr>
                                         <td>{{ $newValue }}</td>
-                                        <form action="{{ route('payment.store') }}" method="POST">
+                                        <form action="{{ route('payment.store', ['student_id' => $student->id]) }}"
+                                            method="POST">
                                             @csrf
                                             <td><button class="btn btn-sm btn-secondary" type="submit">Pay Now</button>
                                             </td>
                                             <td>
                                                 <div class="form-group">
-                                                    <label for="no_kupon">No Kupon</label>
-                                                    <input type="text" class="form-control" id="no_kupon"
-                                                        name="no_kupon" placeholder="Masukkan No Kupon">
+                                                    <label for="coupon_number">No Kupon</label>
+                                                    <input type="text" class="form-control" id="coupon_number"
+                                                        name="coupon_number" placeholder="Masukkan No Kupon">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label for="diskon">Diskon</label>
-                                                    <input type="number" class="form-control" id="diskon"
-                                                        name="diskon" placeholder="Masukkan Diskon">
+                                                    <label for="discount">Diskon</label>
+                                                    <input type="number" class="form-control" id="discount"
+                                                        name="discount" placeholder="Masukkan Diskon">
                                                 </div>
                                             </td>
                                             <td></td>
                                             <td>
                                                 <div class="form-group">
-                                                    <select class="form-control" id="jenis_pembayaran"
-                                                        name="jenis_pembayaran">
+                                                    <select class="form-control" id="payment_type" name="payment_type">
                                                         <option value="Cash">Cash</option>
                                                         <option value="Debit">Debit</option>
                                                         <option value="EDC">EDC</option>
@@ -119,9 +119,9 @@
                                         <tr>
                                             <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
                                             <td>{{ $payment->status }}</td>
-                                            <td>Kupon</td>
+                                            <td>{{ $payment->coupun_number }}</td>
                                             <td>{{ $payment->payment_date }}</td>
-                                            <td>Jenis</td>
+                                            <td>{{ $payment->payment_type }}</td>
                                             <td><i class="fas fa-print"></i></td>
                                         </tr>
                                     @endforeach
@@ -199,26 +199,26 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="no_kupon">No Kupon</label>
-                            <input type="text" class="form-control" id="no_kupon" name="no_kupon"
+                            <label for="coupon_number">No Kupon</label>
+                            <input type="text" class="form-control" id="coupon_number" name="coupon_number"
                                 placeholder="Masukkan No Kupon">
                         </div>
 
                         <div class="form-group">
-                            <label for="no_kupon">No Kupon</label>
-                            <input type="text" class="form-control" id="no_kupon" name="no_kupon"
+                            <label for="coupon_number">No Kupon</label>
+                            <input type="text" class="form-control" id="coupon_number" name="coupon_number"
                                 placeholder="Masukkan No Kupon">
                         </div>
 
                         <div class="form-group">
-                            <label for="diskon">Diskon</label>
-                            <input type="number" class="form-control" id="diskon" name="diskon"
+                            <label for="discount">Diskon</label>
+                            <input type="number" class="form-control" id="discount" name="discount"
                                 placeholder="Masukkan Diskon">
                         </div>
 
                         <div class="form-group">
-                            <label for="jenis_pembayaran">Jenis Pembayaran</label>
-                            <select class="form-control" id="jenis_pembayaran" name="jenis_pembayaran">
+                            <label for="payment_type">Jenis Pembayaran</label>
+                            <select class="form-control" id="payment_type" name="payment_type">
                                 <option value="Cash">Cash</option>
                                 <option value="Debit">Debit</option>
                                 <option value="EDC">EDC</option>

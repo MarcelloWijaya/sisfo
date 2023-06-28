@@ -76,7 +76,7 @@ class PaymentController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request, int $student_id)
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
@@ -92,14 +92,16 @@ class PaymentController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $payment = new Payment;
-        $payment->center_id = $request->center_id;
-        $payment->student_id = $request->student_id;
-        $payment->payment_date = $request->payment_date;
+        $student = Student::find($student_id);
+
+        $payment = new Payment();
+        $payment->center_id = $student->center_id;
+        $payment->student_id = $student->id;
+        $payment->payment_date = now()->format('Y-m-d H:i:s');
         $payment->discount = $request->discount;
         $payment->coupun_number = $request->coupun_number;
         $payment->payment_type = $request->payment_type;
-        $payment->status = $request->status;
+        $payment->status = "Paid";
         $payment->save();
 
         return redirect()->route('payment.index')->with('success', 'Payment created successfully.');

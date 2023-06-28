@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('center_id');
             $table->foreignId('student_id');
-            $table->timestamp('payment_date');
+            $table->timestamp('payment_date')->nullable();
             $table->integer('discount')->nullable();
             $table->string('coupun_number')->nullable();
             $table->enum('payment_type', ['Cash', 'Debit', 'EDC', 'Kartu Kredit', 'Transfer'])->default('Cash')->nullable();
