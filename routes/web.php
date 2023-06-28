@@ -68,6 +68,9 @@ Route::put('/center/update/{center_id}', [CenterController::class, 'updateCenter
 
 Route::delete('/center/delete/{center_id}', [CenterController::class, 'destroy'])->name('center.delete');
 
+Route::get('/centers/export', [CenterController::class, 'exportCenter'])->name('center.export');
+
+
 
 Route::get('/centerPayment', [CenterPaymentController::class, 'index'])->name('centerPayment.index');
 
@@ -136,7 +139,7 @@ Route::get('/payment/student/index', [PaymentController::class, 'indexStudent'])
 
 Route::get('/payment/student/{student_id}/detail', [PaymentController::class, 'paymentDetail'])->name('payment.student.detail');
 
-Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment', [PaymentController::class, 'indexPayment'])->name('payment.index');
 
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
 

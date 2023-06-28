@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\CentersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CenterController extends Controller
 {
@@ -121,5 +123,23 @@ class CenterController extends Controller
         $center->delete();
 
         return redirect()->route('center.index')->with('delete', 'Center deleted successfully.');
+    }
+
+    public function exportCenter()
+    {
+        $centers = Center::all();
+
+        $data = [];
+        foreach ($centers as $center) {
+            $data[] = [
+                'Center Name' => $center->center_name,
+                'Owner' => $center->owner,
+                'Address' => $center->address,
+                'Phone Number' => $center->phone_number,
+                'Email' => $center->email_center,
+            ];
+        }
+
+        return Excel::download(new CentersExport($data), 'centers.xlsx');
     }
 }
