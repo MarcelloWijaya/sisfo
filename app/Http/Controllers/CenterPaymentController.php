@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use Illuminate\Http\Request;
 use App\Models\CenterPayment;
+use Illuminate\Support\Facades\Validator;
 
 class CenterPaymentController extends Controller
 {
@@ -34,6 +35,17 @@ class CenterPaymentController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'registration_fee' => 'required',
+            'equipment_fee' => 'required',
+            'course_fee' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $payment = new CenterPayment;
         $payment->center_id = $request->center_id;
         $payment->registration_fee = $request->registration_fee;
@@ -60,6 +72,17 @@ class CenterPaymentController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'registration_fee' => 'required',
+            'equipment_fee' => 'required',
+            'course_fee' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $payment = CenterPayment::find($id);
         $payment->center_id = $request->center_id;
         $payment->registration_fee = $request->registration_fee;
