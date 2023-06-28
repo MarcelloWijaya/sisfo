@@ -28,6 +28,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <h1 class="h3 mb-2 text-gray-800">Center Data</h1>
+
                     <div>
                         @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -50,7 +51,16 @@
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
                             <h6 class="m-0 mt-1 font-weight-bold text-primary">Center Data</h6>
-                            <a href="{{ route('center.create') }}" class="btn btn-sm btn-primary">Add Center</a>
+                            <div class="justify-content-end">
+                                <a href="{{ route('center.create') }}" class="btn btn-sm btn-primary mr-3">Add
+                                    Center</a>
+                                <a href="{{ route('center.export') }}" class="btn btn-sm btn-primary">Export Data</a>
+                            </div>
+                            {{-- <form action="{{ route('center.import') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" name="import_file">
+                                <button type="submit" class="btn btn-sm btn-primary">Import Data</button>
+                            </form> --}}
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

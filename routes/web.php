@@ -70,6 +70,7 @@ Route::delete('/center/delete/{center_id}', [CenterController::class, 'destroy']
 
 Route::get('/centers/export', [CenterController::class, 'exportCenter'])->name('center.export');
 
+Route::post('/centers/import', [CenterController::class, 'importCenter'])->name('center.import');
 
 
 Route::get('/centerPayment', [CenterPaymentController::class, 'index'])->name('centerPayment.index');

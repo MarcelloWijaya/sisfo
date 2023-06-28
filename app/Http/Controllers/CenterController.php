@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Center;
+use App\Exports\CentersExport;
+use App\Imports\CentersImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Exports\;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CenterController extends Controller
@@ -132,7 +133,7 @@ class CenterController extends Controller
         $data = [];
         foreach ($centers as $center) {
             $data[] = [
-                'Center Name' => $center->center_name,
+                'Center Name' => $center->name,
                 'Owner' => $center->owner,
                 'Address' => $center->address,
                 'Phone Number' => $center->phone_number,
@@ -141,5 +142,18 @@ class CenterController extends Controller
         }
 
         return Excel::download(new CentersExport($data), 'centers.xlsx');
+    }
+
+    public function importCenter(Request $request)
+    {
+        $request->validate([
+            'import_file' => 'required|mimes:csv,txt',
+        ]);
+
+        $file = $request->file('import_file');
+
+        Excel::import(new CentersImport, $file);
+
+        return redirect()->route('center.index')->with('success', 'Data imported successfully.');
     }
 }
