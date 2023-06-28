@@ -64,7 +64,7 @@
                                             <th>End Time</th>
                                             <th>Teacher Name</th>
                                             <th>Class Name</th>
-                                            <th>Active</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -77,7 +77,7 @@
                                             <th>End Time</th>
                                             <th>Teacher Name</th>
                                             <th>Class Name</th>
-                                            <th>Active</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -91,13 +91,7 @@
                                                 <td>{{ $classroom->end_time }}</td>
                                                 <td>{{ $classroom->teacher->name }}</td>
                                                 <td>{{ $classroom->class_name }}</td>
-                                                <td>
-                                                    @if ($classroom->aktif == 0)
-                                                        Tidak Aktif
-                                                    @else
-                                                        Aktif
-                                                    @endif
-                                                </td>
+                                                <td>{{ $classroom->status->name }}</td>
 
                                                 <td>
                                                     <div class="d-flex justify-content-center">

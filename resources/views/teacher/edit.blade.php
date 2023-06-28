@@ -130,7 +130,6 @@
                                 <div class="form-group">
                                     <label for="status_id">Status</label>
                                     <select class="form-control" id="status_id" name="status_id" required>
-                                        <option value="">-- Select Status --</option>
                                         @foreach ($teacherStatuses as $status)
                                             <option value="{{ $status->id }}"
                                                 {{ $teacher->status_id == $status->id ? 'selected' : '' }}>

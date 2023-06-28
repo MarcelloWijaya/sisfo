@@ -66,7 +66,6 @@ class PaymentController extends Controller
     {
         $centers = Center::all();
 
-
         $data = [
             'centers' => $centers,
             'title' => 'Anaku Educare Management Information System (MIS)'

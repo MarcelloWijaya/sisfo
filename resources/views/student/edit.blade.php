@@ -157,22 +157,12 @@
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select class="form-control" id="status" name="status" required>
-                                        <option value="">-- Select Status --</option>
-                                        <option value="Aktif"
-                                            {{ old('status', $student->status) == 'Aktif' ? 'selected' : '' }}>Aktif
-                                        </option>
-                                        <option value="Non Aktif"
-                                            {{ old('status', $student->status) == 'Non Aktif' ? 'selected' : '' }}>Non
-                                            Aktif</option>
-                                        <option value="Cuti"
-                                            {{ old('status', $student->status) == 'Cuti' ? 'selected' : '' }}>Cuti
-                                        </option>
-                                        <option value="Keluar"
-                                            {{ old('status', $student->status) == 'Keluar' ? 'selected' : '' }}>Keluar
-                                        </option>
-                                        <option value="Lulus"
-                                            {{ old('status', $student->status) == 'Lulus' ? 'selected' : '' }}>Lulus
-                                        </option>
+                                        @foreach ($studentStatuses as $status)
+                                            <option value="{{ $status->id }}"
+                                                {{ $student->status_id == $status->id ? 'selected' : '' }}>
+                                                {{ $status->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 

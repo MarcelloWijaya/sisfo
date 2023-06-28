@@ -105,14 +105,14 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="aktif">Aktif</label>
-                                    <select class="form-control" id="aktif" name="aktif" required>
-                                        <option value="1"
-                                            {{ old('aktif', $classroom->aktif) == 1 ? 'selected' : '' }}>
-                                            Aktif</option>
-                                        <option value="0"
-                                            {{ old('aktif', $classroom->aktif) == 0 ? 'selected' : '' }}>
-                                            Non-Aktif</option>
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        @foreach ($classroomStatuses as $status)
+                                            <option value="{{ $status->id }}"
+                                                {{ $classroom->status_id == $status->id ? 'selected' : '' }}>
+                                                {{ $status->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 

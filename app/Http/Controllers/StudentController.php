@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\StudentStatus;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
@@ -36,9 +37,11 @@ class StudentController extends Controller
     public function create()
     {
         $centers = Center::all();
+        $studentStatuses = StudentStatus::all();
 
         $data = [
             'centers' => $centers,
+            'studentStatuses' => $studentStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
@@ -96,10 +99,12 @@ class StudentController extends Controller
     {
         $student = Student::find($id);
         $centers = Center::all();
+        $studentStatuses = StudentStatus::all();
 
         $data = [
             'student' => $student,
             'centers' => $centers,
+            'studentStatuses' => $studentStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Center;
 use App\Models\Classroom;
+use App\Models\ClassroomStatus;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -38,10 +39,12 @@ class ClassroomController extends Controller
     {
         $centers = Center::all();
         $teachers = Teacher::all();
+        $classroomStatuses = ClassroomStatus::all();
 
         $data = [
             'centers' => $centers,
             'teachers' => $teachers,
+            'classroomStatuses' => $classroomStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
@@ -83,6 +86,7 @@ class ClassroomController extends Controller
         $classroom = Classroom::find($classroom_id);
         $centers = Center::all();
         $teachers = Teacher::all();
+        $classroomStatuses = ClassroomStatus::all();
 
         if (!$classroom) {
             return redirect()->route('classroom.index')->withErrors('Classroom not found.');
@@ -92,6 +96,7 @@ class ClassroomController extends Controller
             'centers' => $centers,
             'teachers' => $teachers,
             'classroom' => $classroom,
+            'classroomStatuses' => $classroomStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 

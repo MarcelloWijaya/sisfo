@@ -88,7 +88,7 @@
                                                 <td>{{ $student->name }}</td>
                                                 <td>{{ $student->gender }}</td>
                                                 <td>{{ $student->level }}</td>
-                                                <td>{{ $student->status }}</td>
+                                                <td>{{ $student->status->name }}</td>
                                                 <td> <a href="{{ route('student.detail', $student->id) }}"
                                                         class="btn btn-sm btn-secondary">Profile</a> </td>
                                                 <td>

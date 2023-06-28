@@ -150,16 +150,12 @@
                                     <label for="status">Status</label>
                                     <select class="form-control" id="status" name="status" required>
                                         <option value="">-- Select Status --</option>
-                                        <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif
-                                        </option>
-                                        <option value="Non Aktif"
-                                            {{ old('status') == 'Non Aktif' ? 'selected' : '' }}>Non Aktif</option>
-                                        <option value="Cuti" {{ old('status') == 'Cuti' ? 'selected' : '' }}>Cuti
-                                        </option>
-                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}>
-                                            Keluar</option>
-                                        <option value="Lulus" {{ old('status') == 'Lulus' ? 'selected' : '' }}>Lulus
-                                        </option>
+                                        @foreach ($studentStatuses as $status)
+                                            <option value="{{ $status->id }}"
+                                                {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                                {{ $status->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
 
