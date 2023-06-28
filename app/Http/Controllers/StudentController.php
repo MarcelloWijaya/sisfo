@@ -21,16 +21,16 @@ class StudentController extends Controller
         return view('student.index', $data);
     }
 
-    public function detail($id)
+    public function detail(int $student_id)
     {
-        $student = Student::find($id);
+        $student = Student::find($student_id);
 
         $data = [
             'student' => $student,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
-        return view('student.detail', ['id' => $student->id], $data);
+        return view('student.detail', ['student_id' => $student->id], $data);
     }
 
     public function create()

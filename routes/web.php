@@ -132,6 +132,10 @@ Route::put('/classroom/update/{classroom_id}', [ClassroomController::class, 'upd
 Route::delete('/classroom/delete/{classroom_id}', [ClassroomController::class, 'destroy'])->name('classroom.delete');
 
 
+Route::get('/payment/student/index', [PaymentController::class, 'indexStudent'])->name('payment.student.index');
+
+Route::get('/payment/student/{student_id}/detail', [PaymentController::class, 'paymentDetail'])->name('payment.student.detail');
+
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');

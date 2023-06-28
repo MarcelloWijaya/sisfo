@@ -92,7 +92,9 @@
                                     <tr>
                                         <td>Invoices</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">View Invoices</button>
+                                            <a class="btn btn-sm btn-primary"
+                                                href="{{ route('payment.student.detail', ['student_id' => $student->id]) }}">View
+                                                Invoices</a>
                                         </td>
                                     </tr>
                                     <tr>

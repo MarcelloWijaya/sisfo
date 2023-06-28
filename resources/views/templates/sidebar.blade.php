@@ -44,6 +44,7 @@
                 <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
                 <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
                 <a class="collapse-item" href="{{ route('payment.index') }}">Data Pembayaran</a>
+                <a class="collapse-item" href="{{ route('payment.student.index') }}">Data Pembayaran</a>
             </div>
         </div>
     </li>
