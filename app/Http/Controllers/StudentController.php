@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
 {
@@ -34,6 +35,28 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'student_name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'place_of_birth' => 'required',
+            'date_of_birth' => 'required',
+            'religion' => 'required',
+            'phone_number' => 'required',
+            'school_name' => 'required',
+            'parent_name' => 'required',
+            'entry_date' => 'required',
+            'registration_date' => 'required',
+            'level' => 'required',
+            'book_start' => 'required',
+            'parent_email' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $student = new Student;
         $student->center_id = $request->center_id;
         $student->student_name = $request->student_name;
@@ -71,6 +94,28 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'student_name' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'place_of_birth' => 'required',
+            'date_of_birth' => 'required',
+            'religion' => 'required',
+            'phone_number' => 'required',
+            'school_name' => 'required',
+            'parent_name' => 'required',
+            'entry_date' => 'required',
+            'registration_date' => 'required',
+            'level' => 'required',
+            'book_start' => 'required',
+            'parent_email' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $student = Student::find($id);
         $student->center_id = $request->center_id;;
         $student->student_name = $request->student_name;

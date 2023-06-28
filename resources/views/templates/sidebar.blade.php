@@ -15,7 +15,7 @@
             <span>Dashboard</span></a>
     </li>
 
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.role') }}">
             <i class="fas fa-fw fa-user-tie"></i>
             <span>Role</span></a>
@@ -43,6 +43,7 @@
                 <a class="collapse-item" href="{{ route('teacher.index') }}">Data Guru</a>
                 <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
                 <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
+                <a class="collapse-item" href="{{ route('payment.index') }}">Data Pembayaran</a>
             </div>
         </div>
     </li>

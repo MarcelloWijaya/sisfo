@@ -6,6 +6,7 @@ use App\Models\Classroom;
 use App\Models\ManageClassroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ManageClassroomController extends Controller
 {

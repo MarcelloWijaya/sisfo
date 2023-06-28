@@ -129,3 +129,18 @@ Route::get('/classroom/edit/{classroom_id}', [ClassroomController::class, 'edit'
 Route::put('/classroom/update/{classroom_id}', [ClassroomController::class, 'update'])->name('classroom.update');
 
 Route::delete('/classroom/delete/{classroom_id}', [ClassroomController::class, 'destroy'])->name('classroom.delete');
+
+
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
+Route::get('/payment/detail', [PaymentController::class, 'detail'])->name('payment.detail');
+
+Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+
+Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+
+Route::get('/payment/edit/{payment_id}', [PaymentController::class, 'edit'])->name('payment.edit');
+
+Route::put('/payment/update/{payment_id}', [PaymentController::class, 'update'])->name('payment.update');
+
+Route::delete('/payment/delete/{payment_id}', [PaymentController::class, 'destroy'])->name('payment.delete');

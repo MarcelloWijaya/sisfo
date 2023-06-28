@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Teacher;
+use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
 {
@@ -34,6 +35,25 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'teacher_name' => 'required',
+            'nickname' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'place_of_birth' => 'required',
+            'date_of_birth' => 'required',
+            'religion' => 'required',
+            'phone_number' => 'required',
+            'last_education' => 'required',
+            'teacher_email' => 'required',
+            'training_date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $teacher = new Teacher;
         $teacher->center_id = $request->center_id;
         $teacher->teacher_name = $request->teacher_name;
@@ -68,6 +88,25 @@ class TeacherController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'center_id' => 'required',
+            'teacher_name' => 'required',
+            'nickname' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'place_of_birth' => 'required',
+            'date_of_birth' => 'required',
+            'religion' => 'required',
+            'phone_number' => 'required',
+            'last_education' => 'required',
+            'teacher_email' => 'required',
+            'training_date' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $teacher = Teacher::find($id);
         $teacher->center_id = $request->center_id;
         $teacher->teacher_name = $request->teacher_name;

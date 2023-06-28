@@ -26,6 +26,11 @@ class ManageClassroomSeeder extends Seeder
                 'student_id' => 2,
             ],
             [
+                'center_id' => 1,
+                'classroom_id' => 1,
+                'student_id' => 3,
+            ],
+            [
                 'center_id' => 2,
                 'classroom_id' => 2,
                 'student_id' => 1,
