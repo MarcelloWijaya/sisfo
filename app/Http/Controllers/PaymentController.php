@@ -21,6 +21,18 @@ class PaymentController extends Controller
         return view('payment.index', $data);
     }
 
+    public function detail($id)
+    {
+        $payment = Payment::find($id);
+
+        $data = [
+            'payment' => $payment,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('payment.detail', ['id' => $payment->id], $data);
+    }
+
     public function create()
     {
         $centers = Center::all();

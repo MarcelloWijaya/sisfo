@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('level');
             $table->string('book_start');
             $table->string('parent_email');
+            $table->enum('status', ['Aktif', 'Non Aktif', 'Cuti', 'Keluar', 'Lulus'])->default('Aktif');
             $table->timestamps();
         });
     }

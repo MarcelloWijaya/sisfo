@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->date('payment_date');
-            $table->enum('status', ['paid', 'unpaid'])->default('unpaid');
+            $table->foreignId('student_id');
+            $table->timestamp('payment_date');
+            $table->enum('status', ['Paid', 'Unpaid'])->default('Unpaid');
             $table->timestamps();
         });
     }

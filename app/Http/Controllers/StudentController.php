@@ -21,6 +21,18 @@ class StudentController extends Controller
         return view('student.index', $data);
     }
 
+    public function detail($id)
+    {
+        $student = Student::find($id);
+
+        $data = [
+            'student' => $student,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('student.detail', ['id' => $student->id], $data);
+    }
+
     public function create()
     {
         $centers = Center::all();
@@ -51,6 +63,7 @@ class StudentController extends Controller
             'level' => 'required',
             'book_start' => 'required',
             'parent_email' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -73,6 +86,7 @@ class StudentController extends Controller
         $student->level = $request->level;
         $student->book_start = $request->book_start;
         $student->parent_email = $request->parent_email;
+        $student->status = $request->status;
         $student->save();
 
         return redirect()->route('student.index')->with('success', 'Student created successfully.');
@@ -110,6 +124,7 @@ class StudentController extends Controller
             'level' => 'required',
             'book_start' => 'required',
             'parent_email' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -132,6 +147,7 @@ class StudentController extends Controller
         $student->level = $request->level;
         $student->book_start = $request->book_start;
         $student->parent_email = $request->parent_email;
+        $student->status = $request->status;
         $student->save();
 
         return redirect()->route('student.index')->with('success', 'Student updated successfully.');

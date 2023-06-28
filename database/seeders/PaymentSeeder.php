@@ -16,28 +16,15 @@ class PaymentSeeder extends Seeder
         $payments = [
             [
                 'center_id' => 1,
-                'payment_date' => Carbon::now()->subDays(5)->format('Y-m-d'),
-                'status' => 'paid',
+                'student_id' => 1,
+                'payment_date' => Carbon::now()->subDays(5)->format('Y-m-d H:i:s'),
+                'status' => 'Paid',
             ],
             [
                 'center_id' => 2,
-                'payment_date' => Carbon::now()->subDays(3)->format('Y-m-d'),
-                'status' => 'unpaid',
-            ],
-            [
-                'center_id' => 3,
-                'payment_date' => Carbon::now()->subDays(2)->format('Y-m-d'),
-                'status' => 'paid',
-            ],
-            [
-                'center_id' => 4,
-                'payment_date' => Carbon::now()->subDays(1)->format('Y-m-d'),
-                'status' => 'unpaid',
-            ],
-            [
-                'center_id' => 5,
-                'payment_date' => Carbon::now()->format('Y-m-d'),
-                'status' => 'paid',
+                'student_id' => 2,
+                'payment_date' => Carbon::now()->subDays(3)->format('Y-m-d H:i:s'),
+                'status' => 'Unpaid',
             ],
         ];
 

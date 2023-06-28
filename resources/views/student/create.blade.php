@@ -48,8 +48,8 @@
 
                                 <div class="form-group">
                                     <label for="name">Student Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        required value="{{ old('name') }}">
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -144,6 +144,23 @@
                                     <label for="parent_email">Parent Email</label>
                                     <input type="email" class="form-control" id="parent_email" name="parent_email"
                                         required value="{{ old('parent_email') }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select class="form-control" id="status" name="status" required>
+                                        <option value="">-- Select Status --</option>
+                                        <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif
+                                        </option>
+                                        <option value="Non Aktif"
+                                            {{ old('status') == 'Non Aktif' ? 'selected' : '' }}>Non Aktif</option>
+                                        <option value="Cuti" {{ old('status') == 'Cuti' ? 'selected' : '' }}>Cuti
+                                        </option>
+                                        <option value="Keluar" {{ old('status') == 'Keluar' ? 'selected' : '' }}>
+                                            Keluar</option>
+                                        <option value="Lulus" {{ old('status') == 'Lulus' ? 'selected' : '' }}>Lulus
+                                        </option>
+                                    </select>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>

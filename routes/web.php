@@ -9,6 +9,7 @@ use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\ManageClassroomController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 
@@ -86,11 +87,11 @@ Route::delete('/centerPayment/delete/{payment_id}', [CenterPaymentController::cl
 
 Route::get('/student', [StudentController::class, 'index'])->name('student.index');
 
-Route::get('/student/detail', [StudentController::class, 'detail'])->name('student.detail');
-
 Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
 
 Route::post('/student/store', [StudentController::class, 'store'])->name('student.store');
+
+Route::get('/student/detail/{student_id}', [StudentController::class, 'detail'])->name('student.detail');
 
 Route::get('/student/edit/{student_id}', [StudentController::class, 'edit'])->name('student.edit');
 
@@ -101,11 +102,11 @@ Route::delete('/student/delete/{student_id}', [StudentController::class, 'destro
 
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
 
-Route::get('/teacher/detail', [TeacherController::class, 'detail'])->name('teacher.detail');
-
 Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
+
+Route::get('/teacher/detail', [TeacherController::class, 'detail'])->name('teacher.detail');
 
 Route::get('/teacher/edit/{teacher_id}', [TeacherController::class, 'edit'])->name('teacher.edit');
 
@@ -133,11 +134,11 @@ Route::delete('/classroom/delete/{classroom_id}', [ClassroomController::class, '
 
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 
-Route::get('/payment/detail', [PaymentController::class, 'detail'])->name('payment.detail');
-
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
 
 Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+
+Route::get('/payment/detail/{payment_id}', [PaymentController::class, 'detail'])->name('payment.detail');
 
 Route::get('/payment/edit/{payment_id}', [PaymentController::class, 'edit'])->name('payment.edit');
 

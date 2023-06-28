@@ -53,69 +53,44 @@
                             <a href="{{ route('student.create') }}" class="btn btn-sm btn-primary">Add Student</a>
                         </div>
                         <div class="card-body">
-                            <div class="table-responsive">
+                            <div class="table-responsive table-hover">
                                 <table id="dt_table" class="table table-bordered" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
+                                            <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
-                                            <th>Address</th>
-                                            <th>Place of Birth</th>
-                                            <th>Date of Birth</th>
-                                            <th>Religion</th>
-                                            <th>Phone Number</th>
-                                            <th>School Name</th>
-                                            <th>Parent Name</th>
-                                            <th>Entry Date</th>
-                                            <th>Registration Date</th>
                                             <th>Level</th>
-                                            <th>Book Start</th>
-                                            <th>Parent Email</th>
+                                            <th>Status</th>
+                                            <th>Profile</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
+                                            <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
-                                            <th>Address</th>
-                                            <th>Place of Birth</th>
-                                            <th>Date of Birth</th>
-                                            <th>Religion</th>
-                                            <th>Phone Number</th>
-                                            <th>School Name</th>
-                                            <th>Parent Name</th>
-                                            <th>Entry Date</th>
-                                            <th>Registration Date</th>
                                             <th>Level</th>
-                                            <th>Book Start</th>
-                                            <th>Parent Email</th>
+                                            <th>Status</th>
+                                            <th>Profile</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach ($students as $student)
-                                            <tr class="text-center">
+                                            <tr class="text-center"
+                                                onclick="window.location='{{ route('student.edit', $student->id) }}';">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $student->center->name }}</td>
                                                 <td>{{ $student->name }}</td>
                                                 <td>{{ $student->gender }}</td>
-                                                <td>{{ $student->address }}</td>
-                                                <td>{{ $student->place_of_birth }}</td>
-                                                <td>{{ $student->date_of_birth }}</td>
-                                                <td>{{ $student->religion }}</td>
-                                                <td>{{ $student->phone_number }}</td>
-                                                <td>{{ $student->school_name }}</td>
-                                                <td>{{ $student->parent_name }}</td>
-                                                <td>{{ $student->entry_date }}</td>
-                                                <td>{{ $student->registration_date }}</td>
                                                 <td>{{ $student->level }}</td>
-                                                <td>{{ $student->book_start }}</td>
-                                                <td>{{ $student->parent_email }}</td>
+                                                <td>{{ $student->status }}</td>
+                                                <td> <a href="{{ route('student.detail', $student->id) }}"
+                                                        class="btn btn-sm btn-secondary">Profile</a> </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('student.edit', $student->id) }}"
