@@ -18,4 +18,9 @@ class Payment extends Model
     {
         return $this->belongsTo(Student::class);
     }
+
+    public function status()
+    {
+        return $this->belongsTo(PaymentStatus::class);
+    }
 }

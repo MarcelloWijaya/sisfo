@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
+            $table->foreignId('status_id');
             $table->string('nis');
             $table->string('name');
             $table->string('gender');
@@ -28,8 +29,7 @@ return new class extends Migration
             $table->date('registration_date');
             $table->string('level');
             $table->string('book_start');
-            $table->string('parent_email');
-            $table->enum('status', ['Aktif', 'Non Aktif', 'Cuti', 'Keluar', 'Lulus'])->default('Aktif');
+            $table->string('parent_email')->nullable();
             $table->timestamps();
         });
     }

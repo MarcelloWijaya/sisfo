@@ -60,16 +60,6 @@
                                             <th>No</th>
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
-                                            <th>Nickname</th>
-                                            <th>Gender</th>
-                                            <th>Address</th>
-                                            <th>Place of Birth</th>
-                                            <th>Date of Birth</th>
-                                            <th>Religion</th>
-                                            <th>Phone Number</th>
-                                            <th>Last Education</th>
-                                            <th>Teacher Email</th>
-                                            <th>Training Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -78,16 +68,6 @@
                                             <th>No</th>
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
-                                            <th>Nickname</th>
-                                            <th>Gender</th>
-                                            <th>Address</th>
-                                            <th>Place of Birth</th>
-                                            <th>Date of Birth</th>
-                                            <th>Religion</th>
-                                            <th>Phone Number</th>
-                                            <th>Last Education</th>
-                                            <th>Teacher Email</th>
-                                            <th>Training Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -97,16 +77,6 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $teacher->center->name }}</td>
                                                 <td>{{ $teacher->name }}</td>
-                                                <td>{{ $teacher->nickname }}</td>
-                                                <td>{{ $teacher->gender }}</td>
-                                                <td>{{ $teacher->address }}</td>
-                                                <td>{{ $teacher->place_of_birth }}</td>
-                                                <td>{{ $teacher->date_of_birth }}</td>
-                                                <td>{{ $teacher->religion }}</td>
-                                                <td>{{ $teacher->phone_number }}</td>
-                                                <td>{{ $teacher->last_education }}</td>
-                                                <td>{{ $teacher->email }}</td>
-                                                <td>{{ $teacher->training_date }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('teacher.edit', $teacher->id) }}"

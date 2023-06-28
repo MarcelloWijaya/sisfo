@@ -18,4 +18,9 @@ class Teacher extends Model
     {
         return $this->hasMany(Classroom::class);
     }
+
+    public function status()
+    {
+        return $this->belongsTo(TeacherStatus::class);
+    }
 }
