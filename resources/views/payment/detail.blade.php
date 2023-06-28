@@ -144,8 +144,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="bulan">Bulan</label>
-                            <input type="text" class="form-control" id="bulan" value="#"
-                                readonly>
+                            <input type="text" class="form-control" id="bulan" value="#" readonly>
                         </div>
 
                         <div class="form-group">

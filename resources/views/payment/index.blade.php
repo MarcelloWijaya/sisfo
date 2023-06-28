@@ -80,7 +80,7 @@
                                                 <td>{{ $payment->center->name }}</td>
                                                 <td>{{ $payment->student->name }}</td>
                                                 <td>{{ $payment->payment_date }}</td>
-                                                <td>{{ $payment->status }}</td>
+                                                <td>{{ $payment->status->name }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
