@@ -60,6 +60,7 @@
                                             <th>No</th>
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -68,6 +69,7 @@
                                             <th>No</th>
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -77,6 +79,7 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $teacher->center->name }}</td>
                                                 <td>{{ $teacher->name }}</td>
+                                                <td>{{ $teacher->status->name }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('teacher.edit', $teacher->id) }}"

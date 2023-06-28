@@ -48,8 +48,8 @@
 
                                 <div class="form-group">
                                     <label for="name">Teacher Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        required value="{{ old('name') }}">
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        value="{{ old('name') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -118,8 +118,8 @@
 
                                 <div class="form-group">
                                     <label for="email">Teacher Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        required value="{{ old('email') }}">
+                                    <input type="email" class="form-control" id="email" name="email" required
+                                        value="{{ old('email') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -127,6 +127,20 @@
                                     <input type="date" class="form-control" id="training_date" name="training_date"
                                         required value="{{ old('training_date') }}">
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="status_id">Status</label>
+                                    <select class="form-control" id="status_id" name="status_id" required>
+                                        <option value="">-- Select Status --</option>
+                                        @foreach ($teacherStatuses as $status)
+                                            <option value="{{ $status->id }}"
+                                                {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                                {{ $status->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
 
                                 <button type="submit" class="btn btn-primary">Create</button>
                             </form>

@@ -21,11 +21,15 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CenterSeeder::class,
             ClassroomSeeder::class,
+            ClassroomStatusSeeder::class,
             CenterPaymentSeeder::class,
             ManageClassroomSeeder::class,
             PaymentSeeder::class,
+            PaymentStatusSeeder::class,
             StudentSeeder::class,
+            StudentStatusSeeder::class,
             TeacherSeeder::class,
+            TeacherStatusSeeder::class,
             UserRoleSeeder::class,
             UserSeeder::class,
         ]);

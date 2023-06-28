@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Teacher;
+use App\Models\TeacherStatus;
+use Database\Seeders\TeacherStatusSeeder;
 use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
@@ -24,9 +26,11 @@ class TeacherController extends Controller
     public function create()
     {
         $centers = Center::all();
+        $teacherStatuses = TeacherStatus::all();
 
         $data = [
             'centers' => $centers,
+            'teacherStatuses' => $teacherStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
@@ -76,10 +80,12 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::find($id);
         $centers = Center::all();
+        $teacherStatuses = TeacherStatus::all();
 
         $data = [
             'teacher' => $teacher,
             'centers' => $centers,
+            'teacherStatuses' => $teacherStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
