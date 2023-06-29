@@ -118,7 +118,7 @@
                                     @foreach ($payments as $payment)
                                         <tr>
                                             <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
-                                            <td>{{ $payment->status }}</td>
+                                            <td>{{ $payment->status->name }}</td>
                                             <td>{{ $payment->coupun_number }}</td>
                                             <td>{{ $payment->payment_date }}</td>
                                             <td>{{ $payment->payment_type }}</td>

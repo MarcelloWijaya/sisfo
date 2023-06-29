@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->string('coupun_number')->nullable();
             $table->foreignId('payment_type_id');
-            $table->foreignId('payment_status_id');
+            $table->foreignId('status_id');
             $table->timestamps();
         });
     }

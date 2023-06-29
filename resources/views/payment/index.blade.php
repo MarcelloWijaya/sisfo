@@ -27,7 +27,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Data Pembayaran</h1>
+                    <h1 class="h3 text-gray-800">Iuran Bulanan</h1>
+                    <div class="">Sudah Bayar : 53</div>
+                    <div class="">Belum Bayar : 0</div>
+                    <div class="mb-2">Tampilkan</div>
+
                     <div>
                         @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">

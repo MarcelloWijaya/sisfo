@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('last_education');
             $table->string('email')->nullable();
             $table->date('training_date');
-            $table->foreignId('teacher_status_id');
+            $table->foreignId('status_id');
             $table->timestamps();
         });
     }

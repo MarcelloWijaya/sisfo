@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('level');
             $table->string('book_start');
             $table->string('parent_email')->nullable();
-            $table->foreignId('student_status_id');
+            $table->foreignId('status_id');
             $table->timestamps();
         });
     }

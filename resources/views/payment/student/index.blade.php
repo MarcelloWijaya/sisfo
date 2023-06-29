@@ -84,9 +84,9 @@
                                                 <td>{{ $student->level }}</td>
                                                 @if ($student->payments->last())
                                                     <td>{{ $student->payments->last()->payment_date }}</td>
-                                                    @if ($student->payments->last()->status == 'Paid')
+                                                    @if ($student->payments->last()->status->name == 'Paid')
                                                         <td>Paid</td>
-                                                    @elseif ($student->payments->last()->status == 'Unpaid')
+                                                    @elseif ($student->payments->last()->status->name == 'Unpaid')
                                                         <td><a href="{{ route('payment.student.detail', ['student_id' => $student->id]) }}"
                                                                 class="btn btn-sm btn-secondary"> Pay Now </a></td>
                                                     @endif

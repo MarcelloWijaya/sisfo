@@ -22,7 +22,7 @@ class ClassroomSeeder extends Seeder
                 'end_time' => '11:00:00',
                 'teacher_id' => 1,
                 'class_name' => 'Mathematics',
-                'classroom_status_id' => 1,
+                'status_id' => 1,
             ],
             [
                 'center_id' => 2,
@@ -31,7 +31,7 @@ class ClassroomSeeder extends Seeder
                 'end_time' => '15:30:00',
                 'teacher_id' => 2,
                 'class_name' => 'Science',
-                'classroom_status_id' => 1,
+                'status_id' => 1,
             ],
         ];
 

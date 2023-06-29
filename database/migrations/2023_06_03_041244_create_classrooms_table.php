@@ -19,7 +19,7 @@ return new class extends Migration
             $table->time('end_time');
             $table->foreignId('teacher_id');
             $table->string('class_name');
-            $table->foreignId('classroom_status_id');
+            $table->foreignId('status_id');
             $table->timestamps();
         });
     }

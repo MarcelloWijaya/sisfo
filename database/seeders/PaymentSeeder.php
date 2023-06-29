@@ -21,7 +21,7 @@ class PaymentSeeder extends Seeder
                 'discount' => '100000',
                 'coupun_number' => '202306280001',
                 'payment_type_id' => 1,
-                'payment_status_id' => 1,
+                'status_id' => 1,
             ],
             [
                 'center_id' => 2,
@@ -30,7 +30,7 @@ class PaymentSeeder extends Seeder
                 'discount' => '50000',
                 'coupun_number' => '202306280002',
                 'payment_type_id' => 1,
-                'payment_status_id' => 1,
+                'status_id' => 1,
             ],
             [
                 'center_id' => 1,
@@ -39,7 +39,7 @@ class PaymentSeeder extends Seeder
                 'discount' => '100000',
                 'coupun_number' => '202306280001',
                 'payment_type_id' => 1,
-                'payment_status_id' => 1,
+                'status_id' => 1,
             ],
             [
                 'center_id' => 2,
@@ -48,7 +48,7 @@ class PaymentSeeder extends Seeder
                 'discount' => '50000',
                 'coupun_number' => '202306280002',
                 'payment_type_id' => 1,
-                'payment_status_id' => 1,
+                'status_id' => 1,
             ],
         ];
 
