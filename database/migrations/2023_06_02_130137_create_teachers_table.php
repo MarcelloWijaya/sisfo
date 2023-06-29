@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->foreignId('status_id');
             $table->string('name');
             $table->string('nickname');
             $table->string('gender');
@@ -26,6 +25,7 @@ return new class extends Migration
             $table->string('last_education');
             $table->string('email')->nullable();
             $table->date('training_date');
+            $table->foreignId('teacher_status_id');
             $table->timestamps();
         });
     }

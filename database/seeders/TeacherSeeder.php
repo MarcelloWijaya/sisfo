@@ -27,7 +27,7 @@ class TeacherSeeder extends Seeder
                 'last_education' => 'Bachelor Degree',
                 'email' => 'john@example.com',
                 'training_date' => '2022-01-01',
-                'status_id' => 1,
+                'teacher_status_id' => 1,
             ],
             [
                 'center_id' => 2,
@@ -42,7 +42,7 @@ class TeacherSeeder extends Seeder
                 'last_education' => 'Master Degree',
                 'email' => 'jane@example.com',
                 'training_date' => '2022-02-01',
-                'status_id' => 1,
+                'teacher_status_id' => 1,
             ],
         ];
 

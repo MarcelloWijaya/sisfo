@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->foreignId('status_id');
             $table->string('day');
             $table->time('start_time');
             $table->time('end_time');
             $table->foreignId('teacher_id');
             $table->string('class_name');
+            $table->foreignId('classroom_status_id');
             $table->timestamps();
         });
     }

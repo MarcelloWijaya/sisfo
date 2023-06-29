@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->foreignId('status_id');
             $table->string('nis');
             $table->string('name');
             $table->string('gender');
@@ -30,6 +29,7 @@ return new class extends Migration
             $table->string('level');
             $table->string('book_start');
             $table->string('parent_email')->nullable();
+            $table->foreignId('student_status_id');
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@ class StudentSeeder extends Seeder
                 'level' => 'Grade 6',
                 'book_start' => 'Book 1',
                 'parent_email' => 'john@example.com',
-                'status_id' => 1,
+                'student_status_id' => 1,
             ],
             [
                 'center_id' => 1,
@@ -50,7 +50,7 @@ class StudentSeeder extends Seeder
                 'level' => 'Grade 4',
                 'book_start' => 'Book 2',
                 'parent_email' => 'jane@example.com',
-                'status_id' => 1,
+                'student_status_id' => 1,
             ],
             [
                 'center_id' => 2,
@@ -69,7 +69,7 @@ class StudentSeeder extends Seeder
                 'level' => 'Grade 4',
                 'book_start' => 'Book 2',
                 'parent_email' => 'jane@example.com',
-                'status_id' => 1,
+                'student_status_id' => 1,
             ],
         ];
 
