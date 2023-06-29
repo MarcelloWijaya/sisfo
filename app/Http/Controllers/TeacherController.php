@@ -23,6 +23,19 @@ class TeacherController extends Controller
         return view('teacher.index', $data);
     }
 
+    public function detail(int $teacher_id)
+    {
+        $teacher = Teacher::find($teacher_id);
+
+        $data = [
+            'teacher' => $teacher,
+            'teacher_id' => $teacher_id,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('teacher.detail', $data);
+    }
+
     public function create()
     {
         $centers = Center::all();

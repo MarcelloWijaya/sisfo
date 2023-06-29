@@ -30,7 +30,7 @@
                     <h1 class="h3 text-gray-800">Iuran Bulanan</h1>
                     <div class="">Sudah Bayar : 53</div>
                     <div class="">Belum Bayar : 0</div>
-                    <div class="mb-2">Tampilkan</div>
+                    <div class="mb-2">Tampilkan : </div>
 
                     <div>
                         @if (\Session::has('success'))

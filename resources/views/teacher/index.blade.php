@@ -61,6 +61,8 @@
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
                                             <th>Status</th>
+                                            <th>Email</th>
+                                            <th>Profile</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,6 +72,8 @@
                                             <th>Center Name</th>
                                             <th>Teacher Name</th>
                                             <th>Status</th>
+                                            <th>Email</th>
+                                            <th>Profile</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -80,6 +84,12 @@
                                                 <td>{{ $teacher->center->name }}</td>
                                                 <td>{{ $teacher->name }}</td>
                                                 <td>{{ $teacher->status->name }}</td>
+                                                <td>
+                                                    <a href="mailto:{{ $teacher->email }}"
+                                                        class="btn btn-sm btn-secondary">Email</a>
+                                                </td>
+                                                <td> <a href="{{ route('teacher.detail', $teacher->id) }}"
+                                                        class="btn btn-sm btn-secondary">Profile</a> </td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('teacher.edit', $teacher->id) }}"

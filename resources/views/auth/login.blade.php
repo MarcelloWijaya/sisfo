@@ -51,7 +51,8 @@
                                             <input type="email" class="form-control form-control-user"
                                                 value="{{ Cookie::has('emailCookie') ? Cookie::get('emailCookie') : '' }}"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="email">
+                                                placeholder="Enter Email Address..." name="email"
+                                                value="{{ old('email') }}">
                                             @error('email')
                                                 <span class="text-danger"><small>{{ $message }}</small></span>
                                             @enderror
@@ -62,13 +63,6 @@
                                             @error('password')
                                                 <span class="text-danger"><small>{{ $message }}</small></span>
                                             @enderror
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="form-check-input" id="customCheck"
-                                                    name="remember" {{ Cookie::has('emailCookie') ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="customCheck">Remember Me</label>
-                                            </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Login

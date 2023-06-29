@@ -40,9 +40,9 @@
                                 src="{{ asset('template/img/undraw_profile_1.svg') }}" alt="...">
                             <div class="d-flex justify-content-center">
                                 <h1 class="h4 text-gray-800 mb-4">
-                                    {{ $student->name }}
+                                    {{ $teacher->name }}
                                 </h1>
-                                <a href="{{ route('student.edit', $student->id) }}">
+                                <a href="{{ route('teacher.edit', $teacher->id) }}">
                                     <i class="fas fa-sm fa-pen ml-2 mt-2"></i>
                                 </a>
                             </div>
@@ -63,15 +63,15 @@
                                 <tbody>
                                     <tr>
                                         <td>Center</td>
-                                        <td><b>{{ $student->center->name }}</b></td>
+                                        <td><b>{{ $teacher->center->name }}</b></td>
                                     </tr>
                                     <tr>
                                         <td>Level</td>
-                                        <td><b>{{ $student->level }}</b></td>
+                                        <td><b>{{ $teacher->level }}</b></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
-                                        <td><b>{{ $student->status->name }}</b></td>
+                                        <td><b>{{ $teacher->status->name }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -82,7 +82,7 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th class="text-center" colspan="2">
-                                            <i class="fas fa-dollar-sign mr-1"></i>Pembayaran
+                                            <i class="fas fa-dollar-sign mr-1"></i>Insentif
                                         </th>
                                     </tr>
                                 </thead>
@@ -90,19 +90,7 @@
                                     <tr>
                                         <td>Invoices</td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary"
-                                                href="{{ route('payment.student.detail', ['student_id' => $student->id]) }}">View
-                                                Invoices</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pendaftaran Pertama</td>
-                                        <td><i class="fas fa-print"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Beli Buku pengganti</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-primary">{{ $student->level }}</button>
+                                            <a class="btn btn-sm btn-primary" href="#">Jumlah Murid Per Level</a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -122,7 +110,7 @@
                                     <tr>
                                         <td>Lihat Absensi</td>
                                         <td>
-                                            <button class="btn btn-sm btn-primary">Absensi Murid</button>
+                                            <button class="btn btn-sm btn-primary">Absensi Guru</button>
                                         </td>
                                     </tr>
                                     <tr>
@@ -135,7 +123,6 @@
                                         <td>Kelas</td>
                                         <td>
                                             <button class="btn btn-sm btn-primary">View Kelas</button>
-                                            <button class="btn btn-sm btn-primary">Pindah Kelas</button>
                                         </td>
                                     </tr>
                                 </tbody>

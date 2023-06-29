@@ -34,10 +34,6 @@ Route::get('/loginpage', [AuthController::class, 'loginPage'])->name('login.page
 
 Route::get('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
 
-Route::get('/register/page', [AuthController::class, 'registerPage'])->name('register.page');
-
-Route::post('/register/action', [AuthController::class, 'registerAction'])->name('register.action');
-
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
@@ -110,7 +106,7 @@ Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teach
 
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
 
-Route::get('/teacher/detail', [TeacherController::class, 'detail'])->name('teacher.detail');
+Route::get('/teacher/detail/{student_id}', [TeacherController::class, 'detail'])->name('teacher.detail');
 
 Route::get('/teacher/edit/{teacher_id}', [TeacherController::class, 'edit'])->name('teacher.edit');
 
