@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Center;
+use App\Models\Classroom;
 use App\Models\Teacher;
 use App\Models\TeacherStatus;
 use Database\Seeders\TeacherStatusSeeder;
@@ -34,6 +35,18 @@ class TeacherController extends Controller
         ];
 
         return view('teacher.detail', $data);
+    }
+
+    public function teaching()
+    {
+        $classrooms = Classroom::all();
+
+        $data = [
+            'classrooms' => $classrooms,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('teacher.teaching', $data);
     }
 
     public function create()

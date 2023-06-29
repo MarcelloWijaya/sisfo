@@ -11,7 +11,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CenterController extends Controller
 {
-    public function indexCenter()
+    public function index()
     {
         $centers = Center::all();
 
@@ -23,7 +23,7 @@ class CenterController extends Controller
         return view('center.index', $data);
     }
 
-    public function detailCenter()
+    public function detail()
     {
         $centers = Center::all();
 
@@ -35,7 +35,7 @@ class CenterController extends Controller
         return view('center.detail', $data);
     }
 
-    public function createCenter()
+    public function create()
     {
         $data = [
             'title' => 'Anaku Educare Management Information System (MIS)'
@@ -44,7 +44,7 @@ class CenterController extends Controller
         return view('center.create', $data);
     }
 
-    public function storeCenter(Request $request)
+    public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'center_name' => 'required',
@@ -67,7 +67,7 @@ class CenterController extends Controller
         return redirect()->route('center.index')->with('success', 'Center created successfully.');
     }
 
-    public function editCenter($id)
+    public function edit($id)
     {
         $center = Center::find($id);
 
@@ -83,7 +83,7 @@ class CenterController extends Controller
         return view('center.edit', $data);
     }
 
-    public function updateCenter(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'center_name' => 'required',

@@ -11,14 +11,26 @@ class CenterPaymentController extends Controller
 {
     public function index()
     {
-        $payments = CenterPayment::all();
+        $centerPayments = CenterPayment::all();
 
         $data = [
-            'payments' => $payments,
+            'centerPayments' => $centerPayments,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('centerPayment.index', $data);
+    }
+
+    public function detail()
+    {
+        $centerPayments = CenterPayment::all();
+
+        $data = [
+            'centerPayments' => $centerPayments,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('centerPayment.detail', $data);
     }
 
     public function create()
@@ -27,7 +39,7 @@ class CenterPaymentController extends Controller
 
         $data = [
             'centers' => $centers,
-            'title' => 'Create Center Payment - Anaku Educare Management Information System (MIS)'
+            'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('centerPayment.create', $data);

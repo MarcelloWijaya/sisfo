@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Center;
 use App\Models\Classroom;
 use App\Models\ManageClassroom;
 use App\Models\Student;
@@ -13,38 +14,44 @@ class ManageClassroomController extends Controller
     public function index()
     {
         $manage_classrooms = ManageClassroom::all();
+        $students = Student::all();
 
         $data = [
             'manage_classrooms' => $manage_classrooms,
+            'students' => $students,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
         return view('classroom.manage', $data);
     }
 
-    public function addMurid(Request $request, $classroomId)
+    public function addMurid(Request $request)
     {
-        $classroom = Classroom::findOrFail($classroomId);
-
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
+        dd($request);
+        $validator = Validator::make($request->all(), [
+            'student_id' => 'required',
         ]);
 
-        $studentId = $request->input('student_id');
-        $student = Student::findOrFail($studentId);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        $classroom->students()->attach($student);
+        $student_id = $request->input('student_id');
 
-        return redirect()->route('manage_classroom.index')->with('success', 'Murid berhasil ditambahkan ke kelas.');
+        $manageClassroom = new ManageClassroom();
+        $manageClassroom->center_id = $manageClassroom->center_id;
+        $manageClassroom->classroom_id = $manageClassroom->classroom_id;
+        $manageClassroom->student_id = $student_id;
+        $manageClassroom->save();
+
+        return redirect()->route('classroom.manage')->with('success', 'Manage Classroom created successfully.');
     }
 
-    public function activatedClass($classroomId)
+    public function destroy(int $manageClassroom_id)
     {
-        $classroom = Classroom::findOrFail($classroomId);
+        $manage_classroom = ManageClassroom::findOrFail($manageClassroom_id);
+        $manage_classroom->delete();
 
-        $classroom->aktif = !$classroom->aktif;
-        $classroom->save();
-
-        return redirect()->route('manage_classroom.index')->with('success', 'Status kelas berhasil diubah.');
+        return redirect()->route('classroom.manage')->with('delete', 'Murid berhasil dihapus dari kelas.');
     }
 }

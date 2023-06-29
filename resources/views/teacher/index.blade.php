@@ -63,7 +63,11 @@
                                             <th>Status</th>
                                             <th>Email</th>
                                             <th>Profile</th>
-                                            <th>Action</th>
+                                            @auth
+                                                @if (Auth::user()->role_id == 1)
+                                                    <th>Action</th>
+                                                @endif
+                                            @endauth
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -74,7 +78,11 @@
                                             <th>Status</th>
                                             <th>Email</th>
                                             <th>Profile</th>
-                                            <th>Action</th>
+                                            @auth
+                                                @if (Auth::user()->role_id == 1)
+                                                    <th>Action</th>
+                                                @endif
+                                            @endauth
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -90,22 +98,27 @@
                                                 </td>
                                                 <td> <a href="{{ route('teacher.detail', $teacher->id) }}"
                                                         class="btn btn-sm btn-secondary">Profile</a> </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('teacher.edit', $teacher->id) }}"
-                                                            class="btn btn-sm btn-primary mx-1"><i
-                                                                class="fas fa-pen"></i></a>
-                                                        <form id="delete-form-{{ $teacher->id }}"
-                                                            action="{{ route('teacher.delete', $teacher->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger mx-1">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
+                                                @auth
+                                                    @if (Auth::user()->role_id == 1)
+                                                        <td>
+                                                            <div class="d-flex justify-content-center">
+                                                                <a href="{{ route('teacher.edit', $teacher->id) }}"
+                                                                    class="btn btn-sm btn-primary mx-1"><i
+                                                                        class="fas fa-pen"></i></a>
+                                                                <form id="delete-form-{{ $teacher->id }}"
+                                                                    action="{{ route('teacher.delete', $teacher->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="btn btn-sm btn-danger mx-1">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </td>
+                                                    @endif
+                                                @endauth
                                             </tr>
                                         @endforeach
                                     </tbody>

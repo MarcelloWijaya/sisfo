@@ -93,18 +93,44 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($manage_classrooms as $manage_classroom)
+                                        @php
+                                            $groupedClassrooms = collect($manage_classrooms)->groupBy(function ($item) {
+                                                return $item['center_id'] . '_' . $item['classroom_id'];
+                                            });
+                                        @endphp
+
+                                        @foreach ($groupedClassrooms as $classrooms)
                                             <tr class="text-center">
-                                                <td>{{ $manage_classroom->center->name }}</td>
-                                                <td>{{ $manage_classroom->classroom->day }} <br>
-                                                    {{ $manage_classroom->classroom->start_time }} -
-                                                    {{ $manage_classroom->classroom->end_time }}</td>
-                                                <td>{{ $manage_classroom->classroom->class_name }}</td>
-                                                <td>{{ $manage_classroom->classroom->teacher->name }}</td>
+                                                <td>{{ $classrooms[0]['center_id'] }}</td>
+                                                <td>{{ $classrooms[0]['classroom']->day }} <br>
+                                                    {{ $classrooms[0]['classroom']->start_time }} -
+                                                    {{ $classrooms[0]['classroom']->end_time }}</td>
+                                                <td>Ruang</td>
+                                                <td>{{ $classrooms[0]['classroom']->class_name }}</td>
+                                                <td>{{ $classrooms[0]['classroom']->teacher->name }}</td>
                                                 <td>
                                                     <div>
-                                                        {{ $manage_classroom->student->name }}
-                                                        <i class="fas fa-times"></i>
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                                $studentLink = route('student.detail', $student->id);
+                                                                $removeLink = route('classroom.deleteClass', ['manageClassroom_id' => $student->id]);
+                                                            @endphp
+                                                            <div>
+                                                                <a
+                                                                    href="{{ $studentLink }}"><b>{{ $student->name }}</b></a>
+                                                                <a href="{{ $removeLink }}"
+                                                                    onclick="event.preventDefault(); document.getElementById('remove-murid-form-{{ $student->id }}').submit();">
+                                                                    <i class="fas fa-times"></i>
+                                                                </a>
+                                                                <form id="remove-murid-form-{{ $student->id }}"
+                                                                    action="{{ $removeLink }}" method="POST"
+                                                                    style="display: none;">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                </form>
+                                                            </div>
+                                                        @endforeach
                                                     </div>
                                                 </td>
                                                 <td>
@@ -116,6 +142,7 @@
                                                 </td>
                                             </tr>
                                         @endforeach
+
                                     </tbody>
                                 </table>
                             </div>
@@ -142,7 +169,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    {{-- <!-- Modal -->
+    <!-- addMurid Modal -->
     <div class="modal fade" id="addMuridModal" tabindex="-1" role="dialog" aria-labelledby="addMuridModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -154,10 +181,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{ route('classroom.addMurid', ['student_id' => $student->id]) }}" method="POST">
+                        @csrf
                         <div class="form-group">
                             <label for="student_id">Student Name</label>
-                            <select class="form-control" id="student_id" name="student_id" readonly>
+                            <select class="form-control" id="student_id" name="student_id">
                                 @foreach ($students as $student)
                                     <option value="{{ $student->id }}">
                                         {{ $student->name }}
@@ -169,11 +197,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </div>
             </div>
         </div>
-    </div> --}}
+    </div>
+
 
     @include('templates.script')
 </body>

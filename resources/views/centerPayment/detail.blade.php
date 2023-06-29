@@ -28,52 +28,59 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    @foreach ($centers as $center)
-                        @if ($center->id === auth()->user()->center_id)
-                            <h1 class="h3 mb-3 text-gray-800">{{ $center->name }}</h1>
-                            <table class="table table-striped text-dark">
-                                <tr>
-                                    <td class="fw-bold"> Owner </td>
-                                    <td>{{ $center->owner }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold"> Alamat </td>
-                                    <td>{{ $center->address }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold"> No. Telp </td>
-                                    <td>{{ $center->phone_number }}</td>
-                                </tr>
-                                <tr>
-                                    <td class="fw-bold"> Email </td>
-                                    <td>{{ $center->email_center }}</td>
-                                </tr>
-                            </table>
-                        @endif
-                    @endforeach
-                </div>
-                <!-- /.container-fluid -->
+                    @foreach ($centerPayments as $centerPayment)
+                        @if ($centerPayment->center_id === auth()->user()->center_id)
+                            <form action="{{ route('centerPayment.update', $centerPayment->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
 
+                                <div class="form-group">
+                                    <label for="registration_fee">Registration Fee</label>
+                                    <input type="text" class="form-control" id="registration_fee"
+                                        name="registration_fee" required
+                                        value="{{ old('registration_fee', $centerPayment->registration_fee) }}">
+                                </div>
 
+                                <div class="form-group">
+                                    <label for="equipment_fee">Equipment Fee</label>
+                                    <input type="text" class="form-control" id="equipment_fee" name="equipment_fee"
+                                        required value="{{ old('equipment_fee', $centerPayment->equipment_fee) }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="course_fee">Course Fee</label>
+                                    <input type="text" class="form-control" id="course_fee" name="course_fee"
+                                        required value="{{ old('course_fee', $centerPayment->course_fee) }}">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        @break
+                    @endif
+                @endforeach
             </div>
-            <!-- End of Main Content -->
+            <!-- /.container-fluid -->
 
-            <!-- Footer -->
-            @include('templates.footer')
-            <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        @include('templates.footer')
+        <!-- End of Footer -->
 
     </div>
-    <!-- End of Page Wrapper -->
+    <!-- End of Content Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+</div>
+<!-- End of Page Wrapper -->
 
-    @include('templates.script')
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+@include('templates.script')
 </body>
 
 </html>

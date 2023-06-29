@@ -19,8 +19,8 @@ class ManageClassroom extends Model
         return $this->belongsTo(Classroom::class);
     }
 
-    public function student()
+    public function students()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsToMany(Student::class);
     }
 }

@@ -50,17 +50,17 @@ Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess']
 Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');
 
 
-Route::get('/center', [CenterController::class, 'indexCenter'])->name('center.index');
+Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 
-Route::get('/center/detail', [CenterController::class, 'detailCenter'])->name('center.detail');
+Route::get('/center/detail', [CenterController::class, 'detail'])->name('center.detail');
 
-Route::get('/center/create', [CenterController::class, 'createCenter'])->name('center.create');
+Route::get('/center/create', [CenterController::class, 'create'])->name('center.create');
 
-Route::post('/center/store', [CenterController::class, 'storeCenter'])->name('center.store');
+Route::post('/center/store', [CenterController::class, 'store'])->name('center.store');
 
-Route::get('/center/edit/{center_id}', [CenterController::class, 'editCenter'])->name('center.edit');
+Route::get('/center/edit/{center_id}', [CenterController::class, 'edit'])->name('center.edit');
 
-Route::put('/center/update/{center_id}', [CenterController::class, 'updateCenter'])->name('center.update');
+Route::put('/center/update/{center_id}', [CenterController::class, 'update'])->name('center.update');
 
 Route::delete('/center/delete/{center_id}', [CenterController::class, 'destroy'])->name('center.delete');
 
@@ -102,6 +102,8 @@ Route::delete('/student/delete/{student_id}', [StudentController::class, 'destro
 
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
 
+Route::get('/teacher/teaching-schedule', [TeacherController::class, 'teaching'])->name('teacher.teaching');
+
 Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
@@ -118,6 +120,10 @@ Route::delete('/teacher/delete/{teacher_id}', [TeacherController::class, 'destro
 Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
 
 Route::get('/classroom/manage', [ManageClassroomController::class, 'index'])->name('classroom.manage');
+
+Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'destroy'])->name('classroom.deleteClass');
+
+Route::post('/classroom/manage/addMurid/{student_id}', [ManageClassroomController::class, 'addMurid'])->name('classroom.addMurid');
 
 Route::get('/classroom/detail', [ClassroomController::class, 'detail'])->name('classroom.detail');
 
