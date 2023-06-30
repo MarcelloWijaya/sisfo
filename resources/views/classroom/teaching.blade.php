@@ -75,24 +75,76 @@
                                                     {{ $classrooms->first()->classroom->start_time }} -
                                                     {{ $classrooms->first()->classroom->end_time }}</td>
                                                 <td>
-                                                    @foreach ($classrooms as $classroom)
-                                                        @php
-                                                            $student = App\Models\Student::find($classroom['student_id']);
-                                                        @endphp
-                                                        <div>
-                                                            {{ $student->name }}
-                                                        </div>
-                                                    @endforeach
+                                                    @if ($classrooms->first()->classroom->day == 'Senin')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                 </td>
                                                 <td>
-                                                    @foreach ($classrooms as $classroom)
-                                                        @php
-                                                            $student = App\Models\Student::find($classroom['student_id']);
-                                                        @endphp
-                                                        <div>
-                                                            {{ $student->name }}
-                                                        </div>
-                                                    @endforeach
+                                                    @if ($classrooms->first()->classroom->day == 'Selasa')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($classrooms->first()->classroom->day == 'Rabu')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($classrooms->first()->classroom->day == 'Kamis')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($classrooms->first()->classroom->day == 'Jumat')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($classrooms->first()->classroom->day == 'Sabtu')
+                                                        @foreach ($classrooms as $classroom)
+                                                            @php
+                                                                $student = App\Models\Student::find($classroom['student_id']);
+                                                            @endphp
+                                                            <div>
+                                                                {{ $student->name }}
+                                                            </div>
+                                                        @endforeach
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
