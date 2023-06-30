@@ -149,27 +149,25 @@
                                                     </div>
                                                 </div>
                                                 <td>
-                                                    <div>
-                                                        @foreach ($classrooms as $classroom)
-                                                            @php
-                                                                $student = App\Models\Student::find($classroom['student_id']);
-                                                            @endphp
-                                                            <div>
-                                                                <a
-                                                                    href="{{ route('student.detail', $student->id) }}"><b>{{ $student->name }}</b></a>
-                                                                <a href="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
-                                                                    onclick="event.preventDefault(); document.getElementById('remove-murid-form-{{ $student->id }}').submit();">
-                                                                    <i class="fas fa-times"></i>
-                                                                </a>
-                                                                <form id="remove-murid-form-{{ $student->id }}"
-                                                                    action="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
-                                                                    method="POST" style="display: none;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                </form>
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
+                                                    @foreach ($classrooms as $classroom)
+                                                        @php
+                                                            $student = App\Models\Student::find($classroom['student_id']);
+                                                        @endphp
+                                                        <div>
+                                                            <a
+                                                                href="{{ route('student.detail', $student->id) }}"><b>{{ $student->name }}</b></a>
+                                                            <a href="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
+                                                                onclick="event.preventDefault(); document.getElementById('remove-murid-form-{{ $student->id }}').submit();">
+                                                                <i class="fas fa-times"></i>
+                                                            </a>
+                                                            <form id="remove-murid-form-{{ $student->id }}"
+                                                                action="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
+                                                                method="POST" style="display: none;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                            </form>
+                                                        </div>
+                                                    @endforeach
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-secondary" data-toggle="modal"

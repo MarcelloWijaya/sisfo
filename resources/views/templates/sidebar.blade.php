@@ -133,7 +133,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('teacher.index') }}">Data</a>
                         <a class="collapse-item" href="{{ route('teacher.create') }}">Tambah</a>
-                        <a class="collapse-item" href="#">Jadwal Mengajar</a>
+                        <a class="collapse-item" href="{{ route('classroom.teaching') }}">Jadwal Mengajar</a>
                         <a class="collapse-item" href="#">Absensi</a>
                         <a class="collapse-item" href="#">Buat Permintaan Training</a>
                     </div>

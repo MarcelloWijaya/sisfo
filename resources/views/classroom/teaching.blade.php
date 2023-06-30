@@ -27,37 +27,21 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Teacher Data</h1>
-                    <div>
-                        @if (\Session::has('success'))
-                            <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
-                                <b>{{ \Session::get('success') }}</b>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @elseif (\Session::has('delete'))
-                            <div class="alert alert-danger alert-dismissible fade show mb-3" role="alert">
-                                <b>{{ \Session::get('delete') }}</b>
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                        @endif
-                    </div>
+                    <div class="h3 mb-2 text-gray-800">Teacher Name : Irma Damayanti</div>
+                    <div class="h3 mb-2 text-gray-800">Total Students : </div>
 
                     <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Teacher Data</h6>
-                            <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-primary">Add Teacher</a>
+                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Teaching Schedule</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="dt_table" class="table" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="text-center">
-                                        <tr class="text-center">
+                                            <th>Center</th>
+                                            <th>Guru</th>
                                             <th>Jam</th>
                                             <th>Senin</th>
                                             <th>Selasa</th>
@@ -70,7 +54,8 @@
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
-                                        <tr class="text-center">
+                                            <th>Center</th>
+                                            <th>Guru</th>
                                             <th>Jam</th>
                                             <th>Senin</th>
                                             <th>Selasa</th>
@@ -82,15 +67,33 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($classrooms as $classroom)
+                                        @foreach ($grouped_classrooms as $classrooms)
                                             <tr class="text-center">
-                                                <td>{{ $classroom->start_time }} - {{ $classroom->end_time }}</td>
-                                                <td>{{ $classroom->day }}</td>
-                                                <td>{{ $classroom->id }}</td>
-                                                <td>{{ $classroom->id }}</td>
-                                                <td>{{ $classroom->id }}</td>
-                                                <td>{{ $classroom->id }}</td>
-                                                <td>{{ $classroom->id }}</td>
+                                                <td>{{ $classrooms->first()->center->name }}</td>
+                                                <td>{{ $classrooms->first()->classroom->teacher->name }}</td>
+                                                <td>{{ $classrooms->first()->classroom->day }} <br>
+                                                    {{ $classrooms->first()->classroom->start_time }} -
+                                                    {{ $classrooms->first()->classroom->end_time }}</td>
+                                                <td>
+                                                    @foreach ($classrooms as $classroom)
+                                                        @php
+                                                            $student = App\Models\Student::find($classroom['student_id']);
+                                                        @endphp
+                                                        <div>
+                                                            {{ $student->name }}
+                                                        </div>
+                                                    @endforeach
+                                                </td>
+                                                <td>
+                                                    @foreach ($classrooms as $classroom)
+                                                        @php
+                                                            $student = App\Models\Student::find($classroom['student_id']);
+                                                        @endphp
+                                                        <div>
+                                                            {{ $student->name }}
+                                                        </div>
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

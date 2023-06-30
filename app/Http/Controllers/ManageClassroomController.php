@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Center;
-use App\Models\Classroom;
 use App\Models\ManageClassroom;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -62,5 +60,24 @@ class ManageClassroomController extends Controller
         $manage_classroom->delete();
 
         return redirect()->route('classroom.manage')->with('delete', 'Murid berhasil dihapus dari kelas.');
+    }
+
+    public function teaching()
+    {
+        $manage_classrooms = ManageClassroom::all();
+        $grouped_classrooms = collect($manage_classrooms)->groupBy(function ($item) {
+            return $item['center_id'] . '_' . $item['classroom_id'];
+        });
+        $students = Student::all();
+
+
+        $data = [
+            'manage_classrooms' => $manage_classrooms,
+            'grouped_classrooms' => $grouped_classrooms,
+            'students' => $students,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('classroom.teaching', $data);
     }
 }

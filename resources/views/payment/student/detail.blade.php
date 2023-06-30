@@ -5,14 +5,14 @@
     <title>{{ $title }}</title>
     @include('templates.header')
 
-    @php
+    {{-- @php
         use Carbon\Carbon;
         
         $value = $payments->last()->payment_date;
         $newValue = \Carbon\Carbon::parse($value)
             ->addMonth()
             ->format('m-Y');
-    @endphp
+    @endphp --}}
 </head>
 
 <body id="page-top">
@@ -78,54 +78,62 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>{{ $newValue }}</td>
-                                        <form action="{{ route('payment.store', ['student_id' => $student->id]) }}"
-                                            method="POST">
-                                            @csrf
-                                            <td><button class="btn btn-sm btn-secondary" type="submit">Pay Now</button>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <label for="coupon_number">No Kupon</label>
-                                                    <input type="text" class="form-control" id="coupon_number"
-                                                        name="coupon_number" placeholder="Masukkan No Kupon">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="discount">Diskon</label>
-                                                    <input type="number" class="form-control" id="discount"
-                                                        name="discount" placeholder="Masukkan Diskon">
-                                                </div>
-                                            </td>
-                                            <td></td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <select class="form-control" id="payment_type" name="payment_type">
-                                                        <option value="Cash">Cash</option>
-                                                        <option value="Debit">Debit</option>
-                                                        <option value="EDC">EDC</option>
-                                                        <option value="Kartu Kredit">Kartu Kredit</option>
-                                                        <option value="Transfer">Transfer</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                        </form>
-                                        <td></td>
-                                        <td><a href="" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash"></i></a></td>
-                                    </tr>
                                     @foreach ($payments as $payment)
-                                        <tr>
-                                            <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
-                                            <td>{{ $payment->status->name }}</td>
-                                            <td>{{ $payment->coupun_number }}</td>
-                                            <td>{{ $payment->payment_date }}</td>
-                                            <td>{{ $payment->payment_type }}</td>
-                                            <td><a
-                                                    href="{{ route('payment.invoice', ['payment_id' => $payment->id]) }}"><i
-                                                        class="fas fa-print"></i></a></td>
-                                        </tr>
+                                        @if ($payment->status_id == 1)
+                                            <tr>
+                                                <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
+                                                <td>{{ $payment->status->name }}</td>
+                                                <td>{{ $payment->coupun_number }}</td>
+                                                <td>{{ $payment->payment_date }}</td>
+                                                <td>{{ $payment->payment_type }}</td>
+                                                <td><a
+                                                        href="{{ route('payment.invoice', ['payment_id' => $payment->id]) }}"><i
+                                                            class="fas fa-print"></i></a></td>
+                                            </tr>
+                                        @elseif ($payment->status_id == 2)
+                                            <tr>
+                                                <td>Bulan</td>
+                                                {{-- <td>{{ $newValue }}</td> --}}
+                                                <form
+                                                    action="{{ route('payment.store', ['student_id' => $student->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <td><button class="btn btn-sm btn-secondary" type="submit">Pay
+                                                            Now</button>
+                                                    </td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <label for="coupon_number">No Kupon</label>
+                                                            <input type="text" class="form-control"
+                                                                id="coupon_number" name="coupon_number"
+                                                                placeholder="Masukkan No Kupon">
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="discount">Diskon</label>
+                                                            <input type="number" class="form-control" id="discount"
+                                                                name="discount" placeholder="Masukkan Diskon">
+                                                        </div>
+                                                    </td>
+                                                    <td></td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <select class="form-control" id="payment_type"
+                                                                name="payment_type">
+                                                                <option value="Cash">Cash</option>
+                                                                <option value="Debit">Debit</option>
+                                                                <option value="EDC">EDC</option>
+                                                                <option value="Kartu Kredit">Kartu Kredit</option>
+                                                                <option value="Transfer">Transfer</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </form>
+                                                <td></td>
+                                                <td><a href="" class="btn btn-sm btn-danger"><i
+                                                            class="fas fa-trash"></i></a></td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

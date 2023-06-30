@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Center;
 use App\Models\Classroom;
 use App\Models\ClassroomStatus;
+use App\Models\ManageClassroom;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
