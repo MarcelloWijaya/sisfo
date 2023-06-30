@@ -93,21 +93,61 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @php
-                                            $groupedClassrooms = collect($manage_classrooms)->groupBy(function ($item) {
-                                                return $item['center_id'] . '_' . $item['classroom_id'];
-                                            });
-                                        @endphp
-
-                                        @foreach ($groupedClassrooms as $classrooms)
+                                        @foreach ($grouped_classrooms as $classrooms)
                                             <tr class="text-center">
-                                                <td>{{ $classrooms[0]['center_id'] }}</td>
-                                                <td>{{ $classrooms[0]['classroom']->day }} <br>
-                                                    {{ $classrooms[0]['classroom']->start_time }} -
-                                                    {{ $classrooms[0]['classroom']->end_time }}</td>
-                                                <td>Ruang</td>
-                                                <td>{{ $classrooms[0]['classroom']->class_name }}</td>
-                                                <td>{{ $classrooms[0]['classroom']->teacher->name }}</td>
+                                                <td>{{ $classrooms->first()->center->name }}</td>
+                                                <td>{{ $classrooms->first()->classroom->day }} <br>
+                                                    {{ $classrooms->first()->classroom->start_time }} -
+                                                    {{ $classrooms->first()->classroom->end_time }}</td>
+                                                <td>{{ $classrooms->first()->classroom->name }}</td>
+                                                <td>{{ $classrooms->first()->classroom->teacher->name }}</td>
+                                                <!-- addMurid Modal -->
+                                                <div class="modal fade" id="addMuridModal" tabindex="-1" role="dialog"
+                                                    aria-labelledby="addMuridModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="addMuridModalLabel">Add
+                                                                    Murid</h5>
+                                                                <button type="button" class="close"
+                                                                    data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="{{ route('classroom.addMurid') }}"
+                                                                    method="POST" id="addMuridForm">
+                                                                    @csrf
+                                                                    <div class="form-group">
+                                                                        <label for="center_id">Center</label>
+                                                                        <input class="form-control" name="center_id"
+                                                                            value="{{ $classrooms }}">
+                                                                        <label for="classroom_id">Classroom</label>
+                                                                        <input class="form-control" name="classroom_id"
+                                                                            value="{{ $classrooms }}">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="student_id">Student Name</label>
+                                                                        <select class="form-control" id="student_id"
+                                                                            name="student_id">
+                                                                            @foreach ($students as $student)
+                                                                                <option value="{{ $student->id }}">
+                                                                                    {{ $student->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">Add</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <td>
                                                     <div>
                                                         @foreach ($classrooms as $classroom)
@@ -136,11 +176,11 @@
                                                         data-target="#addMuridModal">Add Murid</button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-secondary">Non Aktif</button>
+                                                    <button type="button" class="btn btn-secondary">Non
+                                                        Aktif</button>
                                                 </td>
                                             </tr>
                                         @endforeach
-
                                     </tbody>
                                 </table>
                             </div>
@@ -166,40 +206,6 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- addMurid Modal -->
-    <div class="modal fade" id="addMuridModal" tabindex="-1" role="dialog" aria-labelledby="addMuridModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addMuridModalLabel">Add Murid</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('classroom.addMurid', ['student_id' => $student->id]) }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label for="student_id">Student Name</label>
-                            <select class="form-control" id="student_id" name="student_id">
-                                @foreach ($students as $student)
-                                    <option value="{{ $student->id }}">
-                                        {{ $student->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     @include('templates.script')
 </body>

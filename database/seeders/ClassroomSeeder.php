@@ -21,7 +21,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '10:00:00',
                 'end_time' => '11:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -30,7 +30,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '11:00:00',
                 'end_time' => '12:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -39,7 +39,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '13:00:00',
                 'end_time' => '14:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -48,7 +48,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '14:00:00',
                 'end_time' => '15:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -57,7 +57,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '15:00:00',
                 'end_time' => '16:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -66,7 +66,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '16:00:00',
                 'end_time' => '17:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -75,7 +75,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '17:00:00',
                 'end_time' => '18:00:00',
                 'teacher_id' => 1,
-                'class_name' => 'Mathematics',
+                'name' => 'Mathematics',
                 'status_id' => 1,
             ],
             [
@@ -84,7 +84,7 @@ class ClassroomSeeder extends Seeder
                 'start_time' => '13:30:00',
                 'end_time' => '15:30:00',
                 'teacher_id' => 2,
-                'class_name' => 'Science',
+                'name' => 'Science',
                 'status_id' => 1,
             ],
         ];

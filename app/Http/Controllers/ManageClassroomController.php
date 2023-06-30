@@ -14,10 +14,14 @@ class ManageClassroomController extends Controller
     public function index()
     {
         $manage_classrooms = ManageClassroom::all();
+        $grouped_classrooms = collect($manage_classrooms)->groupBy(function ($item) {
+            return $item['center_id'] . '_' . $item['classroom_id'];
+        });
         $students = Student::all();
 
         $data = [
             'manage_classrooms' => $manage_classrooms,
+            'grouped_classrooms' => $grouped_classrooms,
             'students' => $students,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
@@ -27,16 +31,20 @@ class ManageClassroomController extends Controller
 
     public function addMurid(Request $request)
     {
+        dd($request);
+
         $validator = Validator::make($request->all(), [
             'student_id' => 'required',
+            'center_id' => 'required',
+            'classroom_id' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center_id = $manageClassroom->center_id;
-        $classroom_id = $manageClassroom->classroom_id;
+        $center_id = $request->input('center_id');
+        $classroom_id = $request->input('classroom_id');
         $student_id = $request->input('student_id');
 
         $manageClassroom = new ManageClassroom();
@@ -48,7 +56,7 @@ class ManageClassroomController extends Controller
         return redirect()->route('classroom.manage')->with('success', 'Manage Classroom created successfully.');
     }
 
-    public function destroy(int $manageClassroom_id)
+    public function removeMurid(int $manageClassroom_id)
     {
         $manage_classroom = ManageClassroom::findOrFail($manageClassroom_id);
         $manage_classroom->delete();

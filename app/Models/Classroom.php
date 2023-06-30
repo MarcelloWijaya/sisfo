@@ -23,4 +23,9 @@ class Classroom extends Model
     {
         return $this->belongsTo(ClassroomStatus::class);
     }
+
+    public function manageClassrooms()
+    {
+        return $this->hasMany(ManageClassroom::class);
+    }
 }

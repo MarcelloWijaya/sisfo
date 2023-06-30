@@ -14,11 +14,6 @@ class Student extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function classroom()
-    {
-        return $this->belongsTo(Classroom::class);
-    }
-
     public function payments()
     {
         return $this->hasMany(Payment::class);
@@ -27,5 +22,10 @@ class Student extends Model
     public function status()
     {
         return $this->belongsTo(StudentStatus::class);
+    }
+
+    public function manage_classrooms()
+    {
+        return $this->hasMany(ManageClassroom::class);
     }
 }
