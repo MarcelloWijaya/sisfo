@@ -36,33 +36,48 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <label for="name">Center Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        required value="{{ old('name', $center->name) }}">
+                                    <input type="text" class="form-control" id="name" name="name" required
+                                        value="{{ old('name', $center->name) }}">
                                 </div>
+                                @error('name')
+                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                @enderror
 
                                 <div class="form-group">
                                     <label for="owner">Owner</label>
                                     <input type="text" class="form-control" id="owner" name="owner" required
                                         value="{{ old('owner', $center->owner) }}">
                                 </div>
+                                @error('owner')
+                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                @enderror
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control" id="address" name="address" required
                                         value="{{ old('address', $center->address) }}">
                                 </div>
+                                @error('address')
+                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                @enderror
 
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
                                     <input type="tel" class="form-control" id="phone_number" name="phone_number"
                                         required value="{{ old('phone_number', $center->phone_number) }}">
                                 </div>
+                                @error('phone_number')
+                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                @enderror
 
                                 <div class="form-group">
                                     <label for="email">Email Center</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        required value="{{ old('email', $center->email) }}">
+                                    <input type="email" class="form-control" id="email" name="email" required
+                                        value="{{ old('email', $center->email) }}">
                                 </div>
+                                @error('email')
+                                    <span class="text-danger"><small>{{ $message }}</small></span>
+                                @enderror
 
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </form>

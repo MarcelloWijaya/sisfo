@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('center_id');
             $table->foreignId('teacher_id');
             $table->foreignId('status_id');
-            $table->string('day');
+            $table->foreignId('day_id');
             $table->time('start_time');
             $table->time('end_time');
             $table->string('name');

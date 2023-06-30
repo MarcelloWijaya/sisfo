@@ -120,7 +120,8 @@ Route::get('/classroom/teachingSchedule', [ManageClassroomController::class, 'te
 
 Route::get('/classroom/manage', [ManageClassroomController::class, 'index'])->name('classroom.manage');
 
-Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'removeMurid'])->name('classroom.deleteClass');
+Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'removeMurid'])->name('classroom.removeMurid');
+
 
 Route::post('/classroom/manage/addMurid', [ManageClassroomController::class, 'addMurid'])->name('classroom.addMurid');
 

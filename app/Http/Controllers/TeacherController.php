@@ -55,6 +55,7 @@ class TeacherController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
+            'entry_date' => 'required',
             'name' => 'required',
             'nickname' => 'required',
             'gender' => 'required',
@@ -75,6 +76,7 @@ class TeacherController extends Controller
 
         $teacher = new Teacher;
         $teacher->center_id = $request->center_id;
+        $teacher->entry_date = $request->entry_date;
         $teacher->name = $request->name;
         $teacher->nickname = $request->nickname;
         $teacher->gender = $request->gender;
@@ -112,6 +114,7 @@ class TeacherController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
+            'entry_date' => 'required',
             'name' => 'required',
             'nickname' => 'required',
             'gender' => 'required',
@@ -132,6 +135,7 @@ class TeacherController extends Controller
 
         $teacher = Teacher::find($id);
         $teacher->center_id = $request->center_id;
+        $teacher->entry_date = $request->entry_date;
         $teacher->name = $request->name;
         $teacher->nickname = $request->nickname;
         $teacher->gender = $request->gender;

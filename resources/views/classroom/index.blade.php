@@ -86,7 +86,7 @@
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $classroom->center->name }}</td>
-                                                <td>{{ $classroom->day }}</td>
+                                                <td>{{ $classroom->day->name }}</td>
                                                 <td>{{ $classroom->start_time }}</td>
                                                 <td>{{ $classroom->end_time }}</td>
                                                 <td>{{ $classroom->teacher->name }}</td>

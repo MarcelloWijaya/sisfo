@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ManageClassroom;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -16,29 +15,29 @@ class ManageClassroomSeeder extends Seeder
     {
         $manage_classrooms = [
             [
-                'center_id' => 1,
                 'classroom_id' => 1,
                 'student_id' => 1,
             ],
             [
-                'center_id' => 1,
                 'classroom_id' => 1,
                 'student_id' => 2,
             ],
             [
-                'center_id' => 1,
                 'classroom_id' => 1,
                 'student_id' => 3,
             ],
             [
-                'center_id' => 2,
                 'classroom_id' => 2,
-                'student_id' => 1,
+                'student_id' => 3,
             ],
             [
-                'center_id' => 2,
-                'classroom_id' => 2,
-                'student_id' => 2,
+                'classroom_id' => 3,
+            ],
+            [
+                'classroom_id' => 4,
+            ],
+            [
+                'classroom_id' => 5,
             ],
         ];
 

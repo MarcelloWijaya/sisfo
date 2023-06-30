@@ -28,4 +28,9 @@ class Classroom extends Model
     {
         return $this->hasMany(ManageClassroom::class);
     }
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class);
+    }
 }
