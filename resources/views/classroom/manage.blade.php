@@ -113,19 +113,17 @@
                                                         @foreach ($classrooms as $classroom)
                                                             @php
                                                                 $student = App\Models\Student::find($classroom['student_id']);
-                                                                $studentLink = route('student.detail', $student->id);
-                                                                $removeLink = route('classroom.deleteClass', ['manageClassroom_id' => $student->id]);
                                                             @endphp
                                                             <div>
                                                                 <a
-                                                                    href="{{ $studentLink }}"><b>{{ $student->name }}</b></a>
-                                                                <a href="{{ $removeLink }}"
+                                                                    href="{{ route('student.detail', $student->id) }}"><b>{{ $student->name }}</b></a>
+                                                                <a href="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
                                                                     onclick="event.preventDefault(); document.getElementById('remove-murid-form-{{ $student->id }}').submit();">
                                                                     <i class="fas fa-times"></i>
                                                                 </a>
                                                                 <form id="remove-murid-form-{{ $student->id }}"
-                                                                    action="{{ $removeLink }}" method="POST"
-                                                                    style="display: none;">
+                                                                    action="{{ route('classroom.deleteClass', ['manageClassroom_id' => $student->id]) }}"
+                                                                    method="POST" style="display: none;">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                 </form>
@@ -202,7 +200,6 @@
             </div>
         </div>
     </div>
-
 
     @include('templates.script')
 </body>

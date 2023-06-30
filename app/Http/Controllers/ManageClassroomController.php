@@ -27,7 +27,6 @@ class ManageClassroomController extends Controller
 
     public function addMurid(Request $request)
     {
-        dd($request);
         $validator = Validator::make($request->all(), [
             'student_id' => 'required',
         ]);
@@ -36,11 +35,13 @@ class ManageClassroomController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $center_id = $manageClassroom->center_id;
+        $classroom_id = $manageClassroom->classroom_id;
         $student_id = $request->input('student_id');
 
         $manageClassroom = new ManageClassroom();
-        $manageClassroom->center_id = $manageClassroom->center_id;
-        $manageClassroom->classroom_id = $manageClassroom->classroom_id;
+        $manageClassroom->center_id = $center_id;
+        $manageClassroom->classroom_id = $classroom_id;
         $manageClassroom->student_id = $student_id;
         $manageClassroom->save();
 
