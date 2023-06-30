@@ -52,7 +52,8 @@ class StudentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
-            'student_name' => 'required',
+            'nis' => 'required',
+            'name' => 'required',
             'gender' => 'required',
             'address' => 'required',
             'place_of_birth' => 'required',
@@ -66,7 +67,7 @@ class StudentController extends Controller
             'level' => 'required',
             'book_start' => 'required',
             'parent_email' => 'required',
-            'status' => 'required',
+            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -75,7 +76,8 @@ class StudentController extends Controller
 
         $student = new Student;
         $student->center_id = $request->center_id;
-        $student->student_name = $request->student_name;
+        $student->nis = $request->nis;
+        $student->name = $request->name;
         $student->gender = $request->gender;
         $student->address = $request->address;
         $student->place_of_birth = $request->place_of_birth;
@@ -89,8 +91,18 @@ class StudentController extends Controller
         $student->level = $request->level;
         $student->book_start = $request->book_start;
         $student->parent_email = $request->parent_email;
-        $student->status = $request->status;
+        $student->status_id = $request->status_id;
         $student->save();
+
+        $requestData = [
+            'center_id' =>  $request->center_id,
+            'student_id' => $student->id,
+        ];
+
+        $request = new Request($requestData);
+
+        $paymentController = new PaymentController();
+        $paymentController->store($request, $student->id);
 
         return redirect()->route('student.index')->with('success', 'Student created successfully.');
     }
@@ -115,7 +127,8 @@ class StudentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
-            'student_name' => 'required',
+            'nis' => 'required',
+            'name' => 'required',
             'gender' => 'required',
             'address' => 'required',
             'place_of_birth' => 'required',
@@ -129,7 +142,7 @@ class StudentController extends Controller
             'level' => 'required',
             'book_start' => 'required',
             'parent_email' => 'required',
-            'status' => 'required',
+            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -137,8 +150,9 @@ class StudentController extends Controller
         }
 
         $student = Student::find($id);
-        $student->center_id = $request->center_id;;
-        $student->student_name = $request->student_name;
+        $student->center_id = $request->center_id;
+        $student->nis = $request->nis;
+        $student->name = $request->name;
         $student->gender = $request->gender;
         $student->address = $request->address;
         $student->place_of_birth = $request->place_of_birth;
@@ -152,7 +166,7 @@ class StudentController extends Controller
         $student->level = $request->level;
         $student->book_start = $request->book_start;
         $student->parent_email = $request->parent_email;
-        $student->status = $request->status;
+        $student->status_id = $request->status_id;
         $student->save();
 
         return redirect()->route('student.index')->with('success', 'Student updated successfully.');

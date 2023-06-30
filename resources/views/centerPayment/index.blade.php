@@ -60,9 +60,12 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
-                                            <th>Regristration Fee</th>
-                                            <th>Equipment Fee</th>
-                                            <th>Course Fee</th>
+                                            <th>Registration Fee Old</th>
+                                            <th>Equipment Fee Old</th>
+                                            <th>Course Fee Old</th>
+                                            <th>Registration Fee New</th>
+                                            <th>Equipment Fee New</th>
+                                            <th>Course Fee New</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,27 +73,33 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             <th>Center Name</th>
-                                            <th>Registration Fee</th>
-                                            <th>Equipment Fee</th>
-                                            <th>Course Fee</th>
+                                            <th>Registration Fee Old</th>
+                                            <th>Equipment Fee Old</th>
+                                            <th>Course Fee Old</th>
+                                            <th>Registration Fee New</th>
+                                            <th>Equipment Fee New</th>
+                                            <th>Course Fee New</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($payments as $payment)
+                                        @foreach ($centerPayments as $centerPayment)
                                             <tr class="text-center">
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $payment->center->name }}</td>
-                                                <td>{{ $payment->registration_fee }}</td>
-                                                <td>{{ $payment->equipment_fee }}</td>
-                                                <td>{{ $payment->course_fee }}</td>
+                                                <td>{{ $centerPayment->center->name }}</td>
+                                                <td>{{ $centerPayment->registration_fee_old ?? 0 }}</td>
+                                                <td>{{ $centerPayment->equipment_fee_old ?? 0 }}</td>
+                                                <td>{{ $centerPayment->course_fee_old ?? 0 }}</td>
+                                                <td>{{ $centerPayment->registration_fee_new ?? 0 }}</td>
+                                                <td>{{ $centerPayment->equipment_fee_new ?? 0 }}</td>
+                                                <td>{{ $centerPayment->course_fee_new ?? 0 }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('centerPayment.edit', $payment->id) }}"
+                                                        <a href="{{ route('centerPayment.edit', $centerPayment->id) }}"
                                                             class="btn btn-sm btn-primary mx-1"><i
                                                                 class="fas fa-pen"></i></a>
-                                                        <form id="delete-form-{{ $payment->id }}"
-                                                            action="{{ route('centerPayment.delete', $payment->id) }}"
+                                                        <form id="delete-form-{{ $centerPayment->id }}"
+                                                            action="{{ route('centerPayment.delete', $centerPayment->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')

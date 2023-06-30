@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->foreignId('student_id');
+            $table->foreignId('student_id')->unique();
             $table->timestamp('payment_date')->nullable();
             $table->integer('discount')->nullable();
             $table->string('coupun_number')->nullable();
-            $table->foreignId('payment_type_id');
+            $table->foreignId('payment_type_id')->nullable();
             $table->foreignId('status_id');
             $table->timestamps();
         });

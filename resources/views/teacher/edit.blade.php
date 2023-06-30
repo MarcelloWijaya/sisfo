@@ -37,7 +37,7 @@
 
                                 <div class="form-group">
                                     <label for="center_id">Center</label>
-                                    <select class="form-control" id="center_id" name="center_id" required>
+                                    <select class="form-control" id="center_id" name="center_id">
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
                                                 {{ old('center_id', $teacher->center_id) == $center->id ? 'selected' : '' }}>
@@ -45,91 +45,135 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Teacher Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" required
+                                    <input type="text" class="form-control" id="name" name="name"
                                         value="{{ old('name', $teacher->name) }}">
+                                    @error('name')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="nickname">Nickname</label>
-                                    <input type="text" class="form-control" id="nickname" name="nickname" required
+                                    <input type="text" class="form-control" id="nickname" name="nickname"
                                         value="{{ old('nickname', $teacher->nickname) }}">
+                                    @error('nickname')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="gender">Gender</label>
-                                    <select class="form-control" id="gender" name="gender" required>
-                                        <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male
+                                    <select class="form-control" id="gender" name="gender">
+                                        <option value="Male"
+                                            {{ old('gender', $teacher->gender) == 'Male' ? 'selected' : '' }}>Male
                                         </option>
-                                        <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female
+                                        <option value="Female"
+                                            {{ old('gender', $teacher->gender) == 'Female' ? 'selected' : '' }}>Female
                                         </option>
                                     </select>
+                                    @error('gender')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" required
+                                    <input type="text" class="form-control" id="address" name="address"
                                         value="{{ old('address', $teacher->address) }}">
+                                    @error('address')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="place_of_birth">Place of Birth</label>
                                     <input type="text" class="form-control" id="place_of_birth" name="place_of_birth"
-                                        required value="{{ old('place_of_birth', $teacher->place_of_birth) }}">
+                                     value="{{ old('place_of_birth', $teacher->place_of_birth) }}">
+                                    @error('place_of_birth')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="date_of_birth">Date of Birth</label>
                                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                                        required value="{{ old('date_of_birth', $teacher->date_of_birth) }}">
+                                     value="{{ old('date_of_birth', $teacher->date_of_birth) }}">
+                                    @error('date_of_birth')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="religion">Religion</label>
-                                    <select class="form-control" id="religion" name="religion" required>
-                                        <option value="Buddha" {{ old('religion') == 'Buddha' ? 'selected' : '' }}>
+                                    <select class="form-control" id="religion" name="religion">
+                                        <option value="Buddha"
+                                            {{ old('religion', $teacher->religion) == 'Buddha' ? 'selected' : '' }}>
                                             Buddha</option>
-                                        <option value="Hindu" {{ old('religion') == 'Hindu' ? 'selected' : '' }}>Hindu
-                                        </option>
-                                        <option value="Islam" {{ old('religion') == 'Islam' ? 'selected' : '' }}>Islam
-                                        </option>
-                                        <option value="Katholik" {{ old('religion') == 'Katholik' ? 'selected' : '' }}>
+                                        <option value="Hindu"
+                                            {{ old('religion', $teacher->religion) == 'Hindu' ? 'selected' : '' }}>
+                                            Hindu</option>
+                                        <option value="Islam"
+                                            {{ old('religion', $teacher->religion) == 'Islam' ? 'selected' : '' }}>
+                                            Islam</option>
+                                        <option value="Katholik"
+                                            {{ old('religion', $teacher->religion) == 'Katholik' ? 'selected' : '' }}>
                                             Katholik</option>
-                                        <option value="Kristen" {{ old('religion') == 'Kristen' ? 'selected' : '' }}>
+                                        <option value="Kristen"
+                                            {{ old('religion', $teacher->religion) == 'Kristen' ? 'selected' : '' }}>
                                             Kristen</option>
                                     </select>
+                                    @error('religion')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
                                     <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                        required value="{{ old('phone_number', $teacher->phone_number) }}">
+                                     value="{{ old('phone_number', $teacher->phone_number) }}">
+                                    @error('phone_number')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="last_education">Last Education</label>
                                     <input type="text" class="form-control" id="last_education" name="last_education"
-                                        required value="{{ old('last_education', $teacher->last_education) }}">
+                                     value="{{ old('last_education', $teacher->last_education) }}">
+                                    @error('last_education')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required
+                                    <input type="email" class="form-control" id="email" name="email"
                                         value="{{ old('email', $teacher->email) }}">
+                                    @error('email')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="training_date">Training Date</label>
-                                    <input type="date" class="form-control" id="training_date" name="training_date"
-                                        required value="{{ old('training_date', $teacher->training_date) }}">
+                                    <input type="date" class="form-control" id="training_date"
+                                        name="training_date"
+                                        value="{{ old('training_date', $teacher->training_date) }}">
+                                    @error('training_date')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="status_id">Status</label>
-                                    <select class="form-control" id="status_id" name="status_id" required>
+                                    <select class="form-control" id="status_id" name="status_id">
                                         @foreach ($teacherStatuses as $status)
                                             <option value="{{ $status->id }}"
                                                 {{ $teacher->status_id == $status->id ? 'selected' : '' }}>
@@ -137,6 +181,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('status_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Update</button>

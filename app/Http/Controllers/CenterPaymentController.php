@@ -48,33 +48,33 @@ class CenterPaymentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'registration_fee' => 'required',
-            'equipment_fee' => 'required',
-            'course_fee' => 'required',
+            'center_id' => 'required|unique:center_centerPayments,center_id',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $payment = new CenterPayment;
-        $payment->center_id = $request->center_id;
-        $payment->registration_fee = $request->registration_fee;
-        $payment->equipment_fee = $request->equipment_fee;
-        $payment->course_fee = $request->course_fee;
-        $payment->save();
+        $centerPayment = new CenterPayment;
+        $centerPayment->center_id = $request->center_id;
+        $centerPayment->registration_fee_old = $request->registration_fee_old;
+        $centerPayment->equipment_fee_old = $request->equipment_fee_old;
+        $centerPayment->course_fee_old = $request->course_fee_old;
+        $centerPayment->registration_fee_new = $request->registration_fee_new;
+        $centerPayment->equipment_fee_new = $request->equipment_fee_new;
+        $centerPayment->course_fee_new = $request->course_fee_new;
+        $centerPayment->save();
 
         return redirect()->route('centerPayment.index')->with('success', 'Payment created successfully.');
     }
 
     public function edit($id)
     {
-        $payment = CenterPayment::find($id);
+        $centerPayment = CenterPayment::find($id);
         $centers = Center::all();
 
         $data = [
-            'payment' => $payment,
+            'centerPayment' => $centerPayment,
             'centers' => $centers,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
@@ -86,30 +86,36 @@ class CenterPaymentController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
-            'registration_fee' => 'required',
-            'equipment_fee' => 'required',
-            'course_fee' => 'required',
+            'registration_fee_old' => 'required',
+            'equipment_fee_old' => 'required',
+            'course_fee_old' => 'required',
+            'registration_fee_new' => 'required',
+            'equipment_fee_new' => 'required',
+            'course_fee_new' => 'required',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $payment = CenterPayment::find($id);
-        $payment->center_id = $request->center_id;
-        $payment->registration_fee = $request->registration_fee;
-        $payment->equipment_fee = $request->equipment_fee;
-        $payment->course_fee = $request->course_fee;
-        $payment->save();
+        $centerPayment = CenterPayment::find($id);
+        $centerPayment->center_id = $request->center_id;
+        $centerPayment->registration_fee_old = $request->registration_fee_old;
+        $centerPayment->equipment_fee_old = $request->equipment_fee_old;
+        $centerPayment->course_fee_old = $request->course_fee_old;
+        $centerPayment->registration_fee_new = $request->registration_fee_new;
+        $centerPayment->equipment_fee_new = $request->equipment_fee_new;
+        $centerPayment->course_fee_new = $request->course_fee_new;
+        $centerPayment->save();
 
         return redirect()->route('centerPayment.index')->with('success', 'Payment updated successfully.');
     }
 
     public function destroy($id)
     {
-        $payment = CenterPayment::find($id);
+        $centerPayment = CenterPayment::find($id);
 
-        $payment->delete();
+        $centerPayment->delete();
 
         return redirect()->route('centerPayment.index')->with('delete', 'Payment deleted successfully.');
     }

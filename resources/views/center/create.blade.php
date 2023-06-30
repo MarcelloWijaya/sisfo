@@ -35,32 +35,49 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Center Name</label>
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        required value="{{ old('name') }}">
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                        id="name" name="name" required value="{{ old('name') }}">
+                                    @error('name')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="owner">Owner</label>
-                                    <input type="text" class="form-control" id="owner" name="owner" required
-                                        value="{{ old('owner') }}">
+                                    <input type="text" class="form-control @error('owner') is-invalid @enderror"
+                                        id="owner" name="owner" required value="{{ old('owner') }}">
+                                    @error('owner')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address" required
-                                        value="{{ old('address') }}">
+                                    <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                        id="address" name="address" required value="{{ old('address') }}">
+                                    @error('address')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phone_number" name="phone_number"
-                                        required value="{{ old('phone_number') }}">
+                                    <input type="tel"
+                                        class="form-control @error('phone_number') is-invalid @enderror"
+                                        id="phone_number" name="phone_number" required
+                                        value="{{ old('phone_number') }}">
+                                    @error('phone_number')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="email">Email Center</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        required value="{{ old('email') }}">
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                        id="email" name="email" required value="{{ old('email') }}">
+                                    @error('email')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>

@@ -47,10 +47,11 @@ class CenterController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'center_name' => 'required',
+            'name' => 'required',
             'owner' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
+            'email' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -58,10 +59,11 @@ class CenterController extends Controller
         }
 
         $center = new Center();
-        $center->center_name = $request->input('center_name');
+        $center->name = $request->input('name');
         $center->owner = $request->input('owner');
         $center->address = $request->input('address');
         $center->phone_number = $request->input('phone_number');
+        $center->email = $request->input('email');
         $center->save();
 
         return redirect()->route('center.index')->with('success', 'Center created successfully.');
@@ -86,11 +88,11 @@ class CenterController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'center_name' => 'required',
+            'name' => 'required',
             'owner' => 'required',
             'address' => 'required',
             'phone_number' => 'required',
-            'email_center' => 'required',
+            'email' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -103,11 +105,11 @@ class CenterController extends Controller
             return redirect()->route('center.index')->withErrors('Center not found.');
         }
 
-        $center->center_name = $request->input('center_name');
+        $center->name = $request->input('name');
         $center->owner = $request->input('owner');
         $center->address = $request->input('address');
         $center->phone_number = $request->input('phone_number');
-        $center->email_center = $request->input('email_center');
+        $center->email = $request->input('email');
         $center->save();
 
         return redirect()->route('center.index')->with('success', 'Center updated successfully.');
@@ -137,7 +139,7 @@ class CenterController extends Controller
                 'Owner' => $center->owner,
                 'Address' => $center->address,
                 'Phone Number' => $center->phone_number,
-                'Email' => $center->email_center,
+                'Email' => $center->email,
             ];
         }
 

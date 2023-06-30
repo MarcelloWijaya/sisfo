@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('center_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
-            $table->unsignedInteger('registration_fee');
-            $table->unsignedInteger('equipment_fee');
-            $table->unsignedInteger('course_fee');
+            $table->unsignedInteger('registration_fee_old')->nullable();
+            $table->unsignedInteger('equipment_fee_old')->nullable();
+            $table->unsignedInteger('course_fee_old')->nullable();
+            $table->unsignedInteger('registration_fee_new')->nullable();
+            $table->unsignedInteger('equipment_fee_new')->nullable();
+            $table->unsignedInteger('course_fee_new')->nullable();
             $table->timestamps();
         });
     }

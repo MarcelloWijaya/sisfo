@@ -41,6 +41,6 @@ class PaymentTypeSeeder extends Seeder
             ],
         ];
 
-        DB::table('payment_statuses')->insert($paymentTypes);
+        DB::table('payment_types')->insert($paymentTypes);
     }
 }

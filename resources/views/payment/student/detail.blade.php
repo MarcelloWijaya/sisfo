@@ -122,7 +122,9 @@
                                             <td>{{ $payment->coupun_number }}</td>
                                             <td>{{ $payment->payment_date }}</td>
                                             <td>{{ $payment->payment_type }}</td>
-                                            <td><i class="fas fa-print"></i></td>
+                                            <td><a
+                                                    href="{{ route('payment.invoice', ['payment_id' => $payment->id]) }}"><i
+                                                        class="fas fa-print"></i></a></td>
                                         </tr>
                                     @endforeach
                                 </tbody>

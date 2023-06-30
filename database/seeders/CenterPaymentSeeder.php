@@ -17,23 +17,22 @@ class CenterPaymentSeeder extends Seeder
         $centerPayments = [
             [
                 'center_id' => 1,
-                'registration_fee' => 50000,
-                'equipment_fee' => 100000,
-                'course_fee' => 200000,
-            ],
-            [
-                'center_id' => 1,
-                'registration_fee' => 60000,
-                'equipment_fee' => 120000,
-                'course_fee' => 250000,
+                'registration_fee_old' => 50000,
+                'equipment_fee_old' => 100000,
+                'course_fee_old' => 200000,
+                'registration_fee_new' => 60000,
+                'equipment_fee_new' => 120000,
+                'course_fee_new' => 250000,
             ],
             [
                 'center_id' => 2,
-                'registration_fee' => 45000,
-                'equipment_fee' => 90000,
-                'course_fee' => 180000,
+                'registration_fee_old' => 45000,
+                'equipment_fee_old' => 90000,
+                'course_fee_old' => 180000,
+                'registration_fee_new' => 60000,
+                'equipment_fee_new' => 100000,
+                'course_fee_new' => 200000,
             ],
-            // Tambahkan data biaya pusat untuk cabang lain jika diperlukan
         ];
 
         foreach ($centerPayments as $payment) {

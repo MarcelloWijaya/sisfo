@@ -44,12 +44,27 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="nis">NIS</label>
+                                    <input type="text" class="form-control" id="nis" name="nis"
+                                        value="{{ old('nis', $student->nis) }}">
+                                    @error('nis')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Student Name</label>
                                     <input type="text" class="form-control" id="name" name="name" required
                                         value="{{ old('name', $student->name) }}">
+                                    @error('name')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -63,18 +78,27 @@
                                             {{ old('gender', $student->gender) == 'Female' ? 'selected' : '' }}>Female
                                         </option>
                                     </select>
+                                    @error('gender')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="address">Address</label>
                                     <input type="text" class="form-control" id="address" name="address" required
                                         value="{{ old('address', $student->address) }}">
+                                    @error('address')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="place_of_birth">Place of Birth</label>
                                     <input type="text" class="form-control" id="place_of_birth" name="place_of_birth"
                                         required value="{{ old('place_of_birth', $student->place_of_birth) }}">
+                                    @error('place_of_birth')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
@@ -155,8 +179,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select class="form-control" id="status" name="status" required>
+                                    <label for="status_id">Status</label>
+                                    <select class="form-control" id="status_id" name="status_id" required>
                                         @foreach ($studentStatuses as $status)
                                             <option value="{{ $status->id }}"
                                                 {{ $student->status_id == $status->id ? 'selected' : '' }}>

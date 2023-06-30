@@ -63,7 +63,7 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Teacher Name</th>
-                                            <th>Class Name</th>
+                                            <th>Ruang</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -76,7 +76,7 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Teacher Name</th>
-                                            <th>Class Name</th>
+                                            <th>Name</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -90,7 +90,7 @@
                                                 <td>{{ $classroom->start_time }}</td>
                                                 <td>{{ $classroom->end_time }}</td>
                                                 <td>{{ $classroom->teacher->name }}</td>
-                                                <td>{{ $classroom->class_name }}</td>
+                                                <td>{{ $classroom->name }}</td>
                                                 <td>{{ $classroom->status->name }}</td>
 
                                                 <td>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Payment;
 use App\Models\Student;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
@@ -48,6 +49,18 @@ class PaymentController extends Controller
         return view('payment.index', $data);
     }
 
+    public function indexInvoice()
+    {
+        $payments = Payment::all();
+
+        $data = [
+            'payments' => $payments,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('payment.invoice', $data);
+    }
+
     public function detail(int $student_id)
     {
         $payments = Payment::where('student_id', $student_id)->get();
@@ -80,11 +93,6 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
             'student_id' => 'required',
-            'payment_date' => 'required',
-            'discount' => 'required',
-            'coupun_number' => 'required',
-            'payment_type' => 'required|in:Cash,Debit,EDC,Kartu Kredit,Transfer',
-            'status' => 'required|in:Paid,Unpaid',
         ]);
 
         if ($validator->fails()) {
@@ -96,11 +104,7 @@ class PaymentController extends Controller
         $payment = new Payment();
         $payment->center_id = $student->center_id;
         $payment->student_id = $student->id;
-        $payment->payment_date = now()->format('Y-m-d H:i:s');
-        $payment->discount = $request->discount;
-        $payment->coupun_number = $request->coupun_number;
-        $payment->payment_type = $request->payment_type;
-        $payment->status = "Paid";
+        $payment->status_id = 2;
         $payment->save();
 
         return redirect()->route('payment.index')->with('success', 'Payment created successfully.');
@@ -156,4 +160,20 @@ class PaymentController extends Controller
 
         return redirect()->route('payment.index')->with('delete', 'Payment deleted successfully.');
     }
+
+    // public function createInvoice(Request $request)
+    // {
+    //     $invoice = Invoice::create([
+    //         'invoice_number' => 'INV-' . uniqid(),
+    //         'student_id' => $request->input('student_id'),
+    //         'total' => $request->input('total_amount'),
+    //     ]);
+
+    //     // Mengaitkan invoice dengan pembayaran
+    //     $payment = Payment::find($request->input('payment_id'));
+    //     $payment->invoice_id = $invoice->id;
+    //     $payment->save();
+
+    //     return redirect()->back()->with('success', 'Invoice berhasil dibuat.');
+    // }
 }

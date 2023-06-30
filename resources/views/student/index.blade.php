@@ -58,6 +58,7 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
+                                            <th>NIS</th>
                                             <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
@@ -70,6 +71,7 @@
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
+                                            <th>NIS</th>
                                             <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
@@ -84,6 +86,7 @@
                                             <tr class="text-center"
                                                 onclick="window.location='{{ route('student.edit', $student->id) }}';">
                                                 <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $student->nis }}</td>
                                                 <td>{{ $student->center->name }}</td>
                                                 <td>{{ $student->name }}</td>
                                                 <td>{{ $student->gender }}</td>

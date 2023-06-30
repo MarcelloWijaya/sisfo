@@ -35,7 +35,8 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="center_id">Center</label>
-                                    <select class="form-control" id="center_id" name="center_id" required>
+                                    <select class="form-control @error('center_id') is-invalid @enderror" id="center_id"
+                                        name="center_id">
                                         <option value="">-- select Center --</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
@@ -44,24 +45,73 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="registration_fee">Registration Fee</label>
-                                    <input type="text" class="form-control" id="registration_fee"
-                                        name="registration_fee" required value="{{ old('registration_fee') }}">
+                                    <label for="registration_fee_old">Registration Fee Old</label>
+                                    <input type="text"
+                                        class="form-control @error('registration_fee_old') is-invalid @enderror"
+                                        id="registration_fee_old" name="registration_fee_old"
+                                        value="{{ old('registration_fee_old') }}">
+                                    @error('registration_fee_old')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="equipment_fee">Equipment Fee</label>
-                                    <input type="text" class="form-control" id="equipment_fee" name="equipment_fee"
-                                        required value="{{ old('equipment_fee') }}">
+                                    <label for="equipment_fee_old">Equipment Fee Old</label>
+                                    <input type="text"
+                                        class="form-control @error('equipment_fee_old') is-invalid @enderror"
+                                        id="equipment_fee_old" name="equipment_fee_old"
+                                        value="{{ old('equipment_fee_old') }}">
+                                    @error('equipment_fee_old')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="course_fee">Course Fee</label>
-                                    <input type="text" class="form-control" id="course_fee" name="course_fee"
-                                        required value="{{ old('course_fee') }}">
+                                    <label for="course_fee_old">Course Fee Old</label>
+                                    <input type="text"
+                                        class="form-control @error('course_fee_old') is-invalid @enderror"
+                                        id="course_fee_old" name="course_fee_old" value="{{ old('course_fee_old') }}">
+                                    @error('course_fee_old')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="registration_fee_new">Registration Fee New</label>
+                                    <input type="text"
+                                        class="form-control @error('registration_fee_new') is-invalid @enderror"
+                                        id="registration_fee_new" name="registration_fee_new"
+                                        value="{{ old('registration_fee_new') }}">
+                                    @error('registration_fee_new')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="equipment_fee_new">Equipment Fee New</label>
+                                    <input type="text"
+                                        class="form-control @error('equipment_fee_new') is-invalid @enderror"
+                                        id="equipment_fee_new" name="equipment_fee_new"
+                                        value="{{ old('equipment_fee_new') }}">
+                                    @error('equipment_fee_new')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="course_fee_new">Course Fee New</label>
+                                    <input type="text"
+                                        class="form-control @error('course_fee_new') is-invalid @enderror"
+                                        id="course_fee_new" name="course_fee_new" value="{{ old('course_fee_new') }}">
+                                    @error('course_fee_new')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>

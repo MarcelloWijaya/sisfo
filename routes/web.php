@@ -77,12 +77,11 @@ Route::get('/centerPayment/create', [CenterPaymentController::class, 'create'])-
 
 Route::post('/centerPayment/store', [CenterPaymentController::class, 'store'])->name('centerPayment.store');
 
-Route::get('/centerPayment/edit/{payment_id}', [CenterPaymentController::class, 'edit'])->name('centerPayment.edit');
+Route::get('/centerPayment/edit/{center_payment_id}', [CenterPaymentController::class, 'edit'])->name('centerPayment.edit');
 
-Route::put('/centerPayment/update/{payment_id}', [CenterPaymentController::class, 'update'])->name('centerPayment.update');
+Route::put('/centerPayment/update/{center_payment_id}', [CenterPaymentController::class, 'update'])->name('centerPayment.update');
 
-Route::delete('/centerPayment/delete/{payment_id}', [CenterPaymentController::class, 'destroy'])->name('centerPayment.delete');
-
+Route::delete('/centerPayment/delete/{center_payment_id}', [CenterPaymentController::class, 'destroy'])->name('centerPayment.delete');
 
 
 Route::get('/student', [StudentController::class, 'index'])->name('student.index');
@@ -143,6 +142,8 @@ Route::get('/payment/student/index', [PaymentController::class, 'indexStudent'])
 Route::get('/payment/student/{student_id}/detail', [PaymentController::class, 'paymentDetail'])->name('payment.student.detail');
 
 Route::get('/payment', [PaymentController::class, 'indexPayment'])->name('payment.index');
+
+Route::get('/payment/invoice', [PaymentController::class, 'indexInvoice'])->name('payment.invoice');
 
 Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
 

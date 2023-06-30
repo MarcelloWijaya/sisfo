@@ -67,7 +67,7 @@ class TeacherController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
-            'teacher_name' => 'required',
+            'name' => 'required',
             'nickname' => 'required',
             'gender' => 'required',
             'address' => 'required',
@@ -76,8 +76,9 @@ class TeacherController extends Controller
             'religion' => 'required',
             'phone_number' => 'required',
             'last_education' => 'required',
-            'teacher_email' => 'required',
+            'email' => 'required',
             'training_date' => 'required',
+            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +87,7 @@ class TeacherController extends Controller
 
         $teacher = new Teacher;
         $teacher->center_id = $request->center_id;
-        $teacher->teacher_name = $request->teacher_name;
+        $teacher->name = $request->name;
         $teacher->nickname = $request->nickname;
         $teacher->gender = $request->gender;
         $teacher->address = $request->address;
@@ -95,8 +96,9 @@ class TeacherController extends Controller
         $teacher->religion = $request->religion;
         $teacher->phone_number = $request->phone_number;
         $teacher->last_education = $request->last_education;
-        $teacher->teacher_email = $request->teacher_email;
+        $teacher->email = $request->email;
         $teacher->training_date = $request->training_date;
+        $teacher->status_id = $request->status_id;
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher created successfully.');
@@ -122,7 +124,7 @@ class TeacherController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
-            'teacher_name' => 'required',
+            'name' => 'required',
             'nickname' => 'required',
             'gender' => 'required',
             'address' => 'required',
@@ -131,8 +133,9 @@ class TeacherController extends Controller
             'religion' => 'required',
             'phone_number' => 'required',
             'last_education' => 'required',
-            'teacher_email' => 'required',
+            'email' => 'required',
             'training_date' => 'required',
+            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -141,7 +144,7 @@ class TeacherController extends Controller
 
         $teacher = Teacher::find($id);
         $teacher->center_id = $request->center_id;
-        $teacher->teacher_name = $request->teacher_name;
+        $teacher->name = $request->name;
         $teacher->nickname = $request->nickname;
         $teacher->gender = $request->gender;
         $teacher->address = $request->address;
@@ -150,8 +153,9 @@ class TeacherController extends Controller
         $teacher->religion = $request->religion;
         $teacher->phone_number = $request->phone_number;
         $teacher->last_education = $request->last_education;
-        $teacher->teacher_email = $request->teacher_email;
+        $teacher->email = $request->email;
         $teacher->training_date = $request->training_date;
+        $teacher->status_id = $request->status_id;
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher updated successfully.');
