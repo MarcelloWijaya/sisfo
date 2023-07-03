@@ -122,7 +122,6 @@ Route::get('/classroom/manage', [ManageClassroomController::class, 'index'])->na
 
 Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'removeMurid'])->name('classroom.removeMurid');
 
-
 Route::post('/classroom/manage/addMurid', [ManageClassroomController::class, 'addMurid'])->name('classroom.addMurid');
 
 Route::get('/classroom/detail', [ClassroomController::class, 'detail'])->name('classroom.detail');

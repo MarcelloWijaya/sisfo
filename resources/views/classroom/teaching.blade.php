@@ -17,97 +17,119 @@
             <div id="content">
                 <div class="container-fluid">
 
-                    {{-- <div class="d-flex justify-content-end mb-2">
+                    <div class="d-flex justify-content-end mb-2">
                         <div class="mt-2 mr-2">
                             <h1 class="h6 text-gray-800">Guru :</h1>
                         </div>
                         <div class="col-2">
-                            <form id="teacher-form" action="/teaching" method="GET">
-                                <div class="input-group">
-                                    <select class="form-control" id="teacher" name="selected_teacher_id">
-                                        <option value=""></option>
-                                        @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-secondary">Submit</button>
+                            <div class="input-group">
+                                <form id="teacher-form" action="/teaching" method="GET">
+                                    <div class="input-group">
+                                        <select class="form-control" id="teacher_id" name="teacher_id">
+                                            <option value=""></option>
+                                            @foreach ($teachers as $teacher)
+                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-secondary">Submit</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div> --}}
-
-                    {{-- <div id="hidden" style="display: none;"> --}}
-                    <div id="teacher-name">Teacher Name : {{ $selected_teacher_id }}</div>
-                    <div>Total Students : {{ $selected_teacher_id }}</div>
-
-                    <div class="card shadow mb-4">
-                        <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Teaching Schedule</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table id="dt_table" class="table table-bordered" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>Center</th>
-                                            <th>Guru</th>
-                                            <th>Jam</th>
-                                            <th>Senin</th>
-                                            <th>Selasa</th>
-                                            <th>Rabu</th>
-                                            <th>Kamis</th>
-                                            <th>Jumat</th>
-                                            <th>Sabtu</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr class="text-center">
-                                            <th>Center</th>
-                                            <th>Guru</th>
-                                            <th>Jam</th>
-                                            <th>Senin</th>
-                                            <th>Selasa</th>
-                                            <th>Rabu</th>
-                                            <th>Kamis</th>
-                                            <th>Jumat</th>
-                                            <th>Sabtu</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @foreach ($grouped_classrooms as $classrooms)
-                                            {{-- @if ($classrooms->first()->classroom->teacher_id == $selected_teacher_id) --}}
-                                            <tr class="text-center">
-                                                <td>{{ $classrooms->first()->classroom->center->name }}</td>
-                                                <td>{{ $classrooms->first()->classroom->teacher->name }}</td>
-                                                <td>{{ $classrooms->first()->classroom->start_time }} -
-                                                    {{ $classrooms->first()->classroom->end_time }}</td>
-                                                @for ($i = 1; $i <= 6; $i++)
-                                                    <td>
-                                                        @if ($classrooms->first()->classroom->day_id == $i)
-                                                            @foreach ($classrooms as $classroom)
-                                                                @php
-                                                                    $student = $students->find($classroom->student_id);
-                                                                @endphp
-                                                                @if ($student)
-                                                                    <div>{{ $student->name }}</div>
-                                                                @else
-                                                                    <div></div>
-                                                                @endif
-                                                            @endforeach
-                                                        @endif
-                                                    </td>
-                                                @endfor
-                                            </tr>
-                                            {{-- @endif --}}
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                </form>
                             </div>
+                            <script>
+                                document.getElementById('teacher-form').addEventListener('submit', function(event) {
+                                    event.preventDefault();
+
+                                    var teacherId = document.getElementById('teacher_id').value;
+                                    var url = '/classroom/teachingSchedule?teacher_id=' + teacherId;
+
+                                    // Redirect to the URL
+                                    window.location.href = url;
+
+                                    document.getElementById('hidden').style.display = 'block';
+                                });
+                            </script>
                         </div>
                     </div>
-                    {{-- </div> --}}
+
+                    @if ($teacher_name || request()->has('teacher_id'))
+                        <div id="hidden">
+                            <div id="teacher-name">Teacher Name: {{ $teacher_name }}</div>
+                            <div>Total Students: {{ $total_students }}</div>
+
+                            <div class="card shadow mb-4">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h6 class="m-0 mt-1 font-weight-bold text-primary">Teaching Schedule</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table id="dt_table" class="table table-striped" cellspacing="0"
+                                            width="100%">
+                                            <thead>
+                                                <tr class="text-center">
+                                                    @if (Auth::user()->center_id == null)
+                                                        <th>Center</th>
+                                                        <th>Guru</th>
+                                                    @endif
+                                                    <th>Jam</th>
+                                                    <th>Senin</th>
+                                                    <th>Selasa</th>
+                                                    <th>Rabu</th>
+                                                    <th>Kamis</th>
+                                                    <th>Jumat</th>
+                                                    <th>Sabtu</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr class="text-center">
+                                                    @if (Auth::user()->center_id == null)
+                                                        <th>Center</th>
+                                                        <th>Guru</th>
+                                                    @endif
+                                                    <th>Jam</th>
+                                                    <th>Senin</th>
+                                                    <th>Selasa</th>
+                                                    <th>Rabu</th>
+                                                    <th>Kamis</th>
+                                                    <th>Jumat</th>
+                                                    <th>Sabtu</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                @foreach ($grouped_classrooms as $classrooms)
+                                                    {{-- @if ($classrooms->first()->classroom->teacher_id == $selected_teacher_id) --}}
+                                                    <tr class="text-center">
+                                                        <td>{{ $classrooms->first()->classroom->center->name }}</td>
+                                                        <td>{{ $classrooms->first()->classroom->teacher->name }}
+                                                        </td>
+                                                        <td>{{ $classrooms->first()->classroom->start_time }} -
+                                                            {{ $classrooms->first()->classroom->end_time }}</td>
+                                                        @for ($i = 1; $i <= 6; $i++)
+                                                            <td>
+                                                                @if ($classrooms->first()->classroom->day_id == $i)
+                                                                    @foreach ($classrooms as $classroom)
+                                                                        @php
+                                                                            $student = $students->find($classroom->student_id);
+                                                                        @endphp
+                                                                        @if ($student)
+                                                                            <div>{{ $student->name }}</div>
+                                                                        @else
+                                                                            <div></div>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                            </td>
+                                                        @endfor
+                                                        {{-- @endif --}}
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
 

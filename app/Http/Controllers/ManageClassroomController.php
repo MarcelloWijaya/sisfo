@@ -44,8 +44,6 @@ class ManageClassroomController extends Controller
         return redirect()->route('classroom.manage')->with('success', 'Manage Classroom created successfully.');
     }
 
-
-
     public function addMurid(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -87,9 +85,22 @@ class ManageClassroomController extends Controller
         $teachers = Teacher::all();
         $students = Student::all();
 
-        $selected_teacher_id = $request->input('teacher');
-
         $grouped_classrooms = $manage_classrooms->groupBy('classroom_id');
+
+        $selected_teacher_id = $request->input('teacher_id');
+
+        // Menggunakan metode where untuk mengambil classroom dengan teacher_id yang sesuai
+        $selected_classrooms = $manage_classrooms->where('teacher_id', $selected_teacher_id);
+
+        $teacher = Teacher::find($selected_teacher_id);
+        $teacher_name = $teacher ? $teacher->name : '';
+        $count = 0;
+        foreach ($teacher->classrooms as $classroom) {
+            foreach ($classroom->students as $student) {
+                $count++;
+            }
+        };
+        $total_students = $count;
 
         $data = [
             'manage_classrooms' => $manage_classrooms,
@@ -98,6 +109,8 @@ class ManageClassroomController extends Controller
             'students' => $students,
             'title' => 'Anaku Educare Management Information System (MIS)',
             'selected_teacher_id' => $selected_teacher_id,
+            'total_students' => $total_students,
+            'teacher_name' => $teacher_name,
         ];
 
         return view('classroom.teaching', $data);
