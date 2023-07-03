@@ -81,22 +81,18 @@ class ManageClassroomController extends Controller
 
     public function teaching(Request $request)
     {
+        // if ($request->teacher_id != null) {
         $manage_classrooms = ManageClassroom::all();
         $teachers = Teacher::all();
         $students = Student::all();
 
         $grouped_classrooms = $manage_classrooms->groupBy('classroom_id');
-
         $selected_teacher_id = $request->input('teacher_id');
-
-        // Menggunakan metode where untuk mengambil classroom dengan teacher_id yang sesuai
-        $selected_classrooms = $manage_classrooms->where('teacher_id', $selected_teacher_id);
-
         $teacher = Teacher::find($selected_teacher_id);
         $teacher_name = $teacher ? $teacher->name : '';
         $count = 0;
         foreach ($teacher->classrooms as $classroom) {
-            foreach ($classroom->students as $student) {
+            foreach ($classroom->manageClassrooms as $manage_classroom) {
                 $count++;
             }
         };
@@ -107,10 +103,10 @@ class ManageClassroomController extends Controller
             'grouped_classrooms' => $grouped_classrooms,
             'teachers' => $teachers,
             'students' => $students,
-            'title' => 'Anaku Educare Management Information System (MIS)',
             'selected_teacher_id' => $selected_teacher_id,
             'total_students' => $total_students,
             'teacher_name' => $teacher_name,
+            'title' => 'Anaku Educare Management Information System (MIS)',
         ];
 
         return view('classroom.teaching', $data);

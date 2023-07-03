@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             ClassroomStatusSeeder::class,
             CenterPaymentSeeder::class,
             DaySeeder::class,
+            ItemSeeder::class,
             ManageClassroomSeeder::class,
             PaymentSeeder::class,
             PaymentStatusSeeder::class,

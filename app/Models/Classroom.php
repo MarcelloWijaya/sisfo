@@ -24,6 +24,11 @@ class Classroom extends Model
         return $this->belongsTo(ClassroomStatus::class);
     }
 
+    public function day()
+    {
+        return $this->belongsTo(day::class);
+    }
+
     public function manageClassrooms()
     {
         return $this->hasMany(ManageClassroom::class);

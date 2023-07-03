@@ -181,7 +181,23 @@
                 </a>
                 <div id="collapseKelas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('classroom.index') }}">Kelas</a>
+                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
+                        <a class="collapse-item" href="#">Absensi Hari ini</a>
+                        <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Barang dan Buku -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
+                    aria-expanded="true" aria-controls="collapseKelas">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Barang dan Buku</span>
+                </a>
+                <div id="collapseKelas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
                         <a class="collapse-item" href="#">Absensi Hari ini</a>
                         <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
                     </div>

@@ -28,7 +28,10 @@
                                         <select class="form-control" id="teacher_id" name="teacher_id">
                                             <option value=""></option>
                                             @foreach ($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                                <option value="{{ $teacher->id }}"
+                                                    {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                                    {{ $teacher->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         <div class="input-group-append">
@@ -37,23 +40,10 @@
                                     </div>
                                 </form>
                             </div>
-                            <script>
-                                document.getElementById('teacher-form').addEventListener('submit', function(event) {
-                                    event.preventDefault();
-
-                                    var teacherId = document.getElementById('teacher_id').value;
-                                    var url = '/classroom/teachingSchedule?teacher_id=' + teacherId;
-
-                                    // Redirect to the URL
-                                    window.location.href = url;
-
-                                    document.getElementById('hidden').style.display = 'block';
-                                });
-                            </script>
                         </div>
                     </div>
 
-                    @if ($teacher_name || request()->has('teacher_id'))
+                    @if (!empty($data['teacher_name']) || request()->has('teacher_id'))
                         <div id="hidden">
                             <div id="teacher-name">Teacher Name: {{ $teacher_name }}</div>
                             <div>Total Students: {{ $total_students }}</div>
@@ -130,6 +120,7 @@
                             </div>
                         </div>
                     @endif
+
                 </div>
             </div>
 
@@ -141,6 +132,16 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <script>
+        document.getElementById('teacher-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            var teacherId = document.getElementById('teacher_id').value;
+            var url = '/classroom/teachingSchedule?teacher_id=' + teacherId;
+            window.location.href = url;
+            document.getElementById('hidden').style.display = 'block';
+        });
+    </script>
     @include('templates.script')
 </body>
 
