@@ -35,7 +35,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label for="center_id">Center</label>
-                                    <select class="form-control" id="center_id" name="center_id" required>
+                                    <select class="form-control" id="center_id" name="center_id">
                                         <option value="">-- select Center --</option>
                                         @foreach ($centers as $center)
                                             <option value="{{ $center->id }}"
@@ -44,44 +44,48 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('center_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="day">Hari</label>
-                                    <select class="form-control" id="day" name="day" required>
-                                        <option value="">-- Pilih Hari --</option>
-                                        <option value="Senin" {{ old('day') == 'Senin' ? 'selected' : '' }}>Senin
-                                        </option>
-                                        <option value="Selasa" {{ old('day') == 'Selasa' ? 'selected' : '' }}>Selasa
-                                        </option>
-                                        <option value="Rabu" {{ old('day') == 'Rabu' ? 'selected' : '' }}>Rabu
-                                        </option>
-                                        <option value="Kamis" {{ old('day') == 'Kamis' ? 'selected' : '' }}>Kamis
-                                        </option>
-                                        <option value="Jumat" {{ old('day') == 'Jumat' ? 'selected' : '' }}>Jumat
-                                        </option>
-                                        <option value="Sabtu" {{ old('day') == 'Sabtu' ? 'selected' : '' }}>Sabtu
-                                        </option>
-                                        <option value="Minggu" {{ old('day') == 'Minggu' ? 'selected' : '' }}>Minggu
-                                        </option>
+                                    <label for="day_id">Hari</label>
+                                    <select class="form-control" id="day_id" name="day_id">
+                                        <option value="">-- Select Day --</option>
+                                        @foreach ($days as $day)
+                                            <option value="{{ $day->id }}"
+                                                {{ old('day_id') == $day->id ? 'selected' : '' }}>
+                                                {{ $day->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
+                                    @error('day_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="start_time">Start Time</label>
                                     <input type="time" class="form-control" id="start_time" name="start_time"
-                                        required value="{{ old('start_time') }}">
+                                        value="{{ old('start_time') }}">
+                                    @error('start_time')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="end_time">End Time</label>
-                                    <input type="time" class="form-control" id="end_time" name="end_time" required
+                                    <input type="time" class="form-control" id="end_time" name="end_time"
                                         value="{{ old('end_time') }}">
+                                    @error('end_time')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="teacher_id">Teacher</label>
-                                    <select class="form-control" id="teacher_id" name="teacher_id" required>
+                                    <select class="form-control" id="teacher_id" name="teacher_id">
                                         <option value="">-- Select Teacher --</option>
                                         @foreach ($teachers as $teacher)
                                             <option value="{{ $teacher->id }}"
@@ -90,17 +94,23 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('teacher_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="class_name">Class Name</label>
-                                    <input type="text" class="form-control" id="class_name" name="class_name"
-                                        required value="{{ old('class_name') }}">
+                                    <label for="name">Class Name</label>
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        value="{{ old('name') }}">
+                                    @error('name')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select class="form-control" id="status" name="status" required>
+                                    <label for="status_id">Status</label>
+                                    <select class="form-control" id="status_id" name="status_id">
                                         <option value="">-- Select Status --</option>
                                         @foreach ($classroomStatuses as $status)
                                             <option value="{{ $status->id }}"
@@ -109,6 +119,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    @error('status_id')
+                                        <span class="text-danger"><small>{{ $message }}</small></span>
+                                    @enderror
                                 </div>
 
                                 <button type="submit" class="btn btn-primary">Create</button>

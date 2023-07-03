@@ -35,17 +35,28 @@
                                 @csrf
                                 @method('PUT')
 
+                                @if (Auth::user()->center_id == null)
+                                    <div class="form-group">
+                                        <label for="center_id">Center</label>
+                                        <select class="form-control" id="center_id" name="center_id">
+                                            @foreach ($centers as $center)
+                                                <option value="{{ $center->id }}"
+                                                    {{ old('center_id', $teacher->center_id) == $center->id ? 'selected' : '' }}>
+                                                    {{ $center->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('center_id')
+                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                        @enderror
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
-                                    <label for="center_id">Center</label>
-                                    <select class="form-control" id="center_id" name="center_id">
-                                        @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}"
-                                                {{ old('center_id', $teacher->center_id) == $center->id ? 'selected' : '' }}>
-                                                {{ $center->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('center_id')
+                                    <label for="entry_date">Entry Date</label>
+                                    <input type="date" class="form-control" id="entry_date" name="entry_date"
+                                        value="{{ old('entry_date', $teacher->entry_date) }}">
+                                    @error('entry_date')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
@@ -95,7 +106,7 @@
                                 <div class="form-group">
                                     <label for="place_of_birth">Place of Birth</label>
                                     <input type="text" class="form-control" id="place_of_birth" name="place_of_birth"
-                                     value="{{ old('place_of_birth', $teacher->place_of_birth) }}">
+                                        value="{{ old('place_of_birth', $teacher->place_of_birth) }}">
                                     @error('place_of_birth')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -104,7 +115,7 @@
                                 <div class="form-group">
                                     <label for="date_of_birth">Date of Birth</label>
                                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                                     value="{{ old('date_of_birth', $teacher->date_of_birth) }}">
+                                        value="{{ old('date_of_birth', $teacher->date_of_birth) }}">
                                     @error('date_of_birth')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -137,7 +148,7 @@
                                 <div class="form-group">
                                     <label for="phone_number">Phone Number</label>
                                     <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                     value="{{ old('phone_number', $teacher->phone_number) }}">
+                                        value="{{ old('phone_number', $teacher->phone_number) }}">
                                     @error('phone_number')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -146,7 +157,7 @@
                                 <div class="form-group">
                                     <label for="last_education">Last Education</label>
                                     <input type="text" class="form-control" id="last_education" name="last_education"
-                                     value="{{ old('last_education', $teacher->last_education) }}">
+                                        value="{{ old('last_education', $teacher->last_education) }}">
                                     @error('last_education')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror

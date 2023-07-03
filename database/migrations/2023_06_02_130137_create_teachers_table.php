@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('center_id');
+            $table->date('entry_date');
             $table->string('name');
             $table->string('nickname');
             $table->string('gender');

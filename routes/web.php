@@ -101,8 +101,6 @@ Route::delete('/student/delete/{student_id}', [StudentController::class, 'destro
 
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
 
-Route::get('/teacher/teaching-schedule', [TeacherController::class, 'teaching'])->name('teacher.teaching');
-
 Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
@@ -118,9 +116,12 @@ Route::delete('/teacher/delete/{teacher_id}', [TeacherController::class, 'destro
 
 Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
 
+Route::get('/classroom/teachingSchedule', [ManageClassroomController::class, 'teaching'])->name('classroom.teaching');
+
 Route::get('/classroom/manage', [ManageClassroomController::class, 'index'])->name('classroom.manage');
 
-Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'removeMurid'])->name('classroom.deleteClass');
+Route::delete('/classroom/manage/removeMurid/{manageClassroom_id}', [ManageClassroomController::class, 'removeMurid'])->name('classroom.removeMurid');
+
 
 Route::post('/classroom/manage/addMurid', [ManageClassroomController::class, 'addMurid'])->name('classroom.addMurid');
 
