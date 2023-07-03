@@ -53,8 +53,7 @@
 
                                 <div class="form-group">
                                     <label for="entry_date">Entry Date</label>
-                                    <input type="date" class="form-control" id="entry_date" name="entry_date"
-                                        value="{{ old('entry_date') }}" placeholder="Enter entry date">
+                                    <input type="date" class="form-control" id="entry_date" name="entry_date">
                                     @error('entry_date')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -114,7 +113,7 @@
                                 <div class="form-group">
                                     <label for="date_of_birth">Date of Birth</label>
                                     <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                                        value="{{ old('date_of_birth') }}" placeholder="Enter date of birth">
+                                        value="{{ old('date_of_birth') }}">
                                     @error('date_of_birth')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -173,28 +172,30 @@
                                 <div class="form-group">
                                     <label for="training_date">Training Date</label>
                                     <input type="date" class="form-control" id="training_date"
-                                        name="training_date" value="{{ old('training_date') }}"
-                                        placeholder="Enter training date">
+                                        name="training_date" value="{{ old('training_date') }}">
                                     @error('training_date')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="status_id">Status</label>
-                                    <select class="form-control" id="status_id" name="status_id">
-                                        <option value="">-- Select Status --</option>
-                                        @foreach ($teacherStatuses as $status)
-                                            <option value="{{ $status->id }}"
-                                                {{ old('status_id') == $status->id ? 'selected' : '' }}>
-                                                {{ $status->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('status_id')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
+
+                                @if (Auth::user()->center_id == null)
+                                    <div class="form-group">
+                                        <label for="status_id">Status</label>
+                                        <select class="form-control" id="status_id" name="status_id">
+                                            <option value="">-- Select Status --</option>
+                                            @foreach ($teacherStatuses as $status)
+                                                <option value="{{ $status->id }}"
+                                                    {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('status_id')
+                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                        @enderror
+                                    </div>
+                                @endif
 
                                 <button type="submit" class="btn btn-primary">Create</button>
                             </form>
