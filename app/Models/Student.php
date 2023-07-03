@@ -24,8 +24,13 @@ class Student extends Model
         return $this->belongsTo(StudentStatus::class);
     }
 
-    public function manage_classrooms()
+    public function manageClassrooms()
     {
         return $this->hasMany(ManageClassroom::class);
+    }
+
+    public function classrooms()
+    {
+        return $this->belongsToMany(Clasroom::class, Student_mapping::class, 'student_id', 'classroom_id');
     }
 }

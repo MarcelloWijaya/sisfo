@@ -14,7 +14,7 @@ class Teacher extends Model
         return $this->belongsTo(Center::class);
     }
 
-    public function classroom()
+    public function classrooms()
     {
         return $this->hasMany(Classroom::class);
     }
