@@ -50,6 +50,8 @@
                                             <span class="text-danger"><small>{{ $message }}</small></span>
                                         @enderror
                                     </div>
+                                @else
+                                    <input type="hidden" name="center_id" value="{{ Auth::user()->center_id }}">
                                 @endif
 
                                 <div class="form-group">
@@ -156,7 +158,8 @@
 
                                 <div class="form-group">
                                     <label for="last_education">Last Education</label>
-                                    <input type="text" class="form-control" id="last_education" name="last_education"
+                                    <input type="text" class="form-control" id="last_education"
+                                        name="last_education"
                                         value="{{ old('last_education', $teacher->last_education) }}">
                                     @error('last_education')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
@@ -182,20 +185,22 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="status_id">Status</label>
-                                    <select class="form-control" id="status_id" name="status_id">
-                                        @foreach ($teacherStatuses as $status)
-                                            <option value="{{ $status->id }}"
-                                                {{ $teacher->status_id == $status->id ? 'selected' : '' }}>
-                                                {{ $status->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('status_id')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
+                                @if (Auth::user()->center_id == null)
+                                    <div class="form-group">
+                                        <label for="status_id">Status</label>
+                                        <select class="form-control" id="status_id" name="status_id">
+                                            @foreach ($teacherStatuses as $status)
+                                                <option value="{{ $status->id }}"
+                                                    {{ $teacher->status_id == $status->id ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('status_id')
+                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                        @enderror
+                                    </div>
+                                @endif
 
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </form>

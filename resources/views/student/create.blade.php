@@ -33,21 +33,25 @@
                         <div class="card-body">
                             <form action="{{ route('student.store') }}" method="POST">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="center_id">Center</label>
-                                    <select class="form-control" id="center_id" name="center_id">
-                                        <option value="">-- select Center --</option>
-                                        @foreach ($centers as $center)
-                                            <option value="{{ $center->id }}"
-                                                {{ old('center_id') == $center->id ? 'selected' : '' }}>
-                                                {{ $center->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('center_id')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
+                                @if (Auth::user()->center_id == null)
+                                    <div class="form-group">
+                                        <label for="center_id">Center</label>
+                                        <select class="form-control" id="center_id" name="center_id">
+                                            <option value="">-- select Center --</option>
+                                            @foreach ($centers as $center)
+                                                <option value="{{ $center->id }}"
+                                                    {{ old('center_id') == $center->id ? 'selected' : '' }}>
+                                                    {{ $center->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('center_id')
+                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                        @enderror
+                                    </div>
+                                @else
+                                    <input type="hidden" name="center_id" value="{{ Auth::user()->center_id }}">
+                                @endif
 
                                 <div class="form-group">
                                     <label for="nis">NIS</label>
@@ -200,21 +204,25 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="status_id">Status</label>
-                                    <select class="form-control" id="status_id" name="status_id">
-                                        <option value="">-- Select Status --</option>
-                                        @foreach ($studentStatuses as $status)
-                                            <option value="{{ $status->id }}"
-                                                {{ old('status_id') == $status->id ? 'selected' : '' }}>
-                                                {{ $status->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('status_id')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
+                                @if (Auth::user()->center_id == null)
+                                    <div class="form-group">
+                                        <label for="status_id">Status</label>
+                                        <select class="form-control" id="status_id" name="status_id">
+                                            <option value="">-- Select Status --</option>
+                                            @foreach ($studentStatuses as $status)
+                                                <option value="{{ $status->id }}"
+                                                    {{ old('status_id') == $status->id ? 'selected' : '' }}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('status_id')
+                                            <span class="text-danger"><small>{{ $message }}</small></span>
+                                        @enderror
+                                    </div>
+                                @else
+                                    <input type="hidden" name="status_id" value="1">
+                                @endif
 
                                 <button type="submit" class="btn btn-primary">Create</button>
                             </form>

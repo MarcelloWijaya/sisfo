@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Teacher;
 use App\Models\TeacherStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class TeacherController extends Controller
@@ -86,11 +87,7 @@ class TeacherController extends Controller
         $teacher->last_education = $request->last_education;
         $teacher->email = $request->email;
         $teacher->training_date = $request->training_date;
-        if ($request->status_id == null) {
-            $teacher->status_id = 1;
-        } else {
-            $teacher->status_id = $request->status_id;
-        }
+        $teacher->status_id = $request->status_id;
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher created successfully.');
@@ -128,8 +125,11 @@ class TeacherController extends Controller
             'last_education' => 'required',
             'email' => 'required',
             'training_date' => 'required',
-            'status_id' => 'required',
         ]);
+
+        if (Auth::user()->center_id == null) {
+            $validator->addRules(['status_id' => 'required']);
+        }
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -149,7 +149,10 @@ class TeacherController extends Controller
         $teacher->last_education = $request->last_education;
         $teacher->email = $request->email;
         $teacher->training_date = $request->training_date;
-        $teacher->status_id = $request->status_id;
+        if (Auth::user()->center_id == null) {
+            $teacher->status_id = $request->status_id;
+        }
+
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher updated successfully.');

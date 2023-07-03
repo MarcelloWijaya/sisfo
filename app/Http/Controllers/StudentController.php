@@ -6,6 +6,7 @@ use App\Models\Center;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentStatus;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class StudentController extends Controller
@@ -142,7 +143,6 @@ class StudentController extends Controller
             'level' => 'required',
             'book_start' => 'required',
             'parent_email' => 'required',
-            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -166,7 +166,10 @@ class StudentController extends Controller
         $student->level = $request->level;
         $student->book_start = $request->book_start;
         $student->parent_email = $request->parent_email;
-        $student->status_id = $request->status_id;
+        if (Auth::user()->center_id == null) {
+            $student->status_id = $request->status_id;
+        }
+
         $student->save();
 
         return redirect()->route('student.index')->with('success', 'Student updated successfully.');

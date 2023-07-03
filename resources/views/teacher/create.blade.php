@@ -40,7 +40,7 @@
                                             <option value="">-- Select Center --</option>
                                             @foreach ($centers as $center)
                                                 <option value="{{ $center->id }}"
-                                                    {{ old('center_id') == $center->id || (Auth::check() && Auth::user()->center_id == $center->id) ? 'selected' : '' }}>
+                                                    {{ old('center_id') == $center->id ? 'selected' : '' }}>
                                                     {{ $center->name }}
                                                 </option>
                                             @endforeach
@@ -49,11 +49,14 @@
                                             <span class="text-danger"><small>{{ $message }}</small></span>
                                         @enderror
                                     </div>
+                                @else
+                                    <input type="hidden" name="center_id" value="{{ Auth::user()->center_id }}">
                                 @endif
 
                                 <div class="form-group">
                                     <label for="entry_date">Entry Date</label>
-                                    <input type="date" class="form-control" id="entry_date" name="entry_date">
+                                    <input type="date" class="form-control" id="entry_date" name="entry_date"
+                                        value="{{ old('entry_date') }}">
                                     @error('entry_date')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
@@ -178,7 +181,6 @@
                                     @enderror
                                 </div>
 
-
                                 @if (Auth::user()->center_id == null)
                                     <div class="form-group">
                                         <label for="status_id">Status</label>
@@ -195,6 +197,8 @@
                                             <span class="text-danger"><small>{{ $message }}</small></span>
                                         @enderror
                                     </div>
+                                @else
+                                    <input type="hidden" name="status_id" value="1">
                                 @endif
 
                                 <button type="submit" class="btn btn-primary">Create</button>
