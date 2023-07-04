@@ -174,3 +174,9 @@ Route::get('/item/edit/{item_id}', [ItemController::class, 'edit'])->name('item.
 Route::put('/item/update/{item_id}', [ItemController::class, 'update'])->name('item.update');
 
 Route::delete('/item/delete/{item_id}', [ItemController::class, 'destroy'])->name('item.delete');
+
+Route::get('/cart', [ItemController::class, 'index'])->name('cart.index');
+Route::post('/addToCart/{item_id}', [ItemController::class, 'addToCart'])->name('item.addToCart');
+Route::delete('/removeFromCart/{item_id}', [ItemController::class, 'removeFromCart'])->name('item.removeFromCart');
+Route::put('/updateQuantity/{item_id}', [ItemController::class, 'updateQuantity'])->name('item.updateQuantity');
+Route::put('/checkout', [ItemController::class, 'checkout'])->name('item.checkout');

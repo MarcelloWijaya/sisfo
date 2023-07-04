@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartItem;
 use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Item;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,9 +28,11 @@ class ItemController extends Controller
 
     public function list()
     {
+        $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
         $items = Item::all();
 
         $data = [
+            'cart' => $cart,
             'items' => $items,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
@@ -144,29 +149,29 @@ class ItemController extends Controller
         return redirect()->route('item.index')->with('delete', 'Item deleted successfully.');
     }
 
-    public function addToCart(Request $request, int $product_id)
+    public function addToCart(Request $request, int $item_id)
     {
         $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
 
-        $cart_product = Cart_product::where('cart_id', $cart->id)->where('product_id', $product_id)->first();
+        $cart_item = CartItem::where('cart_id', $cart->id)->where('item_id', $item_id)->first();
 
-        if ($cart_product) {
-            return back()->with('errorMessage', 'The product is already in your cart.');
+        if ($cart_item) {
+            return back()->with('delete', 'The Item is already in your cart.');
         }
 
-        $product = Product::find($product_id);
+        $item = Item::find($item_id);
 
-        $cart_product = new Cart_product();
-        $cart_product->cart_id = $cart->id;
-        $cart_product->product_id = $product->id;
-        $cart_product->quantity = 1;
-        $cart_product->total = $product->price;
-        $cart_product->save();
+        $cart_item = new CartItem();
+        $cart_item->cart_id = $cart->id;
+        $cart_item->item_id = $item->id;
+        $cart_item->quantity = 1;
+        $cart_item->total = $item->price;
+        $cart_item->save();
 
-        return redirect(route('cart.index'))->with('message', 'Successfully add ' . $product->name . ' to cart.');
+        return redirect(route('item.list'))->with('success', 'Successfully add Item to cart.');
     }
 
-    public function updateQuantity(Request $request, int $product_id)
+    public function updateQuantity(Request $request, int $item_id)
     {
         if ($request->quantity < 1) {
             return back()->with('errorMessage', 'Invalid Product Quantity');
@@ -174,27 +179,27 @@ class ItemController extends Controller
 
         $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
 
-        $product = Product::find($product_id);
+        $item = Item::find($item_id);
 
-        $cart_product = Cart_product::where('cart_id', $cart->id)->where('product_id', $product_id)->first();
-        $cart_product->quantity = $request->quantity;
-        $cart_product->total = $product->price * $request->quantity;
-        $cart_product->save();
+        $cart_item = CartItem::where('cart_id', $cart->id)->where('item_id', $item_id)->first();
+        $cart_item->quantity = $request->quantity;
+        $cart_item->total = $item->price * $request->quantity;
+        $cart_item->save();
 
-        return back()->with('message', 'Successfully update quantity ' . $product->name . '.');
+        return back()->with('success', 'Successfully update quantity Item');
     }
 
-    public function removeFromCart(int $product_id)
+    public function removeFromCart(int $item_id)
     {
 
         $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
 
-        $cart_product = Cart_product::where('cart_id', $cart->id)->where('product_id', $product_id)->first();
-        $cart_product->delete();
+        $cart_item = CartItem::where('cart_id', $cart->id)->where('item_id', $item_id)->first();
+        $cart_item->delete();
 
-        $product = Product::find($product_id);
+        $item = Item::find($item_id);
 
-        return back()->with('message', 'Successfully remove ' . $product->name . ' from cart.');
+        return back()->with('delete', 'Successfully remove Item from cart.');
     }
 
     public function checkout()
@@ -202,19 +207,19 @@ class ItemController extends Controller
 
         $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
 
-        foreach ($cart->cart_products as $cart_product) {
+        foreach ($cart->cart_items as $cart_item) {
             $transaction = new Transaction();
             $transaction->check_out = date_create('now')->format('Y-m-d');
             $transaction->user_id = session()->get('currUserSession')->id;
-            $transaction->product_id = $cart_product->product_id;
-            $transaction->price = $cart_product->product->price;
-            $transaction->quantity = $cart_product->quantity;
-            $transaction->total = $cart_product->total;
+            $transaction->item_id = $cart_item->item_id;
+            $transaction->price = $cart_item->item->price;
+            $transaction->quantity = $cart_item->quantity;
+            $transaction->total = $cart_item->total;
             $transaction->save();
 
-            $cart_product->delete();
+            $cart_item->delete();
         }
 
-        return back()->with('message', 'Successfully checkout cart at ' . $transaction->check_out . '.');
+        return back()->with('success', 'Successfully checkout cart at ' . $transaction->check_out . '.');
     }
 }
