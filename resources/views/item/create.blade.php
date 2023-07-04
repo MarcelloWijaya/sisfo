@@ -27,11 +27,11 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-4 text-gray-800">Create Teacher Data</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Create Item Data</h1>
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('teacher.store') }}" method="POST">
+                            <form action="{{ route('item.store') }}" method="POST">
                                 @csrf
                                 @if (Auth::user()->center_id == null)
                                     <div class="form-group">
@@ -54,152 +54,48 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="entry_date">Entry Date</label>
-                                    <input type="date" class="form-control" id="entry_date" name="entry_date"
-                                        value="{{ old('entry_date') }}">
-                                    @error('entry_date')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Teacher Name</label>
+                                    <label for="name">Item Name</label>
                                     <input type="text" class="form-control" id="name" name="name"
-                                        value="{{ old('name') }}" placeholder="Enter teacher name">
+                                        value="{{ old('name') }}" placeholder="Enter item name">
                                     @error('name')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="nickname">Nickname</label>
-                                    <input type="text" class="form-control" id="nickname" name="nickname"
-                                        value="{{ old('nickname') }}" placeholder="Enter nickname">
-                                    @error('nickname')
+                                    <label for="quantity">Quantity</label>
+                                    <input type="number" class="form-control" id="quantity" name="quantity"
+                                        value="{{ old('quantity') }}" placeholder="Enter quantity">
+                                    @error('quantity')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="gender">Gender</label>
-                                    <select class="form-control" id="gender" name="gender">
-                                        <option value="">-- Select Gender --</option>
-                                        <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male
-                                        </option>
-                                        <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>
-                                            Female
-                                        </option>
-                                    </select>
-                                    @error('gender')
+                                    <label for="price">Price</label>
+                                    <input type="number" class="form-control" id="price" name="price"
+                                        value="{{ old('price') }}" placeholder="Enter price">
+                                    @error('price')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" class="form-control" id="address" name="address"
-                                        value="{{ old('address') }}" placeholder="Enter address">
-                                    @error('address')
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="4" placeholder="Enter description">{{ old('description') }}</textarea>
+                                    @error('description')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="place_of_birth">Place of Birth</label>
-                                    <input type="text" class="form-control" id="place_of_birth" name="place_of_birth"
-                                        value="{{ old('place_of_birth') }}" placeholder="Enter place of birth">
-                                    @error('place_of_birth')
+                                    <label for="image">Image</label>
+                                    <input type="text" class="form-control" id="image" name="image"
+                                        value="{{ old('image') }}" placeholder="Enter image URL">
+                                    @error('image')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="date_of_birth">Date of Birth</label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
-                                        value="{{ old('date_of_birth') }}">
-                                    @error('date_of_birth')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="religion">Religion</label>
-                                    <select class="form-control" id="religion" name="religion">
-                                        <option value="">-- Select Religion --</option>
-                                        <option value="Buddha" {{ old('religion') == 'Buddha' ? 'selected' : '' }}>
-                                            Buddha</option>
-                                        <option value="Hindu" {{ old('religion') == 'Hindu' ? 'selected' : '' }}>
-                                            Hindu
-                                        </option>
-                                        <option value="Islam" {{ old('religion') == 'Islam' ? 'selected' : '' }}>
-                                            Islam
-                                        </option>
-                                        <option value="Katholik" {{ old('religion') == 'Katholik' ? 'selected' : '' }}>
-                                            Katholik</option>
-                                        <option value="Kristen" {{ old('religion') == 'Kristen' ? 'selected' : '' }}>
-                                            Kristen</option>
-                                    </select>
-                                    @error('religion')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="phone_number">Phone Number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                        value="{{ old('phone_number') }}" placeholder="Enter phone number">
-                                    @error('phone_number')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="last_education">Last Education</label>
-                                    <input type="text" class="form-control" id="last_education"
-                                        name="last_education" value="{{ old('last_education') }}"
-                                        placeholder="Enter last education">
-                                    @error('last_education')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email">Teacher Email</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        value="{{ old('email') }}" placeholder="Enter email">
-                                    @error('email')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="training_date">Training Date</label>
-                                    <input type="date" class="form-control" id="training_date"
-                                        name="training_date" value="{{ old('training_date') }}">
-                                    @error('training_date')
-                                        <span class="text-danger"><small>{{ $message }}</small></span>
-                                    @enderror
-                                </div>
-
-                                @if (Auth::user()->center_id == null)
-                                    <div class="form-group">
-                                        <label for="status_id">Status</label>
-                                        <select class="form-control" id="status_id" name="status_id">
-                                            <option value="">-- Select Status --</option>
-                                            @foreach ($teacherStatuses as $status)
-                                                <option value="{{ $status->id }}"
-                                                    {{ old('status_id') == $status->id ? 'selected' : '' }}>
-                                                    {{ $status->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('status_id')
-                                            <span class="text-danger"><small>{{ $message }}</small></span>
-                                        @enderror
-                                    </div>
-                                @else
-                                    <input type="hidden" name="status_id" value="1">
-                                @endif
 
                                 <button type="submit" class="btn btn-primary">Create</button>
                             </form>

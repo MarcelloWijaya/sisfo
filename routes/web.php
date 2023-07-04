@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ManageClassroomController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
@@ -164,7 +165,9 @@ Route::get('/item/create', [ItemController::class, 'create'])->name('item.create
 
 Route::post('/item/store', [ItemController::class, 'store'])->name('item.store');
 
-Route::get('/item/detail/{item_id}', [ItemController::class, 'detail'])->name('item.detail');
+Route::get('/item/list', [ItemController::class, 'list'])->name('item.list');
+
+Route::get('/item/price', [ItemController::class, 'price'])->name('item.price');
 
 Route::get('/item/edit/{item_id}', [ItemController::class, 'edit'])->name('item.edit');
 

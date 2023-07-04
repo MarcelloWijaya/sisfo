@@ -191,16 +191,16 @@
 
             <!-- Barang dan Buku -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
-                    aria-expanded="true" aria-controls="collapseKelas">
-                    <i class="fas fa-fw fa-home"></i>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarang"
+                    aria-expanded="true" aria-controls="collapseBarang">
+                    <i class="fas fa-fw fa-book"></i>
                     <span>Barang dan Buku</span>
                 </a>
-                <div id="collapseKelas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseBarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
-                        <a class="collapse-item" href="#">Absensi Hari ini</a>
-                        <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
+                        <a class="collapse-item" href="{{ route('item.index') }}">Data</a>
+                        <a class="collapse-item" href="{{ route('item.price') }}">Jenis dan Harga</a>
+                        <a class="collapse-item" href="{{ route('item.list') }}">Buat Pesanan</a>
                     </div>
                 </div>
             </li>

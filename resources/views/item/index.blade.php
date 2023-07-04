@@ -62,9 +62,8 @@
                                                 <th>Center Name</th>
                                             @endif
                                             <th>Item Name</th>
-                                            <th>Status</th>
-                                            <th>Email</th>
-                                            <th>Profile</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
                                             @auth
                                                 @if (Auth::user()->role_id == 1)
                                                     <th>Action</th>
@@ -79,9 +78,8 @@
                                                 <th>Center Name</th>
                                             @endif
                                             <th>Item Name</th>
-                                            <th>Status</th>
-                                            <th>Email</th>
-                                            <th>Profile</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
                                             @auth
                                                 @if (Auth::user()->role_id == 1)
                                                     <th>Action</th>
@@ -98,17 +96,14 @@
                                                 <tr class="text-center"
                                                     onclick="window.location='{{ route('item.edit', $item->id) }}';">
                                                     <td>{{ $no++ }}</td>
-                                                    <td>{{ $item->center->name }}</td>
+                                                    @if ($item->center != null)
+                                                        <td>{{ $item->center->name }}</td>
+                                                    @else
+                                                        <td>Pusat</td>
+                                                    @endif
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->status->name }}</td>
-                                                    <td>
-                                                        <a href="mailto:{{ $item->email }}"
-                                                            class="btn btn-sm btn-secondary">Email</a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('item.detail', $item->id) }}"
-                                                            class="btn btn-sm btn-secondary">Profile</a>
-                                                    </td>
+                                                    <td>{{ $item->quantity }}</td>
+                                                    <td>{{ $item->price }}</td>
                                                     @auth
                                                         @if (Auth::user()->role_id == 1)
                                                             <td>
@@ -136,19 +131,8 @@
                                                     onclick="window.location='{{ route('item.edit', $item->id) }}';">
                                                     <td>{{ $no++ }}</td>
                                                     <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->status->name }}</td>
-                                                    @if ($item->email)
-                                                        <td>
-                                                            <a href="mailto:{{ $item->email }}"
-                                                                class="btn btn-sm btn-secondary">Email</a>
-                                                        </td>
-                                                    @else
-                                                        <td></td>
-                                                    @endif
-                                                    <td>
-                                                        <a href="{{ route('item.detail', $item->id) }}"
-                                                            class="btn btn-sm btn-secondary">Profile</a>
-                                                    </td>
+                                                    <td>{{ $item->quantity }}</td>
+                                                    <td>{{ $item->price }}</td>
                                                     @auth
                                                         @if (Auth::user()->role_id == 1)
                                                             <td>

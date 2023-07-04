@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('center_id')->nullable();
             $table->string('name');
+            $table->integer('quantity');
             $table->integer('price');
-            $table->integer('quantity')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('image');
             $table->timestamps();
         });
