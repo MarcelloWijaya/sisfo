@@ -31,7 +31,7 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <form action="{{ route('item.store') }}" method="POST">
+                            <form enctype="multipart/form-data" action="{{ route('item.store') }}" method="POST">
                                 @csrf
                                 @if (Auth::user()->center_id == null)
                                     <div class="form-group">
@@ -90,8 +90,11 @@
 
                                 <div class="form-group">
                                     <label for="image">Image</label>
-                                    <input type="text" class="form-control" id="image" name="image"
-                                        value="{{ old('image') }}" placeholder="Enter image URL">
+                                    <div class="input-group">
+
+                                        <input type="file" class="form-control" id="imageUpload" name="image">
+                                        <label class="input-group-text" for="imageUpload">Upload</label>
+                                    </div>
                                     @error('image')
                                         <span class="text-danger"><small>{{ $message }}</small></span>
                                     @enderror

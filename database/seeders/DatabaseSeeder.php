@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            CartSeeder::class,
             CenterSeeder::class,
             ClassroomSeeder::class,
             ClassroomStatusSeeder::class,

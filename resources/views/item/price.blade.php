@@ -33,7 +33,7 @@
                             <form action="">
                                 @foreach ($items as $item)
                                     <div class="form-group">
-                                        <label for="name">{{ $item->name }}</label>
+                                        <label for="name"><b>{{ $item->name }}</b></label>
                                         <input type="text" class="form-control" id="name" name="name"
                                             value="{{ old('price', $item->price) }}" readonly>
                                     </div>

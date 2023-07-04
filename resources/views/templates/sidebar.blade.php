@@ -46,6 +46,7 @@
                         <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
                         <a class="collapse-item" href="{{ route('payment.index') }}">Data Pembayaran</a>
                         <a class="collapse-item" href="{{ route('item.index') }}">Data Barang dan Buku</a>
+                        <a class="collapse-item" href="{{ route('item.list') }}">Buat Pesanan</a>
                     </div>
                 </div>
             </li>

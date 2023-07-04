@@ -30,19 +30,25 @@
 
                     <!-- Page Heading -->
 
-                    <div class="card" style="width: 30%;">
-                        <div class="card-body ">
-                            <div class="row">
-                                <img src="{{ asset('template/img/undraw_profile.svg') }}" width="50%"
-                                    class="img-fluid" alt="...">
-                                <div class="card-text">
-                                    <div>Buku A</div>
-                                    <div>Rp. 100.000</div>
-                                    {{-- <div>{{ $item->name }}</div>
-                                <div>{{ $item->price }}</div> --}}
+                    <div class="row">
+                        @foreach ($items as $item)
+                            <div class="col-6">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <img src="{{ asset('storage/images/' . $item->image) }}" width="100px"
+                                                class="img-fluid" alt="...">
+                                            <div class="card-text ml-4">
+                                                <div>{{ $item->name }}</div>
+                                                <div class="mb-4"><b>IDR {{ $item->price }},-</b></div>
+                                                <div class="mt-4"><button class="btn btn-sm btn-secondary">Add to Cart
+                                                        <i class="fas fa-shopping-cart"></i></button></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
 
                 </div>
