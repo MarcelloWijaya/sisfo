@@ -204,7 +204,6 @@ class ItemController extends Controller
 
     public function checkout()
     {
-
         $cart = Cart::where('user_id', session()->get('currUserSession')->id)->first();
 
         foreach ($cart->cart_items as $cart_item) {
@@ -218,8 +217,12 @@ class ItemController extends Controller
             $transaction->save();
 
             $cart_item->delete();
+
+            // Pindahkan pesan sukses ke dalam perulangan
+            $successMessage = 'Successfully checked out cart at ' . $transaction->check_out . '.';
         }
 
-        return back()->with('success', 'Successfully checkout cart at ' . $transaction->check_out . '.');
+        // Gunakan pesan sukses di akhir metode
+        return back()->with('success', $successMessage);
     }
 }

@@ -36,7 +36,7 @@
                     <!-- Cart Modal -->
                     <div class="modal fade" id="myCartModal" tabindex="-1" role="dialog"
                         aria-labelledby="myCartModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="myCartModalLabel">
@@ -49,16 +49,58 @@
                                 </div>
                                 <div class="modal-body">
                                     @foreach ($cart->cart_items as $cart_item)
-                                        <div class="row">
-                                            <div>{{ $cart_item->item->name }}</div>
-                                            <div>{{ $cart_item->quantity }}</div>
-                                            <div>{{ $cart_item->item->price }}</div>
+                                        <div class="row align-items-center">
+                                            <div class="col-1">
+                                                <img src="{{ asset('storage/images/' . $cart_item->item->image) }}"
+                                                    width="34px" class="img-fluid mr-4" alt="...">
+                                            </div>
+                                            <div class="col-3">{{ $cart_item->item->name }}</div>
+                                            <div class="col-2">
+                                                IDR {{ number_format($cart_item->item->price, 0, ',', '.') }},-
+                                            </div>
+                                            <div class="col-2">
+                                                <form
+                                                    action="{{ route('item.updateQuantity', ['item_id' => $cart_item->item->id]) }}"
+                                                    method="POST"
+                                                    oninput="updateTotal({{ $cart_item->item->id }}, this.elements['quantity'].value * {{ $cart_item->item->price }})">
+                                                    {{ method_field('PUT') }}
+                                                    @csrf
+                                                    <div class="input-group">
+                                                        <input type="number" class="form-control"
+                                                            value="{{ $cart_item->quantity }}" id="quantityInput"
+                                                            name="quantity">
+                                                        <div class="input-group-append">
+                                                            <button type="submit" class="btn btn-sm btn-success">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="col-3">
+                                                IDR {{ number_format($cart_item->total, 0, ',', '.') }},-
+                                            </div>
+                                            <div class="col-1">
+                                                <form
+                                                    action="{{ route('item.removeFromCart', ['item_id' => $cart_item->item->id]) }}"
+                                                    method="POST">
+                                                    {{ method_field('DELETE') }}
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-danger">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     @endforeach
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save Changes</button>
+                                    <form action="{{ route('item.checkout') }}" method="POST">
+                                        {{ method_field('PUT') }}
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Checkout</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +135,8 @@
                                                 class="img-fluid" alt="...">
                                             <div class="card-text ml-4">
                                                 <div>{{ $item->name }}</div>
-                                                <div class="mb-4"><b>IDR {{ $item->price }},-</b></div>
+                                                <div class="mb-4"><b>IDR
+                                                        {{ number_format($item->price, 0, ',', '.') }},-</b></div>
                                                 <form action="{{ route('item.addToCart', ['item_id' => $item->id]) }}"
                                                     method="POST">
                                                     @csrf
