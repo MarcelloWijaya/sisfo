@@ -66,12 +66,10 @@ class ItemController extends Controller
     {
         $item = Item::find($id);
         $centers = Center::all();
-        $itemStatuses = ItemStatus::all();
 
         $data = [
             'item' => $item,
             'centers' => $centers,
-            'itemStatuses' => $itemStatuses,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
