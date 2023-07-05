@@ -37,6 +37,32 @@ class PaymentController extends Controller
         return view('payment.student.detail', $data);
     }
 
+    public function updatePayment(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'payment_date' => 'required',
+            'coupun_number' => 'required',
+            'payment_type' => 'required|in:Cash,Debit,EDC,Kartu Kredit,Transfer',
+            'status' => 'required|in:Paid,Unpaid',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $payment = Payment::find($id);
+        $payment->center_id = auth()->user()->center_id;
+        $payment->student_id = $payment->student_id;
+        $payment->payment_date = now()->format('Y-m-d H:i:s');
+        $payment->discount = $request->discount;
+        $payment->coupun_number = $request->coupun_number;
+        $payment->payment_type = $request->payment_type;
+        $payment->status = $request->status;
+        $payment->save();
+
+        return redirect()->route('payment.index')->with('success', 'Payment updated successfully.');
+    }
+
     public function indexPayment()
     {
         $payments = Payment::all();

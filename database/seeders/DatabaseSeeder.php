@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Coupon;
+use App\Models\CouponStatus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CartSeeder::class,
             CenterSeeder::class,
+            CouponSeeder::class,
+            CouponStatusSeeder::class,
             ClassroomSeeder::class,
             ClassroomStatusSeeder::class,
             CenterPaymentSeeder::class,

@@ -28,7 +28,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <div class="card">
+                    <div class="card mb-4">
                         <div class="card-body">
                             <form action="">
                                 @foreach ($items as $item)
@@ -39,7 +39,7 @@
                                     </div>
                                 @endforeach
 
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button class="btn btn-primary">Submit</button>
                             </form>
                         </div>
                     </div>

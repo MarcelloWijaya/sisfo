@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CenterController;
 use App\Http\Controllers\CenterPaymentController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ManageClassroomController;
 use App\Http\Controllers\PaymentController;
@@ -182,3 +183,12 @@ Route::delete('/removeItemFromCart/{item_id}', [ItemController::class, 'removeFr
 Route::put('/updateItemQuantity/{item_id}', [ItemController::class, 'updateQuantity'])->name('item.updateQuantity');
 
 Route::put('/checkoutItem', [ItemController::class, 'checkout'])->name('item.checkoutItem');
+
+
+Route::get('/coupon', [CouponController::class, 'index'])->name('coupon.index');
+
+Route::get('/coupon/createOrder', [CouponController::class, 'createCoupon'])->name('coupon.create');
+
+Route::post('/coupon/storeOrder', [CouponController::class, 'storeCoupon'])->name('coupon.store');
+
+Route::put('/coupon/{coupon_bundle_id}/update-status', [CouponController::class, 'updateStatus'])->name('coupon.updateStatus');

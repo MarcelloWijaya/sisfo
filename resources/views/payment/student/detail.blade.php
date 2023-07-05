@@ -4,15 +4,6 @@
 <head>
     <title>{{ $title }}</title>
     @include('templates.header')
-
-    {{-- @php
-        use Carbon\Carbon;
-        
-        $value = $payments->last()->payment_date;
-        $newValue = \Carbon\Carbon::parse($value)
-            ->addMonth()
-            ->format('m-Y');
-    @endphp --}}
 </head>
 
 <body id="page-top">
@@ -93,7 +84,6 @@
                                         @elseif ($payment->status_id == 2)
                                             <tr>
                                                 <td>Bulan</td>
-                                                {{-- <td>{{ $newValue }}</td> --}}
                                                 <form
                                                     action="{{ route('payment.store', ['student_id' => $student->id]) }}"
                                                     method="POST">

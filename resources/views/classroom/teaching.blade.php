@@ -21,31 +21,29 @@
                         <div class="mt-2 mr-2">
                             <h1 class="h6 text-gray-800">Guru :</h1>
                         </div>
-                        <div class="col-2">
-                            <div class="input-group">
-                                <form id="teacher-form" action="/teaching" method="GET">
-                                    <div class="input-group">
-                                        <select class="form-control" id="teacher_id" name="teacher_id">
-                                            <option value=""></option>
-                                            @foreach ($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}"
-                                                    {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
-                                                    {{ $teacher->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-secondary">Submit</button>
-                                        </div>
+                        <div class="col-3">
+                            <form id="teacher-form" action="/teaching" method="GET">
+                                <div class="input-group">
+                                    <select class="form-control" id="teacher_id" name="teacher_id">
+                                        <option value=""></option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}"
+                                                {{ old('teacher_id') == $teacher->id ? 'selected' : '' }}>
+                                                {{ $teacher->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-secondary">Submit</button>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
-                    @if (!empty($data['teacher_name']) || request()->has('teacher_id'))
+                    @if (!empty($selected_teacher_id))
                         <div id="hidden">
-                            <div id="teacher-name">Teacher Name: {{ $teacher_name }}</div>
+                            <div id="teacher-name">Teacher Name: <b>{{ $teacher_name }}</b></div>
                             <div>Total Students: {{ $total_students }}</div>
 
                             <div class="card shadow mb-4">
@@ -88,30 +86,30 @@
                                             </tfoot>
                                             <tbody>
                                                 @foreach ($grouped_classrooms as $classrooms)
-                                                    {{-- @if ($classrooms->first()->classroom->teacher_id == $selected_teacher_id) --}}
-                                                    <tr class="text-center">
-                                                        <td>{{ $classrooms->first()->classroom->center->name }}</td>
-                                                        <td>{{ $classrooms->first()->classroom->teacher->name }}
-                                                        </td>
-                                                        <td>{{ $classrooms->first()->classroom->start_time }} -
-                                                            {{ $classrooms->first()->classroom->end_time }}</td>
-                                                        @for ($i = 1; $i <= 6; $i++)
-                                                            <td>
-                                                                @if ($classrooms->first()->classroom->day_id == $i)
-                                                                    @foreach ($classrooms as $classroom)
-                                                                        @php
-                                                                            $student = $students->find($classroom->student_id);
-                                                                        @endphp
-                                                                        @if ($student)
-                                                                            <div>{{ $student->name }}</div>
-                                                                        @else
-                                                                            <div></div>
-                                                                        @endif
-                                                                    @endforeach
-                                                                @endif
+                                                    @if ($classrooms->first()->classroom->teacher_id == $selected_teacher_id)
+                                                        <tr class="text-center">
+                                                            <td>{{ $classrooms->first()->classroom->center->name }}</td>
+                                                            <td>{{ $classrooms->first()->classroom->teacher->name }}
                                                             </td>
-                                                        @endfor
-                                                        {{-- @endif --}}
+                                                            <td>{{ $classrooms->first()->classroom->start_time }} -
+                                                                {{ $classrooms->first()->classroom->end_time }}</td>
+                                                            @for ($i = 1; $i <= 6; $i++)
+                                                                <td>
+                                                                    @if ($classrooms->first()->classroom->day_id == $i)
+                                                                        @foreach ($classrooms as $classroom)
+                                                                            @php
+                                                                                $student = $students->find($classroom->student_id);
+                                                                            @endphp
+                                                                            @if ($student)
+                                                                                <div>{{ $student->name }}</div>
+                                                                            @else
+                                                                                <div></div>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                </td>
+                                                            @endfor
+                                                    @endif
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -139,7 +137,15 @@
             var teacherId = document.getElementById('teacher_id').value;
             var url = '/classroom/teachingSchedule?teacher_id=' + teacherId;
             window.location.href = url;
-            document.getElementById('hidden').style.display = 'block';
+
+            var hiddenDiv = document.getElementById('hidden');
+
+            // Check if the selected_teacher_id is empty or undefined
+            if (!teacherId || teacherId === '') {
+                hiddenDiv.style.display = 'none'; // Hide the div with id "hidden"
+            } else {
+                hiddenDiv.style.display = 'block'; // Show the div with id "hidden"
+            }
         });
     </script>
     @include('templates.script')

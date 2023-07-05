@@ -81,22 +81,29 @@ class ManageClassroomController extends Controller
 
     public function teaching(Request $request)
     {
-        // if ($request->teacher_id != null) {
         $manage_classrooms = ManageClassroom::all();
         $teachers = Teacher::all();
         $students = Student::all();
 
         $grouped_classrooms = $manage_classrooms->groupBy('classroom_id');
         $selected_teacher_id = $request->input('teacher_id');
-        $teacher = Teacher::find($selected_teacher_id);
+
+        $teacher = $selected_teacher_id ? Teacher::find($selected_teacher_id) : null;
         $teacher_name = $teacher ? $teacher->name : '';
+
         $count = 0;
-        foreach ($teacher->classrooms as $classroom) {
-            foreach ($classroom->manageClassrooms as $manage_classroom) {
-                $count++;
+        $total_students = 0;
+
+        if ($teacher) {
+            foreach ($teacher->classrooms as $classroom) {
+                foreach ($classroom->manageClassrooms as $manageClassroom) {
+                    if ($manageClassroom->student_id) {
+                        $count++;
+                    }
+                }
             }
-        };
-        $total_students = $count;
+            $total_students = $count;
+        }
 
         $data = [
             'manage_classrooms' => $manage_classrooms,

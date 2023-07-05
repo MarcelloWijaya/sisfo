@@ -38,4 +38,14 @@ class Center extends Model
     {
         return $this->hasMany(CenterPayment::class);
     }
+
+    public function coupons()
+    {
+        return $this->hasMany(Coupon::class);
+    }
+
+    public function coupon_bundles()
+    {
+        return $this->hasMany(CouponBundle::class);
+    }
 }
