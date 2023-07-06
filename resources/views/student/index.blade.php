@@ -58,59 +58,107 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
                                             <th>NIS</th>
-                                            <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
                                             <th>Level</th>
                                             <th>Status</th>
                                             <th>Profile</th>
-                                            <th>Action</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
                                             <th>NIS</th>
-                                            <th>Center</th>
                                             <th>Student Name</th>
                                             <th>Gender</th>
                                             <th>Level</th>
                                             <th>Status</th>
                                             <th>Profile</th>
-                                            <th>Action</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Action</th>
+                                            @endif
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
                                         @foreach ($students as $student)
-                                            <tr class="text-center"
-                                                onclick="window.location='{{ route('student.edit', $student->id) }}';">
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $student->nis }}</td>
-                                                <td>{{ $student->center->name }}</td>
-                                                <td>{{ $student->name }}</td>
-                                                <td>{{ $student->gender }}</td>
-                                                <td>{{ $student->level }}</td>
-                                                <td>{{ $student->status->name }}</td>
-                                                <td> <a href="{{ route('student.detail', $student->id) }}"
-                                                        class="btn btn-sm btn-secondary">Profile</a> </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('student.edit', $student->id) }}"
-                                                            class="btn btn-sm btn-primary mx-1"><i
-                                                                class="fas fa-pen"></i></a>
-                                                        <form id="delete-form-{{ $student->id }}"
-                                                            action="{{ route('student.delete', $student->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger mx-1">
-                                                                <i class="fas fa-trash"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            @if (Auth::user()->center_id == null)
+                                                <tr class="text-center"
+                                                    onclick="window.location='{{ route('student.edit', $student->id) }}';">
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $student->center->name }}</td>
+                                                    <td>{{ $student->nis }}</td>
+                                                    <td>{{ $student->name }}</td>
+                                                    <td>{{ $student->gender }}</td>
+                                                    <td>{{ $student->level }}</td>
+                                                    <td>{{ $student->status->name }}</td>
+                                                    <td> <a href="{{ route('student.detail', $student->id) }}"
+                                                            class="btn btn-sm btn-secondary">Profile</a> </td>
+
+                                                    <td>
+                                                        <div class="d-flex justify-content-center">
+                                                            <a href="{{ route('student.edit', $student->id) }}"
+                                                                class="btn btn-sm btn-primary mx-1"><i
+                                                                    class="fas fa-pen"></i></a>
+                                                            <form id="delete-form-{{ $student->id }}"
+                                                                action="{{ route('student.delete', $student->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit"
+                                                                    class="btn btn-sm btn-danger mx-1">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @elseif ($student->center_id == Auth::user()->center_id)
+                                                <tr class="text-center"
+                                                    onclick="window.location='{{ route('student.edit', $student->id) }}';">
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $student->nis }}</td>
+                                                    <td>{{ $student->name }}</td>
+                                                    <td>{{ $student->gender }}</td>
+                                                    <td>{{ $student->level }}</td>
+                                                    <td>{{ $student->status->name }}</td>
+                                                    <td> <a href="{{ route('student.detail', $student->id) }}"
+                                                            class="btn btn-sm btn-secondary">Profile</a> </td>
+                                                    @auth
+                                                        @if (Auth::user()->role_id == 1)
+                                                            <td>
+                                                                <div class="d-flex justify-content-center">
+                                                                    <a href="{{ route('student.edit', $student->id) }}"
+                                                                        class="btn btn-sm btn-primary mx-1"><i
+                                                                            class="fas fa-pen"></i></a>
+                                                                    <form id="delete-form-{{ $student->id }}"
+                                                                        action="{{ route('student.delete', $student->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit"
+                                                                            class="btn btn-sm btn-danger mx-1">
+                                                                            <i class="fas fa-trash"></i>
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                        @endif
+                                                    @endauth
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -138,18 +186,6 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Skrip Anda lainnya -->
-    <script>
-        $(document).ready(function() {
-            // Inisialisasi DataTables
-            $('#dt_table').DataTable({
-                searching: true,
-                paging: true,
-                lengthMenu: [10, 25, 50],
-                ordering: true,
-            });
-        });
-    </script>
     @include('templates.script')
 </body>
 

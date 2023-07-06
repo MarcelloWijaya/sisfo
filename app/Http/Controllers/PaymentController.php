@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Center;
 use App\Models\Payment;
+use App\Models\PaymentType;
 use App\Models\Student;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Facades\Validator;
@@ -27,9 +28,11 @@ class PaymentController extends Controller
     {
         $payments = Payment::where('student_id', $student_id)->get();
         $student = Student::find($student_id);
+        $payment_types = PaymentType::all();
 
         $data = [
             'payments' => $payments,
+            'payment_types' => $payment_types,
             'student' => $student,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
@@ -105,9 +108,7 @@ class PaymentController extends Controller
     public function store(Request $request, int $student_id)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
             'student_id' => 'required',
-            'payment_date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -117,39 +118,33 @@ class PaymentController extends Controller
         $student = Student::find($student_id);
 
         $payment = new Payment();
-        $payment->center_id = $student->center_id;
         $payment->student_id = $student->id;
-        $payment->payment_date = $request->payment_date;
         $payment->status_id = 2;
         $payment->save();
 
         return redirect()->route('payment.index')->with('success', 'Payment created successfully.');
     }
 
-    public function edit($id)
-    {
-        $payment = Payment::find($id);
-        $centers = Center::all();
+    // public function edit($id)
+    // {
+    //     $payment = Payment::find($id);
+    //     $centers = Center::all();
 
-        $data = [
-            'payment' => $payment,
-            'centers' => $centers,
-            'title' => 'Anaku Educare Management Information System (MIS)'
-        ];
+    //     $data = [
+    //         'payment' => $payment,
+    //         'centers' => $centers,
+    //         'title' => 'Anaku Educare Management Information System (MIS)'
+    //     ];
 
-        return view('payment.edit', $data);
-    }
+    //     return view('payment.edit', $data);
+    // }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'student_id' => 'required',
-            'payment_date' => 'required',
             'discount' => 'required',
-            'coupun_number' => 'required',
-            'payment_type' => 'required|in:Cash,Debit,EDC,Kartu Kredit,Transfer',
-            'status' => 'required|in:Paid,Unpaid',
+            'coupon_number' => 'required',
+            'payment_type_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -157,16 +152,15 @@ class PaymentController extends Controller
         }
 
         $payment = Payment::find($id);
-        $payment->center_id = $request->center_id;
-        $payment->student_id = $request->student_id;
-        $payment->payment_date = $request->payment_date;
+        $payment->student_id = $payment->student_id;
+        $payment->payment_date = now()->format('Y-m-d H:i:s');
         $payment->discount = $request->discount;
-        $payment->coupun_number = $request->coupun_number;
-        $payment->payment_type = $request->payment_type;
-        $payment->status = $request->status;
+        $payment->coupon_number = $request->coupon_number;
+        $payment->payment_type_id = $request->payment_type_id;
+        $payment->status_id = 1;
         $payment->save();
 
-        return redirect()->route('payment.index')->with('success', 'Payment updated successfully.');
+        return redirect()->route('payment.index')->with('success', 'Payment Success.');
     }
 
     public function destroy($id)

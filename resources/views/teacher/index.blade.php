@@ -59,9 +59,9 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             @if (Auth::user()->center_id == null)
-                                                <th>Center Name</th>
+                                                <th>Center</th>
                                             @endif
-                                            <th>Teacher Name</th>
+                                            <th>Name</th>
                                             <th>Status</th>
                                             <th>Email</th>
                                             <th>Profile</th>
@@ -76,9 +76,9 @@
                                         <tr class="text-center">
                                             <th>No</th>
                                             @if (Auth::user()->center_id == null)
-                                                <th>Center Name</th>
+                                                <th>Center</th>
                                             @endif
-                                            <th>Teacher Name</th>
+                                            <th>Name</th>
                                             <th>Status</th>
                                             <th>Email</th>
                                             <th>Profile</th>

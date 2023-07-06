@@ -70,10 +70,15 @@
                                 <tbody>
                                     @foreach ($payments as $payment)
                                         <tr id="form-row" style="display: none;">
-                                            <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
-                                            <form action="{{ route('payment.store', ['student_id' => $student->id]) }}"
+                                            <form action="{{ route('payment.update', ['payment_id' => $payment->id]) }}"
                                                 method="POST">
                                                 @csrf
+                                                @method('PUT')
+                                                @if (!$payment->payment_date)
+                                                    <td>{{ date('m-Y') }}</td>
+                                                @else
+                                                    <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
+                                                @endif
                                                 <td><button class="btn btn-sm btn-secondary" type="submit">Pay
                                                         Now</button>
                                                 </td>
@@ -81,31 +86,38 @@
                                                     <div class="form-group">
                                                         <label for="coupon_number">No Kupon</label>
                                                         <input type="text" class="form-control" id="coupon_number"
-                                                            name="coupon_number" placeholder="Masukkan No Kupon">
+                                                            name="coupon_number" placeholder="Masukkan No Kupon"
+                                                            value="{{ old('coupon_number') }}">
+                                                        @error('coupon_number')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
-
                                                     <div class="form-group">
                                                         <label for="discount">Diskon</label>
                                                         <input type="number" class="form-control" id="discount"
-                                                            name="discount" placeholder="Masukkan Diskon">
+                                                            name="discount" placeholder="Masukkan Diskon"
+                                                            value="{{ old('discount') }}">
+                                                        @error('discount')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </td>
                                                 <td></td>
                                                 <td>
                                                     <div class="form-group">
-                                                        <select class="form-control" id="payment_type"
-                                                            name="payment_type">
-                                                            <option value="Cash">Cash</option>
-                                                            <option value="Debit">Debit</option>
-                                                            <option value="EDC">EDC</option>
-                                                            <option value="Kartu Kredit">Kartu Kredit</option>
-                                                            <option value="Transfer">Transfer</option>
+                                                        <select class="form-control" id="payment_type_id"
+                                                            name="payment_type_id">
+                                                            @foreach ($payment_types as $payment_types)
+                                                                <option value="{{ $payment_types->id }}">
+                                                                    {{ $payment_types->name }}
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </td>
                                             </form>
                                             <td></td>
-                                            <td>    
+                                            <td>
                                                 <a href="" class="btn btn-sm btn-danger"><i
                                                         class="fas fa-trash"></i></a>
                                             </td>

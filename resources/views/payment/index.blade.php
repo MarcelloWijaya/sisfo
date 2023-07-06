@@ -65,8 +65,10 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
-                                            <th>Student Name</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
+                                            <th>Name</th>
                                             <th>Payment Date</th>
                                             <th>Status</th>
                                         </tr>
@@ -74,29 +76,50 @@
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
-                                            <th>Student Name</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
+                                            <th>Name</th>
                                             <th>Payment Date</th>
                                             <th>Status</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        @php
+                                            $no = 1;
+                                        @endphp
                                         @foreach ($payments as $payment)
-                                            <tr class="text-center">
-                                                <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $payment->center->name }}</td>
-                                                <td><a
-                                                        href="{{ route('student.detail', ['student_id' => $payment->student->id]) }}">{{ $payment->student->name }}</a>
-                                                </td>
-                                                <td>{{ $payment->payment_date }}</td>
-                                                @if ($payment->status_id == 1)
-                                                    <td>{{ $payment->status->name }}</td>
-                                                @elseif ($payment->status_id == 2)
-                                                    <td><a href="{{ route('payment.student.detail', ['student_id' => $payment->student->id]) }}"
-                                                            class="btn btn-sm btn-secondary"> Pay Now </a></td>
-                                                @endif
+                                            @if (Auth::user()->center_id == null)
+                                                <tr class="text-center">
+                                                    <td>{{ $no++ }}</td>
+                                                    <td>{{ $payment->student->center->name }}</td>
+                                                    <td><a
+                                                            href="{{ route('student.detail', ['student_id' => $payment->student->id]) }}">{{ $payment->student->name }}</a>
+                                                    </td>
+                                                    <td>{{ $payment->payment_date }}</td>
+                                                    @if ($payment->status_id == 1)
+                                                        <td>{{ $payment->status->name }}</td>
+                                                    @elseif ($payment->status_id == 2)
+                                                        <td><a href="{{ route('payment.student.detail', ['student_id' => $payment->student->id]) }}"
+                                                                class="btn btn-sm btn-secondary"> Pay Now </a></td>
+                                                    @endif
+                                                </tr>
+                                            @elseif ($payment->student->center_id == Auth::user()->center_id)
+                                                <tr class="text-center">
+                                                    <td>{{ $no++ }}</td>
+                                                    <td><a
+                                                            href="{{ route('student.detail', ['student_id' => $payment->student->id]) }}">{{ $payment->student->name }}</a>
+                                                    </td>
+                                                    <td>{{ $payment->payment_date }}</td>
+                                                    @if ($payment->status_id == 1)
+                                                        <td>{{ $payment->status->name }}</td>
+                                                    @elseif ($payment->status_id == 2)
+                                                        <td><a href="{{ route('payment.student.detail', ['student_id' => $payment->student->id]) }}"
+                                                                class="btn btn-sm btn-secondary"> Pay Now </a></td>
+                                                    @endif
 
-                                            </tr>
+                                                </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

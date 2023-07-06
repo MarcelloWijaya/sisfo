@@ -57,7 +57,9 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
                                             <th>Student Name</th>
                                             <th>Level</th>
                                             <th>Payment Date</th>
@@ -67,7 +69,9 @@
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Center Name</th>
+                                            @if (Auth::user()->center_id == null)
+                                                <th>Center</th>
+                                            @endif
                                             <th>Student Name</th>
                                             <th>Level</th>
                                             <th>Payment Date</th>
