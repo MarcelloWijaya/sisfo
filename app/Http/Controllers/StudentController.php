@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Center;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\StudentStatus;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -98,6 +100,7 @@ class StudentController extends Controller
         $requestData = [
             'center_id' =>  $request->center_id,
             'student_id' => $student->id,
+            'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
 
         $request = new Request($requestData);
@@ -178,6 +181,9 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $student = Student::find($id);
+
+        $student->payments()->delete();
+
         $student->delete();
 
         return redirect()->route('student.index')->with('delete', 'Student deleted successfully.');

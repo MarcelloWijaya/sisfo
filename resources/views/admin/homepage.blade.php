@@ -41,7 +41,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Teacher</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 7 </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $total_teachers }}
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
@@ -58,7 +59,8 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 Total Student</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> 100 </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800"> {{ $total_students }}
+                                            </div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-child fa-2x text-gray-300"></i>

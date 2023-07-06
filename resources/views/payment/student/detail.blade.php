@@ -32,14 +32,13 @@
                     <div class="d-flex justify-content-between mb-4">
                         <h1 class="h4 text-gray-800">Invoices {{ $student->name }}</h1>
                         <div class="justify-content-end">
-                            <a href="#" class="btn btn-primary mr-2" data-bs-toggle="modal"
-                                data-bs-target="#iuran-bulanan-modal">Buat Invoice Iuran Bulanan</a>
+                            <a href="#" class="btn btn-primary mr-2" onclick="toggleFormRow()">Buat Invoice Iuran
+                                Bulanan</a>
                             <a href="{{ route('student.detail', ['student_id' => $student->id]) }}"
                                 class="btn btn-primary">Back to
                                 profile</a>
                         </div>
                     </div>
-
 
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -70,6 +69,47 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($payments as $payment)
+                                        <tr id="form-row" style="display: none;">
+                                            <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
+                                            <form action="{{ route('payment.store', ['student_id' => $student->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <td><button class="btn btn-sm btn-secondary" type="submit">Pay
+                                                        Now</button>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="coupon_number">No Kupon</label>
+                                                        <input type="text" class="form-control" id="coupon_number"
+                                                            name="coupon_number" placeholder="Masukkan No Kupon">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="discount">Diskon</label>
+                                                        <input type="number" class="form-control" id="discount"
+                                                            name="discount" placeholder="Masukkan Diskon">
+                                                    </div>
+                                                </td>
+                                                <td></td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <select class="form-control" id="payment_type"
+                                                            name="payment_type">
+                                                            <option value="Cash">Cash</option>
+                                                            <option value="Debit">Debit</option>
+                                                            <option value="EDC">EDC</option>
+                                                            <option value="Kartu Kredit">Kartu Kredit</option>
+                                                            <option value="Transfer">Transfer</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </form>
+                                            <td></td>
+                                            <td>    
+                                                <a href="" class="btn btn-sm btn-danger"><i
+                                                        class="fas fa-trash"></i></a>
+                                            </td>
+                                        </tr>
                                         @if ($payment->status_id == 1)
                                             <tr>
                                                 <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
@@ -80,48 +120,6 @@
                                                 <td><a
                                                         href="{{ route('payment.invoice', ['payment_id' => $payment->id]) }}"><i
                                                             class="fas fa-print"></i></a></td>
-                                            </tr>
-                                        @elseif ($payment->status_id == 2)
-                                            <tr>
-                                                <td>Bulan</td>
-                                                <form
-                                                    action="{{ route('payment.store', ['student_id' => $student->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <td><button class="btn btn-sm btn-secondary" type="submit">Pay
-                                                            Now</button>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label for="coupon_number">No Kupon</label>
-                                                            <input type="text" class="form-control"
-                                                                id="coupon_number" name="coupon_number"
-                                                                placeholder="Masukkan No Kupon">
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label for="discount">Diskon</label>
-                                                            <input type="number" class="form-control" id="discount"
-                                                                name="discount" placeholder="Masukkan Diskon">
-                                                        </div>
-                                                    </td>
-                                                    <td></td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <select class="form-control" id="payment_type"
-                                                                name="payment_type">
-                                                                <option value="Cash">Cash</option>
-                                                                <option value="Debit">Debit</option>
-                                                                <option value="EDC">EDC</option>
-                                                                <option value="Kartu Kredit">Kartu Kredit</option>
-                                                                <option value="Transfer">Transfer</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </form>
-                                                <td></td>
-                                                <td><a href="" class="btn btn-sm btn-danger"><i
-                                                            class="fas fa-trash"></i></a></td>
                                             </tr>
                                         @endif
                                     @endforeach
@@ -176,66 +174,12 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    {{-- <!-- Modal Iuran Bulanan -->
-    <div class="modal fade" id="iuran-bulanan-modal" tabindex="-1" role="dialog"
-        aria-labelledby="iuran-bulanan-modal-label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="iuran-bulanan-modal-label">Buat Invoice Iuran Bulanan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form Iuran Bulanan -->
-                    <form action="{{ route('payment.store') }}" method="POST">
-                        @csrf
-
-                        <div class="form-group">
-                            <label for="bulan">Bulan</label>
-                            <input type="text" class="form-control" id="bulan" value="{{ $newValue }}"
-                                readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="coupon_number">No Kupon</label>
-                            <input type="text" class="form-control" id="coupon_number" name="coupon_number"
-                                placeholder="Masukkan No Kupon">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="coupon_number">No Kupon</label>
-                            <input type="text" class="form-control" id="coupon_number" name="coupon_number"
-                                placeholder="Masukkan No Kupon">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="discount">Diskon</label>
-                            <input type="number" class="form-control" id="discount" name="discount"
-                                placeholder="Masukkan Diskon">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="payment_type">Jenis Pembayaran</label>
-                            <select class="form-control" id="payment_type" name="payment_type">
-                                <option value="Cash">Cash</option>
-                                <option value="Debit">Debit</option>
-                                <option value="EDC">EDC</option>
-                                <option value="Kartu Kredit">Kartu Kredit</option>
-                                <option value="Transfer">Transfer</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-primary">Pay Now</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
+    <script>
+        function toggleFormRow() {
+            const formRow = document.getElementById('form-row');
+            formRow.style.display = formRow.style.display === 'none' ? 'table-row' : 'none';
+        }
+    </script>
     @include('templates.script')
 </body>
 

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('day_id');
             $table->time('start_time');
             $table->time('end_time');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

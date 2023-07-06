@@ -2,16 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
+use App\Models\Teacher;
 use App\Models\User;
 use App\Models\User_role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
     public function indexHome()
     {
-        return view('admin.homepage');
+        $centerId = Auth::user()->center_id; // Mendapatkan center_id dari user yang sedang login
+
+        if ($centerId) {
+            $students = Student::where('center_id', $centerId)->get();
+            $teachers = Teacher::where('center_id', $centerId)->get();
+        } else {
+            $students = Student::all();
+            $teachers = Teacher::all();
+        }
+
+        $totalStudents = count($students);
+        $totalTeachers = count($teachers);
+
+        $data = [
+            'total_students' => $totalStudents,
+            'total_teachers' => $totalTeachers,
+        ];
+
+        return view('admin.homepage', $data);
     }
 
     public function indexRole()

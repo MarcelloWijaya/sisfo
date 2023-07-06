@@ -75,18 +75,6 @@ class PaymentController extends Controller
         return view('payment.index', $data);
     }
 
-    public function indexInvoice()
-    {
-        $payments = Payment::all();
-
-        $data = [
-            'payments' => $payments,
-            'title' => 'Anaku Educare Management Information System (MIS)'
-        ];
-
-        return view('payment.invoice', $data);
-    }
-
     public function detail(int $student_id)
     {
         $payments = Payment::where('student_id', $student_id)->get();
@@ -119,6 +107,7 @@ class PaymentController extends Controller
         $validator = Validator::make($request->all(), [
             'center_id' => 'required',
             'student_id' => 'required',
+            'payment_date' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -130,6 +119,7 @@ class PaymentController extends Controller
         $payment = new Payment();
         $payment->center_id = $student->center_id;
         $payment->student_id = $student->id;
+        $payment->payment_date = $request->payment_date;
         $payment->status_id = 2;
         $payment->save();
 
@@ -185,6 +175,18 @@ class PaymentController extends Controller
         $payment->delete();
 
         return redirect()->route('payment.index')->with('delete', 'Payment deleted successfully.');
+    }
+
+    public function indexInvoice()
+    {
+        $payments = Payment::all();
+
+        $data = [
+            'payments' => $payments,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('payment.invoice', $data);
     }
 
     // public function createInvoice(Request $request)

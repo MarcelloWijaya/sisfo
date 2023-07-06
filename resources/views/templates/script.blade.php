@@ -17,6 +17,12 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#dt_table').DataTable();
+    });
+</script>
+
 {{-- Tabs Iuran --}}
 <script>
     // Inisialisasi tab menggunakan ID 'myTab'
