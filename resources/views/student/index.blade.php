@@ -138,6 +138,18 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <!-- Skrip Anda lainnya -->
+    <script>
+        $(document).ready(function() {
+            // Inisialisasi DataTables
+            $('#dt_table').DataTable({
+                searching: true,
+                paging: true,
+                lengthMenu: [10, 25, 50],
+                ordering: true,
+            });
+        });
+    </script>
     @include('templates.script')
 </body>
 

@@ -17,12 +17,6 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $('#dt_table').DataTable();
-    });
-</script>
-
 {{-- Tabs Iuran --}}
 <script>
     // Inisialisasi tab menggunakan ID 'myTab'
@@ -46,13 +40,8 @@
     });
 </script>
 
-<!-- Masukkan link JavaScript Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-
-<!-- Bootstrap core JavaScript-->
-<script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- Masukkan link JavaScript jQuery -->
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> --}}
 
 <!-- Core plugin JavaScript-->
 <script src="{{ asset('template/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
@@ -62,6 +51,8 @@
 
 <!-- Page level plugins -->
 <script src="{{ asset('template/vendor/chart.js/Chart.min.js') }}"></script>
+<script src="{{ asset('template/vendor/jquery/jquery.js') }}"></script>
+<script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('template/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('template/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
