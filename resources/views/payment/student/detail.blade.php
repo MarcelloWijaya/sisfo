@@ -74,11 +74,13 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('PUT')
-                                                @if (!$payment->payment_date)
-                                                    <td>{{ date('m-Y') }}</td>
-                                                @else
-                                                    <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
-                                                @endif
+                                                <td>
+                                                    @if ($displayMonth == date('m-Y'))
+                                                        {{ $displayMonth }}
+                                                    @else
+                                                        {{ $displayMonth }}
+                                                    @endif
+                                                </td>
                                                 <td><button class="btn btn-sm btn-secondary" type="submit">Pay
                                                         Now</button>
                                                 </td>
@@ -107,9 +109,9 @@
                                                     <div class="form-group">
                                                         <select class="form-control" id="payment_type_id"
                                                             name="payment_type_id">
-                                                            @foreach ($payment_types as $payment_types)
-                                                                <option value="{{ $payment_types->id }}">
-                                                                    {{ $payment_types->name }}
+                                                            @foreach ($payment_types as $payment_type)
+                                                                <option value="{{ $payment_type->id }}">
+                                                                    {{ $payment_type->name }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -126,9 +128,9 @@
                                             <tr>
                                                 <td>{{ date('m-Y', strtotime($payment->payment_date)) }}</td>
                                                 <td>{{ $payment->status->name }}</td>
-                                                <td>{{ $payment->coupun_number }}</td>
-                                                <td>{{ $payment->payment_date }}</td>
-                                                <td>{{ $payment->payment_type }}</td>
+                                                <td>{{ $payment->coupon_number }}</td>
+                                                <td>{{ $payment->created_at }}</td>
+                                                <td>{{ $payment->payment_type->name }}</td>
                                                 <td><a
                                                         href="{{ route('payment.invoice', ['payment_id' => $payment->id]) }}"><i
                                                             class="fas fa-print"></i></a></td>

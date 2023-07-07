@@ -27,14 +27,53 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 text-gray-800">Iuran Bulanan</h1>
-                    <div class="">Sudah Bayar : <b>{{ $payments->where('status_id', 1)->count() }}</b></div>
-                    <div class="">Belum Bayar : <b
-                            class="text-danger">{{ $payments->where('status_id', 2)->count() }}</b></div>
-                    <div class="mb-2">
-                        <div class="col-2">Tampilkan : </div>
-                        <div class="col-2"></div>
+                    <div class="d-flex justify-content-between">
+                        <h1 class="h3 text-gray-800">Iuran Bulanan</h1>
+                        <div>
+                            <form action="{{ route('payment.index') }}" method="POST" class="form-horizontal">
+                                @csrf
+                                <div class="d-flex align-items-center">
+                                    <div class="mt-1 mr-2">
+                                        <label for="month">Bulan:</label>
+                                        <select id="month" name="month">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                    <div class="mt-1 mr-2">
+                                        <label for="year">Tahun:</label>
+                                        <select id="month" name="month">
+                                            <option value="2023">2023</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
+
+                    <div class="">Sudah Bayar: <b>{{ $payments->where('status_id', 1)->count() }}</b></div>
+                    <div class="">Belum Bayar: <b
+                            class="text-danger">{{ $payments->where('status_id', 2)->count() }}</b></div>
+                    <div class="row mb-4">
+                        <label for="month" class="mt-2 col-1 form-label">Tampilkan:</label>
+                        <select class="col-2 form-control" id="month" name="month">
+                            <option value="">Semua</option>
+                            <option value="1">Sudah Bayar</option>
+                            <option value="2">Belum Bayar</option>
+                        </select>
+                    </div>
+
 
                     <div>
                         @if (\Session::has('success'))
@@ -117,7 +156,6 @@
                                                         <td><a href="{{ route('payment.student.detail', ['student_id' => $payment->student->id]) }}"
                                                                 class="btn btn-sm btn-secondary"> Pay Now </a></td>
                                                     @endif
-
                                                 </tr>
                                             @endif
                                         @endforeach

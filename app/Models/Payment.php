@@ -23,4 +23,9 @@ class Payment extends Model
     {
         return $this->belongsTo(PaymentStatus::class);
     }
+
+    public function payment_type()
+    {
+        return $this->belongsTo(PaymentType::class);
+    }
 }

@@ -7,7 +7,7 @@ use App\Models\Center;
 use App\Models\Payment;
 use App\Models\PaymentType;
 use App\Models\Student;
-use GuzzleHttp\Psr7\Response;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
@@ -22,48 +22,6 @@ class PaymentController extends Controller
         ];
 
         return view('payment.student.index', $data);
-    }
-
-    public function paymentDetail(int $student_id)
-    {
-        $payments = Payment::where('student_id', $student_id)->get();
-        $student = Student::find($student_id);
-        $payment_types = PaymentType::all();
-
-        $data = [
-            'payments' => $payments,
-            'payment_types' => $payment_types,
-            'student' => $student,
-            'title' => 'Anaku Educare Management Information System (MIS)'
-        ];
-
-        return view('payment.student.detail', $data);
-    }
-
-    public function updatePayment(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'payment_date' => 'required',
-            'coupun_number' => 'required',
-            'payment_type' => 'required|in:Cash,Debit,EDC,Kartu Kredit,Transfer',
-            'status' => 'required|in:Paid,Unpaid',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        $payment = Payment::find($id);
-        $payment->center_id = auth()->user()->center_id;
-        $payment->student_id = $payment->student_id;
-        $payment->payment_date = now()->format('Y-m-d H:i:s');
-        $payment->discount = $request->discount;
-        $payment->coupun_number = $request->coupun_number;
-        $payment->payment_type = $request->payment_type;
-        $payment->status = $request->status;
-        $payment->save();
-
-        return redirect()->route('payment.index')->with('success', 'Payment updated successfully.');
     }
 
     public function indexPayment()
@@ -81,11 +39,9 @@ class PaymentController extends Controller
     public function detail(int $student_id)
     {
         $payments = Payment::where('student_id', $student_id)->get();
-        // $lastPaymentMonth = $student->payments()->latest('payment_date')->value('bulan');
 
         $data = [
             'payments' => $payments,
-            // 'lastPaymentMonth' => $lastPaymentMonth,
             'title' => 'Anaku Educare Management Information System (MIS)'
         ];
 
@@ -125,19 +81,32 @@ class PaymentController extends Controller
         return redirect()->route('payment.index')->with('success', 'Payment created successfully.');
     }
 
-    // public function edit($id)
-    // {
-    //     $payment = Payment::find($id);
-    //     $centers = Center::all();
+    public function paymentDetail(int $student_id)
+    {
+        $payments = Payment::where('student_id', $student_id)->get();
+        $student = Student::find($student_id);
+        $payment_types = PaymentType::all();
 
-    //     $data = [
-    //         'payment' => $payment,
-    //         'centers' => $centers,
-    //         'title' => 'Anaku Educare Management Information System (MIS)'
-    //     ];
+        $latestPayment = Payment::where('student_id', $student_id)
+            ->whereNotNull('payment_date')
+            ->orderBy('payment_date', 'desc')
+            ->first();
 
-    //     return view('payment.edit', $data);
-    // }
+        $currentMonth = Carbon::now()->format('m-Y');
+        $displayMonth = $latestPayment && $latestPayment->payment_date >= $currentMonth
+            ? Carbon::parse($latestPayment->payment_date)->addMonth()->format('m-Y')
+            : $currentMonth;
+
+        $data = [
+            'payments' => $payments,
+            'student' => $student,
+            'payment_types' => $payment_types,
+            'displayMonth' => $displayMonth,
+            'title' => 'Anaku Educare Management Information System (MIS)'
+        ];
+
+        return view('payment.student.detail', $data);
+    }
 
     public function update(Request $request, $id)
     {
@@ -152,13 +121,42 @@ class PaymentController extends Controller
         }
 
         $payment = Payment::find($id);
-        $payment->student_id = $payment->student_id;
-        $payment->payment_date = now()->format('Y-m-d H:i:s');
-        $payment->discount = $request->discount;
-        $payment->coupon_number = $request->coupon_number;
-        $payment->payment_type_id = $request->payment_type_id;
-        $payment->status_id = 1;
-        $payment->save();
+
+        if ($payment->payment_date) {
+            // Cek apakah sudah ada pembayaran untuk bulan sebelumnya
+            $previousMonthPayment = Payment::where('student_id', $payment->student_id)
+                ->where('payment_date', '<=', $payment->payment_date)
+                ->orderBy('payment_date', 'desc')
+                ->first();
+
+            if ($previousMonthPayment) {
+                // Jika sudah ada pembayaran untuk bulan sebelumnya, tambahkan 1 bulan ke payment_date
+                $newPayment = new Payment();
+                $newPayment->student_id = $payment->student_id;
+                $newPayment->payment_date = Carbon::parse($previousMonthPayment->payment_date)->addMonth()->format('Y-m-d H:i:s');
+                $newPayment->discount = $request->discount;
+                $newPayment->coupon_number = $request->coupon_number;
+                $newPayment->payment_type_id = $request->payment_type_id;
+                $newPayment->status_id = 1;
+                $newPayment->save();
+            } else {
+                // Jika belum ada pembayaran untuk bulan sebelumnya, perbarui data pembayaran yang ada
+                $payment->discount = $request->discount;
+                $payment->coupon_number = $request->coupon_number;
+                $payment->payment_type_id = $request->payment_type_id;
+                $payment->payment_date = now()->format('Y-m-d H:i:s');
+                $payment->status_id = 1;
+                $payment->save();
+            }
+        } else {
+            // Jika belum ada data pembayaran, perbarui data pembayaran yang ada
+            $payment->discount = $request->discount;
+            $payment->coupon_number = $request->coupon_number;
+            $payment->payment_type_id = $request->payment_type_id;
+            $payment->payment_date = now()->format('Y-m-d H:i:s');
+            $payment->status_id = 1;
+            $payment->save();
+        }
 
         return redirect()->route('payment.index')->with('success', 'Payment Success.');
     }

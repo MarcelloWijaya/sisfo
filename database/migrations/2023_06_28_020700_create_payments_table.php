@@ -13,7 +13,7 @@
         {
             Schema::create('payments', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('student_id')->unique();
+                $table->foreignId('student_id');
                 $table->timestamp('payment_date')->nullable();
                 $table->integer('discount')->nullable();
                 $table->string('coupon_number')->nullable();
