@@ -66,14 +66,13 @@
                     <div class="">Belum Bayar: <b
                             class="text-danger">{{ $payments->where('status_id', 2)->count() }}</b></div>
                     <div class="row mb-4">
-                        <label for="month" class="mt-2 col-1 form-label">Tampilkan:</label>
-                        <select class="col-2 form-control" id="month" name="month">
+                        <label for="status_id" class="mt-2 col-1 form-label">Tampilkan:</label>
+                        <select class="col-2 form-control" id="status_id" name="status_id">
                             <option value="">Semua</option>
                             <option value="1">Sudah Bayar</option>
                             <option value="2">Belum Bayar</option>
                         </select>
                     </div>
-
 
                     <div>
                         @if (\Session::has('success'))
@@ -185,6 +184,36 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var select = document.getElementById('month');
+            var selectedValue = select.value;
+
+            select.addEventListener('change', function() {
+                selectedValue = select.value;
+                filterTableByStatus(selectedValue);
+            });
+
+            function filterTableByStatus(status) {
+                var tableRows = document.querySelectorAll('#dt_table tbody tr');
+
+                tableRows.forEach(function(row) {
+                    var statusCell = row.querySelector('td:nth-child(5)');
+                    var paymentStatus = statusCell.textContent.trim();
+
+                    if (status === '1' && paymentStatus === 'Sudah Bayar') {
+                        row.style.display = 'table-row';
+                    } else if (status === '2' && paymentStatus === 'Belum Bayar') {
+                        row.style.display = 'table-row';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+
+            filterTableByStatus(selectedValue);
+        });
+    </script>
     @include('templates.script')
 </body>
 
