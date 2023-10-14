@@ -58,16 +58,8 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            @if (Auth::user()->center_id == null)
-                                                <th>Center</th>
-                                            @endif
-                                            <th>Day</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
-                                            <th>Teacher Name</th>
-                                            <th>Ruang</th>
-                                            <th>Status</th>
-                                            @if (Auth::user()->center_id == null)
+                                            <th>Name</th>
+                                            @if (Auth::user()->role_id == 1)
                                                 <th>Action</th>
                                             @endif
                                         </tr>
@@ -75,16 +67,8 @@
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            @if (Auth::user()->center_id == null)
-                                                <th>Center</th>
-                                            @endif
-                                            <th>Day</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
-                                            <th>Teacher Name</th>
-                                            <th>Ruang</th>
-                                            <th>Status</th>
-                                            @if (Auth::user()->center_id == null)
+                                            <th>Name</th>
+                                            @if (Auth::user()->role_id == 1)
                                                 <th>Action</th>
                                             @endif
                                         </tr>
@@ -94,66 +78,26 @@
                                             $no = 1;
                                         @endphp
                                         @foreach ($classrooms as $classroom)
-                                            @if (Auth::user()->center_id == null)
-                                                <tr class="text-center">
-                                                    <td>{{ $no++ }}</td>
-                                                    <td>{{ $classroom->center->name }}</td>
-                                                    <td>{{ $classroom->day->name }}</td>
-                                                    <td>{{ $classroom->start_time }}</td>
-                                                    <td>{{ $classroom->end_time }}</td>
-                                                    <td>{{ $classroom->teacher->name }}</td>
-                                                    <td>{{ $classroom->name }}</td>
-                                                    <td>{{ $classroom->status->name }}</td>
-                                                    <td>
-                                                        <div class="d-flex justify-content-center">
-                                                            <a href="{{ route('classroom.edit', $classroom->id) }}"
-                                                                class="btn btn-sm btn-primary mx-1"><i
-                                                                    class="fas fa-pen"></i></a>
-                                                            <form id="delete-form-{{ $classroom->id }}"
-                                                                action="{{ route('classroom.delete', $classroom->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="btn btn-sm btn-danger mx-1">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            @elseif ($classroom->center_id == Auth::user()->center_id)
-                                                <tr class="text-center">
-                                                    <td>{{ $no++ }}</td>
-                                                    <td>{{ $classroom->day->name }}</td>
-                                                    <td>{{ $classroom->start_time }}</td>
-                                                    <td>{{ $classroom->end_time }}</td>
-                                                    <td>{{ $classroom->teacher->name }}</td>
-                                                    <td>{{ $classroom->name }}</td>
-                                                    <td>{{ $classroom->status->name }}</td>
-                                                    @auth
-                                                        @if (Auth::user()->role_id == 1)
-                                                            <td>
-                                                                <div class="d-flex justify-content-center">
-                                                                    <a href="{{ route('classroom.edit', $classroom->id) }}"
-                                                                        class="btn btn-sm btn-primary mx-1"><i
-                                                                            class="fas fa-pen"></i></a>
-                                                                    <form id="delete-form-{{ $classroom->id }}"
-                                                                        action="{{ route('classroom.delete', $classroom->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit"
-                                                                            class="btn btn-sm btn-danger mx-1">
-                                                                            <i class="fas fa-trash"></i>
-                                                                        </button>
-                                                                    </form>
-                                                                </div>
-                                                            </td>
-                                                        @endif
-                                                    @endauth
-                                                </tr>
-                                            @endif
+                                            <tr class="text-center">
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $classroom->name }}</td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="{{ route('classroom.edit', $classroom->id) }}"
+                                                            class="btn btn-sm btn-primary mx-1"><i
+                                                                class="fas fa-pen"></i></a>
+                                                        <form id="delete-form-{{ $classroom->id }}"
+                                                            action="{{ route('classroom.delete', $classroom->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger mx-1">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>

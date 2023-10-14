@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Center;
-use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\Student;
-use App\Models\StudentStatus;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +16,7 @@ class StudentController extends Controller
 
         $data = [
             'students' => $students,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('student.index', $data);
@@ -31,7 +28,7 @@ class StudentController extends Controller
 
         $data = [
             'student' => $student,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('student.detail', ['student_id' => $student->id], $data);
@@ -39,13 +36,8 @@ class StudentController extends Controller
 
     public function create()
     {
-        $centers = Center::all();
-        $studentStatuses = StudentStatus::all();
-
         $data = [
-            'centers' => $centers,
-            'studentStatuses' => $studentStatuses,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('student.create', $data);
@@ -54,23 +46,11 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'nis' => 'required',
+            'card_id' => 'required',
+            'customer_id' => 'required',
             'name' => 'required',
-            'gender' => 'required',
-            'address' => 'required',
-            'place_of_birth' => 'required',
-            'date_of_birth' => 'required',
-            'religion' => 'required',
             'phone_number' => 'required',
-            'school_name' => 'required',
-            'parent_name' => 'required',
-            'entry_date' => 'required',
-            'registration_date' => 'required',
-            'level' => 'required',
-            'book_start' => 'required',
-            'parent_email' => 'required',
-            'status_id' => 'required',
+            'email' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -78,35 +58,12 @@ class StudentController extends Controller
         }
 
         $student = new Student;
-        $student->center_id = $request->center_id;
-        $student->nis = $request->nis;
+        $student->card_id = $request->card_id;
+        $student->customer_id = $request->customer_id;
         $student->name = $request->name;
-        $student->gender = $request->gender;
-        $student->address = $request->address;
-        $student->place_of_birth = $request->place_of_birth;
-        $student->date_of_birth = $request->date_of_birth;
-        $student->religion = $request->religion;
         $student->phone_number = $request->phone_number;
-        $student->school_name = $request->school_name;
-        $student->parent_name = $request->parent_name;
-        $student->entry_date = $request->entry_date;
-        $student->registration_date = $request->registration_date;
-        $student->level = $request->level;
-        $student->book_start = $request->book_start;
-        $student->parent_email = $request->parent_email;
-        $student->status_id = $request->status_id;
+        $student->email = $request->email;
         $student->save();
-
-        $requestData = [
-            'center_id' =>  $request->center_id,
-            'student_id' => $student->id,
-            'payment_date' => Carbon::now()->format('Y-m-d H:i:s'),
-        ];
-
-        $request = new Request($requestData);
-
-        $paymentController = new PaymentController();
-        $paymentController->store($request, $student->id);
 
         return redirect()->route('student.index')->with('success', 'Student created successfully.');
     }
@@ -114,14 +71,10 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
-        $centers = Center::all();
-        $studentStatuses = StudentStatus::all();
 
         $data = [
             'student' => $student,
-            'centers' => $centers,
-            'studentStatuses' => $studentStatuses,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('student.edit', $data);
@@ -130,22 +83,11 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'nis' => 'required',
+            'card_id' => 'required',
+            'customer_id' => 'required',
             'name' => 'required',
-            'gender' => 'required',
-            'address' => 'required',
-            'place_of_birth' => 'required',
-            'date_of_birth' => 'required',
-            'religion' => 'required',
             'phone_number' => 'required',
-            'school_name' => 'required',
-            'parent_name' => 'required',
-            'entry_date' => 'required',
-            'registration_date' => 'required',
-            'level' => 'required',
-            'book_start' => 'required',
-            'parent_email' => 'required',
+            'email' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -153,25 +95,11 @@ class StudentController extends Controller
         }
 
         $student = Student::find($id);
-        $student->center_id = $request->center_id;
-        $student->nis = $request->nis;
+        $student->card_id = $request->card_id;
+        $student->customer_id = $request->customer_id;
         $student->name = $request->name;
-        $student->gender = $request->gender;
-        $student->address = $request->address;
-        $student->place_of_birth = $request->place_of_birth;
-        $student->date_of_birth = $request->date_of_birth;
-        $student->religion = $request->religion;
         $student->phone_number = $request->phone_number;
-        $student->school_name = $request->school_name;
-        $student->parent_name = $request->parent_name;
-        $student->entry_date = $request->entry_date;
-        $student->registration_date = $request->registration_date;
-        $student->level = $request->level;
-        $student->book_start = $request->book_start;
-        $student->parent_email = $request->parent_email;
-        if (Auth::user()->center_id == null) {
-            $student->status_id = $request->status_id;
-        }
+        $student->email = $request->email;
 
         $student->save();
 

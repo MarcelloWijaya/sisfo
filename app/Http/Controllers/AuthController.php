@@ -19,14 +19,13 @@ class AuthController extends Controller
     public function loginAction(Request $request)
     {
         $rules = [
-            'email' => 'required|email|ends_with:anaku.com',
+            'email' => 'required|email',
             'password' => 'required|min:6',
         ];
 
         $messages = [
             'email.required' => 'Email harus diisi.',
             'email.email' => 'Email harus dalam format yang valid.',
-            'email.ends_with' => 'Email harus menggunakan domain "anaku.com".',
             'password.required' => 'Password harus diisi.',
             'password.min' => 'Password minimal harus terdiri dari :min karakter.',
         ];

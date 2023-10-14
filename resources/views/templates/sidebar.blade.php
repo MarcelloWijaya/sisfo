@@ -2,7 +2,7 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('homepage') }}">
-        <div class="sidebar-brand-text mx-1">Anaku Educare </div>
+        <div class="sidebar-brand-text mx-1">Absensi</div>
         {{-- <img src="{{ asset('template/img/Logo Removed.png') }}" width="100%" alt="..."> --}}
     </a>
     @auth
@@ -39,16 +39,10 @@
                 </a>
                 <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('center.index') }}">Data Center</a>
-                        <a class="collapse-item" href="{{ route('centerPayment.index') }}">Data Biaya Center</a>
                         <a class="collapse-item" href="{{ route('teacher.index') }}">Data Guru</a>
                         <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
                         <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
-                        <a class="collapse-item" href="{{ route('payment.index') }}">Data Pembayaran</a>
-                        <a class="collapse-item" href="{{ route('item.index') }}">Data Barang dan Buku</a>
-                        <a class="collapse-item" href="{{ route('item.list') }}">Buat Pesanan</a>
-                        <a class="collapse-item" href="{{ route('coupon.index') }}">Data Kupon</a>
-                        <a class="collapse-item" href="{{ route('coupon.create') }}">Pemesanan Kupon</a>
+                        <a class="collapse-item" href="{{ route('presence.index') }}">Data Kehadiran</a>
                     </div>
                 </div>
             </li>
@@ -95,22 +89,6 @@
                 </div>
             </li>
 
-            <!-- Pembayaran -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembayaran"
-                    aria-expanded="true" aria-controls="collapsePembayaran">
-                    <i class="fas fa-fw fa-dollar-sign"></i>
-                    <span>Pembayaran</span>
-                </a>
-                <div id="collapsePembayaran" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('payment.index') }}">Iuran Bulanan</a>
-                        <a class="collapse-item" href="#">Iuran Buku</a>
-                    </div>
-                </div>
-            </li>
-
             <!-- Kelas -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
@@ -127,34 +105,19 @@
                 </div>
             </li>
 
-            <!-- Kupon -->
+            <!-- Kehadiran -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKupon"
-                    aria-expanded="true" aria-controls="collapseKupon">
-                    <i class="fas fa-fw fa-barcode"></i>
-                    <span>Kupon</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKehadiran"
+                    aria-expanded="true" aria-controls="collapseKehadiran">
+                    <i class="fas fa-fw fa-home"></i>
+                    <span>Kehadiran</span>
                 </a>
-                <div id="collapseKupon" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="collapseKehadiran" class="collapse" aria-labelledby="headingTwo"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('coupon.index') }}">Stok Kupon TC</a>
-                        <a class="collapse-item" href="{{ route('coupon.create') }}">Buat Pemesanan Kupon</a>
-                        <a class="collapse-item" href="#">Sejarah Pemesanan Kupon</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Barang dan Buku -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarang"
-                    aria-expanded="true" aria-controls="collapseBarang">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Barang dan Buku</span>
-                </a>
-                <div id="collapseBarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('item.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('item.price') }}">Jenis dan Harga</a>
-                        <a class="collapse-item" href="{{ route('item.list') }}">Buat Pesanan</a>
+                        <a class="collapse-item" href="{{ route('presence.index') }}">Data</a>
+                        <a class="collapse-item" href="{{ route('presence.create') }}">Absensi</a>
+                        <a class="collapse-item" href="{{ route('presence.report') }}">Laporan</a>
                     </div>
                 </div>
             </li>
@@ -166,35 +129,6 @@
             <div class="sidebar-heading">
                 Main Navigation
             </div>
-
-            <!-- Center -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCenter"
-                    aria-expanded="true" aria-controls="collapseCenter">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>TC</span>
-                </a>
-                <div id="collapseCenter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('center.detail') }}">Data TC</a>
-                        <a class="collapse-item" href="{{ route('homepage') }}">Dashboard</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Biaya -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBiaya"
-                    aria-expanded="true" aria-controls="collapseBiaya">
-                    <i class="fas fa-fw fa-money-bill-alt"></i>
-                    <span>Biaya</span>
-                </a>
-                <div id="collapseBiaya" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('centerPayment.detail') }}">Lihat Biaya TC</a>
-                    </div>
-                </div>
-            </li>
 
             <!-- Guru -->
             <li class="nav-item">
@@ -230,22 +164,6 @@
                 </div>
             </li>
 
-            <!-- Pembayaran -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembayaran"
-                    aria-expanded="true" aria-controls="collapsePembayaran">
-                    <i class="fas fa-fw fa-dollar-sign"></i>
-                    <span>Pembayaran</span>
-                </a>
-                <div id="collapsePembayaran" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('payment.index') }}">Iuran Bulanan</a>
-                        <a class="collapse-item" href="#">Iuran Buku</a>
-                    </div>
-                </div>
-            </li>
-
             <!-- Kelas -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
@@ -258,38 +176,6 @@
                         <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
                         <a class="collapse-item" href="#">Absensi Hari ini</a>
                         <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Kupon -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKupon"
-                    aria-expanded="true" aria-controls="collapseKupon">
-                    <i class="fas fa-fw fa-barcode"></i>
-                    <span>Kupon</span>
-                </a>
-                <div id="collapseKupon" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('coupon.index') }}">Stok Kupon TC</a>
-                        <a class="collapse-item" href="{{ route('coupon.create') }}">Buat Pemesanan Kupon</a>
-                        <a class="collapse-item" href="#">Sejarah Pemesanan Kupon</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Barang dan Buku -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBarang"
-                    aria-expanded="true" aria-controls="collapseBarang">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Barang dan Buku</span>
-                </a>
-                <div id="collapseBarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('item.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('item.price') }}">Jenis dan Harga</a>
-                        <a class="collapse-item" href="{{ route('item.list') }}">Buat Pesanan</a>
                     </div>
                 </div>
             </li>

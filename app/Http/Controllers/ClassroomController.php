@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Center;
 use App\Models\Classroom;
-use App\Models\ClassroomStatus;
-use App\Models\Day;
 use App\Models\ManageClassroom;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -19,7 +16,7 @@ class ClassroomController extends Controller
 
         $data = [
             'classrooms' => $classrooms,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('classroom.index', $data);
@@ -31,7 +28,7 @@ class ClassroomController extends Controller
 
         $data = [
             'classrooms' => $classrooms,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('classroom.detail', $data);
@@ -39,17 +36,11 @@ class ClassroomController extends Controller
 
     public function create()
     {
-        $centers = Center::all();
         $teachers = Teacher::all();
-        $classroomStatuses = ClassroomStatus::all();
-        $days = Day::all();
 
         $data = [
-            'centers' => $centers,
             'teachers' => $teachers,
-            'classroomStatuses' => $classroomStatuses,
-            'days' => $days,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('classroom.create', $data);
@@ -58,13 +49,7 @@ class ClassroomController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'day_id' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'teacher_id' => 'required',
             'name' => 'required',
-            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -72,13 +57,7 @@ class ClassroomController extends Controller
         }
 
         $classroom = new Classroom();
-        $classroom->center_id = $request->input('center_id');
-        $classroom->day_id = $request->input('day_id');
-        $classroom->start_time = $request->input('start_time');
-        $classroom->end_time = $request->input('end_time');
-        $classroom->teacher_id = $request->input('teacher_id');
         $classroom->name = $request->input('name');
-        $classroom->status_id = $request->input('status_id');
         $classroom->save();
 
         $requestData = [
@@ -96,22 +75,16 @@ class ClassroomController extends Controller
     public function edit($classroom_id)
     {
         $classroom = Classroom::find($classroom_id);
-        $centers = Center::all();
         $teachers = Teacher::all();
-        $classroomStatuses = ClassroomStatus::all();
-        $days = Day::all();
 
         if (!$classroom) {
             return redirect()->route('classroom.index')->withErrors('Classroom not found.');
         }
 
         $data = [
-            'centers' => $centers,
             'teachers' => $teachers,
             'classroom' => $classroom,
-            'classroomStatuses' => $classroomStatuses,
-            'days' => $days,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('classroom.edit', $data);
@@ -120,13 +93,7 @@ class ClassroomController extends Controller
     public function update(Request $request, $classroom_id)
     {
         $validator = Validator::make($request->all(), [
-            'center_id' => 'required',
-            'day_id' => 'required',
-            'start_time' => 'required',
-            'end_time' => 'required',
-            'teacher_id' => 'required',
             'name' => 'required',
-            'status_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -139,13 +106,7 @@ class ClassroomController extends Controller
             return redirect()->route('classroom.index')->withErrors('Classroom not found.');
         }
 
-        $classroom->day_id = $request->input('day_id');
-        $classroom->center_id = $request->input('center_id');
-        $classroom->start_time = $request->input('start_time');
-        $classroom->end_time = $request->input('end_time');
-        $classroom->teacher_id = $request->input('teacher_id');
         $classroom->name = $request->input('name');
-        $classroom->status_id = $request->input('status_id');
         $classroom->save();
 
         $requestData = [

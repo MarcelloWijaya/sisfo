@@ -72,35 +72,22 @@
                                 <table id="dt_table" class="table table-bordered" cellspacing="0" width="100%">
                                     <thead>
                                         <tr class="text-center">
-                                            <th>Hari dan Jam</th>
-                                            <th>Center</th>
-                                            <th>Ruang</th>
-                                            <th>Guru</th>
+                                            <th>Kelas</th>
                                             <th>Murid</th>
                                             <th>Action</th>
-                                            <th>Status Kelas</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
-                                            <th>Hari dan Jam</th>
-                                            <th>Center</th>
-                                            <th>Ruang</th>
-                                            <th>Guru</th>
+                                            <th>Kelas</th>
                                             <th>Murid</th>
                                             <th>Action</th>
-                                            <th>Status Kelas</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @foreach ($grouped_classrooms as $classroom)
                                             <tr class="text-center">
-                                                <td>{{ $classroom->first()->classroom->day->name }} <br>
-                                                    {{ $classroom->first()->classroom->start_time }} -
-                                                    {{ $classroom->first()->classroom->end_time }}</td>
-                                                <td>{{ $classroom->first()->classroom->center->name }}</td>
                                                 <td>{{ $classroom->first()->classroom->name }}</td>
-                                                <td>{{ $classroom->first()->classroom->teacher->name }}</td>
                                                 <td>
                                                     @foreach ($classroom as $manage_classroom)
                                                         @if ($manage_classroom->student)
@@ -173,9 +160,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <td>
-                                                    <button type="button" class="btn btn-secondary">Non Aktif</button>
-                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

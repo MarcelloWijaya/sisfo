@@ -3,19 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
+namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
-class ManageClassroom extends Model
+class Grade extends Model
 {
-    use HasFactory;
-
-    public function classroom()
+    public function classrooms()
     {
         return $this->belongsTo(Classroom::class);
-    }
-
-    public function student()
-    {
-        return $this->belongsTo(Student::class);
     }
 }
