@@ -36,24 +36,23 @@
                                     <div class="mt-1 mr-2">
                                         <label for="month">Bulan:</label>
                                         <select id="month" name="month">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
+                                            @php
+                                                $currentMonth = date('n'); // Mendapatkan bulan saat ini (tanpa nol di depan)
+                                            @endphp
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                <option value="{{ $i }}"
+                                                    {{ $i == $currentMonth ? 'selected' : '' }}>{{ $i }}
+                                                </option>
+                                            @endfor
                                         </select>
                                     </div>
                                     <div class="mt-1 mr-2">
                                         <label for="year">Tahun:</label>
-                                        <select id="month" name="month">
-                                            <option value="2023">2023</option>
+                                        <select id="year" name="year">
+                                            @php
+                                                $currentYear = date('Y'); // Mendapatkan tahun saat ini
+                                            @endphp
+                                            <option value="{{ $currentYear }}">{{ $currentYear }}</option>
                                         </select>
                                     </div>
                                     <button type="submit" class="btn btn-sm btn-primary">Submit</button>
@@ -184,7 +183,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var select = document.getElementById('month');
             var selectedValue = select.value;
@@ -213,7 +212,7 @@
 
             filterTableByStatus(selectedValue);
         });
-    </script>
+    </script> --}}
     @include('templates.script')
 </body>
 

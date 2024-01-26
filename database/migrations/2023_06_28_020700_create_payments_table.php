@@ -15,6 +15,7 @@
                 $table->id();
                 $table->foreignId('student_id');
                 $table->timestamp('payment_date')->nullable();
+                $table->string('payment_month')->nullable();
                 $table->integer('discount')->nullable();
                 $table->string('coupon_number')->nullable();
                 $table->foreignId('payment_type_id')->nullable();

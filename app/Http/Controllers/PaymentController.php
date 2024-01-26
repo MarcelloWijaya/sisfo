@@ -114,6 +114,7 @@ class PaymentController extends Controller
             'discount' => 'required',
             'coupon_number' => 'required',
             'payment_type_id' => 'required',
+            'payment_month' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -137,6 +138,7 @@ class PaymentController extends Controller
                 $newPayment->discount = $request->discount;
                 $newPayment->coupon_number = $request->coupon_number;
                 $newPayment->payment_type_id = $request->payment_type_id;
+                $payment->payment_month = $request->payment_month;
                 $newPayment->status_id = 1;
                 $newPayment->save();
             } else {
@@ -144,6 +146,7 @@ class PaymentController extends Controller
                 $payment->discount = $request->discount;
                 $payment->coupon_number = $request->coupon_number;
                 $payment->payment_type_id = $request->payment_type_id;
+                $payment->payment_month = $request->payment_month;
                 $payment->payment_date = now()->format('Y-m-d H:i:s');
                 $payment->status_id = 1;
                 $payment->save();
