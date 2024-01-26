@@ -27,7 +27,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Teacher Data</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Data Presence</h1>
                     <div>
                         @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -49,8 +49,8 @@
                     <!-- DataTables Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header d-flex justify-content-between">
-                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Teacher Data</h6>
-                            <a href="{{ route('teacher.create') }}" class="btn btn-sm btn-primary">Add Teacher</a>
+                            <h6 class="m-0 mt-1 font-weight-bold text-primary">Presence Data</h6>
+                            <a href="{{ route('presence.create') }}" class="btn btn-sm btn-primary">Add Presence</a>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive table-hover">
@@ -58,65 +58,27 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Name</th>
-                                            <th>Profile</th>
-                                            @auth
-                                                @if (Auth::user()->role_id == 1)
-                                                    <th>Action</th>
-                                                @endif
-                                            @endauth
+                                            <th>Customer ID</th>
+                                            <th>Date and Time</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Name</th>
+                                            <th>Customer ID</th>
                                             <th>Profile</th>
-                                            @auth
-                                                @if (Auth::user()->role_id == 1)
-                                                    <th>Action</th>
-                                                @endif
-                                            @endauth
                                         </tr>
                                     </tfoot>
                                     <tbody>
                                         @php
                                             $no = 1;
                                         @endphp
-                                        @foreach ($teachers as $teacher)
+                                        @foreach ($presences as $presence)
                                             <tr class="text-center"
-                                                onclick="window.location='{{ route('teacher.edit', $teacher->id) }}';">
+                                                onclick="window.location='{{ route('presence.edit') }}';">
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $teacher->name }}</td>
-                                                {{-- <td>
-                                                        <a href="mailto:{{ $teacher->email }}"
-                                                            class="btn btn-sm btn-secondary">Email</a>
-                                                    </td> --}}
-                                                <td>
-                                                    <a href="{{ route('teacher.detail', $teacher->id) }}"
-                                                        class="btn btn-sm btn-secondary">Profile</a>
-                                                </td>
-                                                @auth
-                                                    @if (Auth::user()->role_id == 1)
-                                                        <td>
-                                                            <div class="d-flex justify-content-center">
-                                                                <a href="{{ route('teacher.edit', $teacher->id) }}"
-                                                                    class="btn btn-sm btn-primary mx-1"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                                <form id="delete-form-{{ $teacher->id }}"
-                                                                    action="{{ route('teacher.delete', $teacher->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-sm btn-danger mx-1">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                    @endif
-                                                @endauth
+                                                <td>{{ $presence->customer_id }}</td>
+                                                <td>{{ $presence->date_and_time }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>

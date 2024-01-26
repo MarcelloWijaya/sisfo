@@ -21,7 +21,7 @@ class ManageClassroomController extends Controller
             'manage_classrooms' => $manage_classrooms,
             'grouped_classrooms' => $grouped_classrooms,
             'students' => $students,
-            'title' => 'Anaku Educare Management Information System (MIS)'
+            'title' => 'Absensi'
         ];
 
         return view('classroom.manage', $data);
@@ -113,7 +113,7 @@ class ManageClassroomController extends Controller
             'selected_teacher_id' => $selected_teacher_id,
             'total_students' => $total_students,
             'teacher_name' => $teacher_name,
-            'title' => 'Anaku Educare Management Information System (MIS)',
+            'title' => 'Absensi',
         ];
 
         return view('classroom.teaching', $data);

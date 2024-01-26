@@ -62,16 +62,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Center</td>
-                                        <td><b>{{ $teacher->center->name }}</b></td>
+                                        <td>Name</td>
+                                        <td><b>{{ $teacher->name }}</b></td>
                                     </tr>
                                     <tr>
-                                        <td>Level</td>
-                                        <td><b>{{ $teacher->level }}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status</td>
-                                        <td><b>{{ $teacher->status->name }}</b></td>
+                                        <td>Phone Number</td>
+                                        <td><b>{{ $teacher->phone_number }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,7 +86,7 @@
                                     <tr>
                                         <td>Invoices</td>
                                         <td>
-                                            <a class="btn btn-sm btn-primary" href="#">Jumlah Murid Per Level</a>
+                                            {{-- <a class="btn btn-sm btn-primary" href="#">Jumlah Murid Per Level</a> --}}
                                         </td>
                                     </tr>
                                 </tbody>

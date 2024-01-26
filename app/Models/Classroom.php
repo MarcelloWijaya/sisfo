@@ -9,29 +9,24 @@ class Classroom extends Model
 {
     use HasFactory;
 
-    public function center()
+    public function grade()
     {
-        return $this->belongsTo(Center::class);
+        return $this->belongsTo(Grade::class);
     }
 
-    public function teacher()
+    public function course()
     {
-        return $this->belongsTo(Teacher::class);
-    }
-
-    public function status()
-    {
-        return $this->belongsTo(ClassroomStatus::class);
-    }
-
-    public function day()
-    {
-        return $this->belongsTo(day::class);
+        return $this->belongsToMany(Course::class);
     }
 
     public function manageClassrooms()
     {
         return $this->hasMany(ManageClassroom::class);
+    }
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
     }
 
     public function students()

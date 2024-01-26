@@ -62,16 +62,12 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Center</td>
-                                        <td><b>{{ $student->center->name }}</b></td>
+                                        <td>Name</td>
+                                        <td><b>{{ $student->name }}</b></td>
                                     </tr>
                                     <tr>
-                                        <td>Level</td>
-                                        <td><b>{{ $student->level }}</b></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status</td>
-                                        <td><b>{{ $student->status->name }}</b></td>
+                                        <td>Phone Number</td>
+                                        <td><b>{{ $student->phone_number }}</b></td>
                                     </tr>
                                 </tbody>
                             </table>

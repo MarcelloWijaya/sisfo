@@ -21,23 +21,13 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            CartSeeder::class,
-            CenterSeeder::class,
-            CouponSeeder::class,
-            CouponStatusSeeder::class,
             ClassroomSeeder::class,
-            ClassroomStatusSeeder::class,
-            CenterPaymentSeeder::class,
-            DaySeeder::class,
-            ItemSeeder::class,
+            CourseSeeder::class,
+            GradeSeeder::class,
             ManageClassroomSeeder::class,
-            PaymentSeeder::class,
-            PaymentStatusSeeder::class,
-            PaymentTypeSeeder::class,
+            PresenceSeeder::class,
             StudentSeeder::class,
-            StudentStatusSeeder::class,
             TeacherSeeder::class,
-            TeacherStatusSeeder::class,
             UserRoleSeeder::class,
             UserSeeder::class,
         ]);
