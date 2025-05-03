@@ -2,6 +2,7 @@
 
 use App\Events\HelloEvent;
 use App\Events\PlaygroundEvent;
+use App\Http\Controllers\FeeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
@@ -33,10 +34,11 @@ Route::get('/', function () {
 
 Route::get('/homepage', [AdminController::class, 'indexHome'])->name('homepage');
 
+Route::get('/register', [AuthController::class, 'registerPage'])->name('register.page');
+Route::post('/register/action', [AuthController::class, 'registerAction'])->name('register.action');
 Route::get('/loginpage', [AuthController::class, 'loginPage'])->name('login.page');
-Route::get('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
+Route::post('/login/action', [AuthController::class, 'loginAction'])->name('login.action');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
 
 Route::get('/admin/role', [AdminController::class, 'indexRole'])->name('admin.role');
 Route::post('/admin/createRole', [AdminController::class, 'createRole'])->name('admin.createrole');
@@ -45,6 +47,20 @@ Route::delete('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUse
 Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess'])->name('admin.giveaccess');
 Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');
 
+Route::get('/center', [CenterController::class, 'index'])->name('center.index');
+Route::get('/center/create', [CenterController::class, 'create'])->name('center.create');
+Route::post('/center/store', [CenterController::class, 'store'])->name('center.store');
+Route::get('/center/detail/{center_id}', [CenterController::class, 'detail'])->name('center.detail');
+Route::get('/center/edit/{center_id}', [CenterController::class, 'edit'])->name('center.edit');
+Route::put('/center/update/{center_id}', [CenterController::class, 'update'])->name('center.update');
+Route::delete('/center/delete/{center_id}', [CenterController::class, 'destroy'])->name('center.delete');
+
+Route::get('/fee', [FeeController::class, 'index'])->name('fee.index');
+Route::get('/fee/create', [FeeController::class, 'create'])->name('fee.create');
+Route::post('/fee/store', [FeeController::class, 'store'])->name('fee.store');
+Route::get('/fee/edit/{fee_id}', [FeeController::class, 'edit'])->name('fee.edit');
+Route::put('/fee/update/{fee_id}', [FeeController::class, 'update'])->name('fee.update');
+Route::delete('/fee/delete/{fee_id}', [FeeController::class, 'destroy'])->name('fee.delete');
 
 Route::get('/student', [StudentController::class, 'index'])->name('student.index');
 Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
@@ -54,7 +70,6 @@ Route::get('/student/edit/{student_id}', [StudentController::class, 'edit'])->na
 Route::put('/student/update/{student_id}', [StudentController::class, 'update'])->name('student.update');
 Route::delete('/student/delete/{student_id}', [StudentController::class, 'destroy'])->name('student.delete');
 
-
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');
 Route::get('/teacher/create', [TeacherController::class, 'create'])->name('teacher.create');
 Route::post('/teacher/store', [TeacherController::class, 'store'])->name('teacher.store');
@@ -63,6 +78,13 @@ Route::get('/teacher/edit/{teacher_id}', [TeacherController::class, 'edit'])->na
 Route::put('/teacher/update/{teacher_id}', [TeacherController::class, 'update'])->name('teacher.update');
 Route::delete('/teacher/delete/{teacher_id}', [TeacherController::class, 'destroy'])->name('teacher.delete');
 
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+Route::get('/payment/detail/{student_id}', [PaymentController::class, 'detail'])->name('payment.detail');
+Route::get('/payment/edit/{teacher_id}', [PaymentController::class, 'edit'])->name('payment.edit');
+Route::put('/payment/update/{teacher_id}', [PaymentController::class, 'update'])->name('payment.update');
+Route::delete('/payment/delete/{teacher_id}', [PaymentController::class, 'destroy'])->name('payment.delete');
 
 Route::get('/classroom', [ClassroomController::class, 'index'])->name('classroom.index');
 Route::get('/classroom/teachingSchedule', [ManageClassroomController::class, 'teaching'])->name('classroom.teaching');
@@ -75,7 +97,6 @@ Route::post('/classroom/store', [ClassroomController::class, 'store'])->name('cl
 Route::get('/classroom/edit/{classroom_id}', [ClassroomController::class, 'edit'])->name('classroom.edit');
 Route::put('/classroom/update/{classroom_id}', [ClassroomController::class, 'update'])->name('classroom.update');
 Route::delete('/classroom/delete/{classroom_id}', [ClassroomController::class, 'destroy'])->name('classroom.delete');
-
 
 Route::get('/presence', [PresenceController::class, 'index'])->name('presence.index');
 Route::get('/presence/report', [PresenceController::class, 'report'])->name('presence.report');

@@ -55,6 +55,50 @@
                 Main Navigation
             </div>
 
+            <!-- Center -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCenter"
+                    aria-expanded="true" aria-controls="collapseCenter">
+                    <i class="fas fa-fw fa-building"></i>
+                    <span>Center</span>
+                </a>
+                <div id="collapseCenter" class="collapse" aria-labelledby="headingCenter" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('center.index') }}">Data</a>
+                        <a class="collapse-item" href="{{ route('center.create') }}">Tambah</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fee -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFee"
+                    aria-expanded="true" aria-controls="collapseFee">
+                    <i class="fas fa-fw fa-money-bill"></i>
+                    <span>Biaya</span>
+                </a>
+                <div id="collapseFee" class="collapse" aria-labelledby="headingFee" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('fee.index') }}">Data</a>
+                        <a class="collapse-item" href="{{ route('fee.create') }}">Tambah</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Pembayaran -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembayaran"
+                    aria-expanded="true" aria-controls="collapsePembayaran">
+                    <i class="fas fa-fw fa-graduation-cap"></i>
+                    <span>Pembayaran</span>
+                </a>
+                <div id="collapsePembayaran" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="{{ route('payment.index') }}">Data</a>
+                        <a class="collapse-item" href="{{ route('payment.create') }}">Tambah</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Guru -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuru"

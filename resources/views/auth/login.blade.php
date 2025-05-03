@@ -8,14 +8,13 @@
 
 <body class="bg-gradient-primary">
 
-    <div class="container">
-
+    <div class="container-fluid d-flex justify-content-center align-items-center min-vh-100">
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center w-100">
 
-            <div class="col-xl-6 col-lg-6 col-md-5">
+            <div class="col-lg-4 col-md-6 col-10">
 
-    <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
@@ -45,15 +44,14 @@
                                             </div>
                                         @endif
                                     </div>
-                                    <form action="{{ route('login.action') }}" method="GET" class="user">
+                                    <form action="{{ route('login.action') }}" method="POST" class="user">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                value="{{ Cookie::has('emailCookie') ? Cookie::get('emailCookie') : '' }}"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address..." name="email"
-                                                value="{{ old('email') }}">
-                                            @error('email')
+                                            <input type="text" class="form-control form-control-user"
+                                                id="exampleInputEmailOrUsername" placeholder="Email or Username"
+                                                name="email_or_username"
+                                                value="{{ Cookie::has('loginCookie') ? Cookie::get('loginCookie') : old('login') }}">
+                                            @error('email_or_username')
                                                 <span class="text-danger"><small>{{ $message }}</small></span>
                                             @enderror
                                         </div>
@@ -68,6 +66,11 @@
                                             Login
                                         </button>
                                     </form>
+                                    <!-- Create an Account Link -->
+                                    <div class="create-account text-center mt-3">
+                                        <p>Don't have an account? <a href="{{ route('register.page') }}">Create an
+                                                Account</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

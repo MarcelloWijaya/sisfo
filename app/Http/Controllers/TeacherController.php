@@ -15,7 +15,7 @@ class TeacherController extends Controller
 
         $data = [
             'teachers' => $teachers,
-            'title' => 'Absensi'
+            'title' => 'Absensi',
         ];
 
         return view('teacher.index', $data);
@@ -28,7 +28,7 @@ class TeacherController extends Controller
         $data = [
             'teacher' => $teacher,
             'teacher_id' => $teacher_id,
-            'title' => 'Absensi'
+            'title' => 'Absensi',
         ];
 
         return view('teacher.detail', $data);
@@ -36,8 +36,11 @@ class TeacherController extends Controller
 
     public function create()
     {
+        $centers = \App\Models\Center::all(); // Ambil semua data cabang
+
         $data = [
-            'title' => 'Absensi'
+            'title' => 'Absensi',
+            'centers' => $centers,
         ];
 
         return view('teacher.create', $data);
@@ -46,19 +49,33 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'teacher_name' => 'required',
+            'nickname' => 'nullable',
+            'gender' => 'nullable',
+            'address' => 'nullable',
+            'place_of_birth' => 'nullable',
+            'date_of_birth' => 'nullable|date',
             'phone_number' => 'required',
-            'email' => 'required',
+            'last_education' => 'nullable',
+            'teacher_email' => 'required|email',
+            'center_id' => 'required|exists:centers,id',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $teacher = new Teacher;
-        $teacher->name = $request->name;
+        $teacher = new Teacher();
+        $teacher->center_id = $request->center_id;
+        $teacher->teacher_name = $request->teacher_name;
+        $teacher->nickname = $request->nickname;
+        $teacher->gender = $request->gender;
+        $teacher->address = $request->address;
+        $teacher->place_of_birth = $request->place_of_birth;
+        $teacher->date_of_birth = $request->date_of_birth;
         $teacher->phone_number = $request->phone_number;
-        $teacher->email = $request->email;
+        $teacher->last_education = $request->last_education;
+        $teacher->teacher_email = $request->teacher_email;
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher created successfully.');
@@ -70,7 +87,7 @@ class TeacherController extends Controller
 
         $data = [
             'teacher' => $teacher,
-            'title' => 'Absensi'
+            'title' => 'Absensi',
         ];
 
         return view('teacher.edit', $data);
@@ -79,9 +96,16 @@ class TeacherController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'teacher_name' => 'required',
+            'nickname' => 'nullable',
+            'gender' => 'nullable',
+            'address' => 'nullable',
+            'place_of_birth' => 'nullable',
+            'date_of_birth' => 'nullable|date',
             'phone_number' => 'required',
-            'email' => 'required',
+            'last_education' => 'nullable',
+            'teacher_email' => 'required|email',
+            'center_id' => 'required|exists:centers,id',
         ]);
 
         if (Auth::user()->center_id == null) {
@@ -93,9 +117,16 @@ class TeacherController extends Controller
         }
 
         $teacher = Teacher::find($id);
-        $teacher->name = $request->name;
+        $teacher->center_id = $request->center_id;
+        $teacher->teacher_name = $request->teacher_name;
+        $teacher->nickname = $request->nickname;
+        $teacher->gender = $request->gender;
+        $teacher->address = $request->address;
+        $teacher->place_of_birth = $request->place_of_birth;
+        $teacher->date_of_birth = $request->date_of_birth;
         $teacher->phone_number = $request->phone_number;
-        $teacher->email = $request->email;
+        $teacher->last_education = $request->last_education;
+        $teacher->teacher_email = $request->teacher_email;
         $teacher->save();
 
         return redirect()->route('teacher.index')->with('success', 'Teacher updated successfully.');

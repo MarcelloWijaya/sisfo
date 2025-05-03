@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            ClassroomSeeder::class,
-            CourseSeeder::class,
-            GradeSeeder::class,
-            ManageClassroomSeeder::class,
-            PresenceSeeder::class,
-            StudentSeeder::class,
-            TeacherSeeder::class,
-            UserRoleSeeder::class,
+            // ClassroomSeeder::class,
+            // CourseSeeder::class,
+            // GradeSeeder::class,
+            // ManageClassroomSeeder::class,
+            // PresenceSeeder::class,
+            // StudentSeeder::class,
+            // TeacherSeeder::class,
+            // UserRoleSeeder::class,
             UserSeeder::class,
         ]);
     }

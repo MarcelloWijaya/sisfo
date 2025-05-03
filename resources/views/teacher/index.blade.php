@@ -27,7 +27,7 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Teacher Data</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Data Guru</h1>
                     <div>
                         @if (\Session::has('success'))
                             <div class="alert alert-success alert-dismissible fade show mb-3" role="alert">
@@ -58,25 +58,23 @@
                                     <thead>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Name</th>
-                                            <th>Profile</th>
-                                            @auth
-                                                @if (Auth::user()->role_id == 1)
-                                                    <th>Action</th>
-                                                @endif
-                                            @endauth
+                                            <th>Nama Lengkap</th>
+                                            <th>Nama Panggilan</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>No. Telepon</th>
+                                            <th>Email</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr class="text-center">
                                             <th>No</th>
-                                            <th>Name</th>
-                                            <th>Profile</th>
-                                            @auth
-                                                @if (Auth::user()->role_id == 1)
-                                                    <th>Action</th>
-                                                @endif
-                                            @endauth
+                                            <th>Nama Lengkap</th>
+                                            <th>Nama Panggilan</th>
+                                            <th>Jenis Kelamin</th>
+                                            <th>No. Telepon</th>
+                                            <th>Email</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
@@ -85,38 +83,29 @@
                                         @endphp
                                         @foreach ($teachers as $teacher)
                                             <tr class="text-center"
-                                                onclick="window.location='{{ route('teacher.edit', $teacher->id) }}';">
+                                                onclick="window.location='{{ route('teacher.detail', $teacher->id) }}';">
                                                 <td>{{ $no++ }}</td>
-                                                <td>{{ $teacher->name }}</td>
-                                                {{-- <td>
-                                                        <a href="mailto:{{ $teacher->email }}"
-                                                            class="btn btn-sm btn-secondary">Email</a>
-                                                    </td> --}}
+                                                <td>{{ $teacher->teacher_name }}</td>
+                                                <td>{{ $teacher->nickname }}</td>
+                                                <td>{{ $teacher->gender }}</td>
+                                                <td>{{ $teacher->phone_number }}</td>
+                                                <td>{{ $teacher->teacher_email }}</td>
                                                 <td>
-                                                    <a href="{{ route('teacher.detail', $teacher->id) }}"
-                                                        class="btn btn-sm btn-secondary">Profile</a>
+                                                    <div class="d-flex justify-content-center">
+                                                        <a href="{{ route('teacher.edit', $teacher->id) }}"
+                                                            class="btn btn-sm btn-primary mx-1"><i
+                                                                class="fas fa-pen"></i></a>
+                                                        <form id="delete-form-{{ $teacher->id }}"
+                                                            action="{{ route('teacher.delete', $teacher->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger mx-1">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </td>
-                                                @auth
-                                                    @if (Auth::user()->role_id == 1)
-                                                        <td>
-                                                            <div class="d-flex justify-content-center">
-                                                                <a href="{{ route('teacher.edit', $teacher->id) }}"
-                                                                    class="btn btn-sm btn-primary mx-1"><i
-                                                                        class="fas fa-pen"></i></a>
-                                                                <form id="delete-form-{{ $teacher->id }}"
-                                                                    action="{{ route('teacher.delete', $teacher->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-sm btn-danger mx-1">
-                                                                        <i class="fas fa-trash"></i>
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                    @endif
-                                                @endauth
                                             </tr>
                                         @endforeach
                                     </tbody>

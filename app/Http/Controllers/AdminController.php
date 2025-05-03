@@ -14,14 +14,26 @@ class AdminController extends Controller
 {
     public function indexHome()
     {
-        $centerId = Auth::user()->center_id; // Mendapatkan center_id dari user yang sedang login
+        // Mendapatkan center_id dari user yang sedang login
+        $user = Auth::user();
 
-        if ($centerId) {
-            $students = Student::where('center_id', $centerId)->get();
-            $teachers = Teacher::where('center_id', $centerId)->get();
-        } else {
+        if ($user->is_admin) {
+            // Cek apakah user adalah admin
+            // Admin dapat melihat semua data
             $students = Student::all();
             $teachers = Teacher::all();
+        } else {
+            $centerId = $user->center_id; // Mendapatkan center_id untuk user yang bukan admin
+
+            if ($centerId) {
+                // Jika ada center_id, tampilkan data sesuai dengan center_id
+                $students = Student::where('center_id', $centerId)->get();
+                $teachers = Teacher::where('center_id', $centerId)->get();
+            } else {
+                // Jika tidak ada center_id, tampilkan data kosong atau sesuai kebijakan
+                $students = [];
+                $teachers = [];
+            }
         }
 
         $totalStudents = count($students);
@@ -37,12 +49,12 @@ class AdminController extends Controller
 
     public function indexRole()
     {
-        $users  = User::all();
+        $users = User::all();
         $user_roles = User_role::all();
 
         $data = [
             'users' => $users,
-            'user_roles' => $user_roles
+            'user_roles' => $user_roles,
         ];
 
         return view('admin.role', $data);
@@ -51,7 +63,7 @@ class AdminController extends Controller
     public function createRole(Request $request)
     {
         $rules = [
-            'User_role' => 'required|min:5|unique:user_roles,name'
+            'User_role' => 'required|min:5|unique:user_roles,name',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -94,7 +106,7 @@ class AdminController extends Controller
         $user = User::find($user_id);
 
         $data = [
-            'user' => $user
+            'user' => $user,
         ];
 
         return view('admin.edit', $data);
