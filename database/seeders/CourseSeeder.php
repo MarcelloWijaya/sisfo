@@ -14,9 +14,9 @@ class CourseSeeder extends Seeder
     {
         $courses = [
             [
-                'name' => 'Matematika',
-                'start_time' => '08:00:00',
-                'end_time' => '09:30:00',
+    'name' => 'Matematika',
+    'start_time' => '08:00:00',
+    'end_time' => '09:30:00',
             ],
             [
                 'name' => 'Bahasa Inggris',
