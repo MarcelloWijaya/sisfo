@@ -81,9 +81,10 @@
                                                     <td>{{ $fee->center->name }}</td>
                                                     <td>{{ $fee->academic_year }}</td>
                                                     <td>{{ $fee->payment_type }}</td>
-                                                    <td>{{ $fee->registration_fee }}</td>
-                                                    <td>{{ $fee->equipment_fee }}</td>
-                                                    <td>{{ $fee->course_fee }}</td>
+                                                    <td>Rp. {{ number_format($fee->registration_fee, 0, ',', '.') }}
+                                                    </td>
+                                                    <td>Rp. {{ number_format($fee->equipment_fee, 0, ',', '.') }}</td>
+                                                    <td>Rp. {{ number_format($fee->course_fee, 0, ',', '.') }}</td>
                                                     <td>
                                                         <a href="{{ route('fee.edit', $fee->id) }}"
                                                             class="btn btn-sm btn-primary"><i

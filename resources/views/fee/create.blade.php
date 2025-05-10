@@ -45,7 +45,7 @@
                             </button>
                         </div>
                     @endif
-                    
+
                     <div class="card">
                         <div class="card-body">
                             <form action="{{ route('fee.store') }}" method="POST">
@@ -79,15 +79,15 @@
                                 <div class="form-group">
                                     <label for="payment_type">Jenis Pembayaran</label>
                                     <select class="form-control" name="payment_type">
-                                        <option value="Monthly"
-                                            {{ old('payment_type') == 'Monthly' ? 'selected' : '' }}>Bulanan</option>
-                                        <option value="Quarterly"
-                                            {{ old('payment_type') == 'Quarterly' ? 'selected' : '' }}>Triwulan
-                                        </option>
-                                        <option value="Semester"
-                                            {{ old('payment_type') == 'Semester' ? 'selected' : '' }}>Semester</option>
-                                        <option value="Yearly" {{ old('payment_type') == 'Yearly' ? 'selected' : '' }}>
-                                            Tahunan</option>
+                                        <option value="3 Bulan"
+                                            {{ old('payment_type', $fee->payment_type) == '3 Bulan' ? 'selected' : '' }}>
+                                            3 Bulan</option>
+                                        <option value="6 Bulan"
+                                            {{ old('payment_type', $fee->payment_type) == '6 Bulan' ? 'selected' : '' }}>
+                                            6 Bulan</option>
+                                        <option value="12 Bulan"
+                                            {{ old('payment_type', $fee->payment_type) == '12 Bulan' ? 'selected' : '' }}>
+                                            12 Bulan</option>
                                     </select>
                                     @error('payment_type')
                                         <small class="text-danger">{{ $message }}</small>
@@ -95,31 +95,41 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="registration_fee">Biaya Pendaftaran</label>
-                                    <input type="number" class="form-control" name="registration_fee"
-                                        value="{{ old('registration_fee') }}" placeholder="Masukkan biaya pendaftaran">
+                                    <label for="registration_fee_display">Biaya Pendaftaran</label>
+                                    <input type="text" class="form-control rupiah" id="registration_fee_display"
+                                        value="{{ old('registration_fee', isset($fee) ? number_format($fee->registration_fee, 0, ',', '.') : '') }}"
+                                        placeholder="Masukkan biaya pendaftaran">
+                                    <input type="hidden" name="registration_fee" id="registration_fee"
+                                        value="{{ old('registration_fee', isset($fee) ? $fee->registration_fee : '') }}">
                                     @error('registration_fee')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="equipment_fee">Biaya Peralatan</label>
-                                    <input type="number" class="form-control" name="equipment_fee"
-                                        value="{{ old('equipment_fee') }}" placeholder="Masukkan biaya peralatan">
+                                    <label for="equipment_fee_display">Biaya Peralatan</label>
+                                    <input type="text" class="form-control rupiah" id="equipment_fee_display"
+                                        value="{{ old('equipment_fee', isset($fee) ? number_format($fee->equipment_fee, 0, ',', '.') : '') }}"
+                                        placeholder="Masukkan biaya peralatan">
+                                    <input type="hidden" name="equipment_fee" id="equipment_fee"
+                                        value="{{ old('equipment_fee', isset($fee) ? $fee->equipment_fee : '') }}">
                                     @error('equipment_fee')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="course_fee">Biaya Kursus</label>
-                                    <input type="number" class="form-control" name="course_fee"
-                                        value="{{ old('course_fee') }}" placeholder="Masukkan biaya kursus">
+                                    <label for="course_fee_display">Biaya Kursus</label>
+                                    <input type="text" class="form-control rupiah" id="course_fee_display"
+                                        value="{{ old('course_fee', isset($fee) ? number_format($fee->course_fee, 0, ',', '.') : '') }}"
+                                        placeholder="Masukkan biaya kursus">
+                                    <input type="hidden" name="course_fee" id="course_fee"
+                                        value="{{ old('course_fee', isset($fee) ? $fee->course_fee : '') }}">
                                     @error('course_fee')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+
 
                                 <div class="form-group">
                                     <label for="note">Catatan</label>

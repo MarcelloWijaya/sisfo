@@ -17,6 +17,44 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fields = ['registration_fee', 'equipment_fee', 'course_fee'];
+
+        fields.forEach(field => {
+            const display = document.getElementById(`${field}_display`);
+            const hidden = document.getElementById(field);
+
+            const formatRupiah = (angka) => {
+                const number = parseInt(angka.replace(/[^\d]/g, '')) || 0;
+                return 'Rp. ' + number.toLocaleString('id-ID');
+            };
+
+            const extractNumber = (value) => {
+                return value.replace(/[^\d]/g, '');
+            };
+
+            // Format saat halaman dimuat (jaga-jaga jika user pakai browser autofill)
+            display.value = formatRupiah(hidden.value);
+
+            display.addEventListener('input', function() {
+                const clean = extractNumber(display.value);
+                hidden.value = clean;
+                display.value = formatRupiah(clean);
+            });
+
+            // Jika user paste angka
+            display.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pasted = (e.clipboardData || window.clipboardData).getData('text');
+                const clean = extractNumber(pasted);
+                hidden.value = clean;
+                display.value = formatRupiah(clean);
+            });
+        });
+    });
+</script>
+
 <!-- Bootstrap core JavaScript-->
 <script src="{{ asset('template/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Center;
+use App\Models\Fee;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\User;
@@ -14,34 +16,35 @@ class AdminController extends Controller
 {
     public function indexHome()
     {
-        // Mendapatkan center_id dari user yang sedang login
         $user = Auth::user();
 
         if ($user->is_admin) {
-            // Cek apakah user adalah admin
-            // Admin dapat melihat semua data
+            // Admin melihat semua data
             $students = Student::all();
             $teachers = Teacher::all();
+            $totalCenters = Center::count();
+            $totalFee = Fee::sum('amount');
         } else {
-            $centerId = $user->center_id; // Mendapatkan center_id untuk user yang bukan admin
+            $centerId = $user->center_id;
 
             if ($centerId) {
-                // Jika ada center_id, tampilkan data sesuai dengan center_id
                 $students = Student::where('center_id', $centerId)->get();
                 $teachers = Teacher::where('center_id', $centerId)->get();
+                $totalCenters = 1; // Non-admin hanya memiliki akses ke satu center
+                $totalFee = Fee::where('center_id', $centerId)->sum('amount');
             } else {
-                // Jika tidak ada center_id, tampilkan data kosong atau sesuai kebijakan
                 $students = [];
                 $teachers = [];
+                $totalCenters = 0;
+                $totalFee = 0;
             }
         }
 
-        $totalStudents = count($students);
-        $totalTeachers = count($teachers);
-
         $data = [
-            'total_students' => $totalStudents,
-            'total_teachers' => $totalTeachers,
+            'total_students' => count($students),
+            'total_teachers' => count($teachers),
+            'total_centers' => $totalCenters,
+            'total_fee' => $totalFee,
         ];
 
         return view('admin.homepage', $data);

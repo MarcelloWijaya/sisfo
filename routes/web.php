@@ -3,6 +3,7 @@
 use App\Events\HelloEvent;
 use App\Events\PlaygroundEvent;
 use App\Http\Controllers\FeeController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
@@ -46,6 +47,9 @@ Route::put('/admin/updateUser/{user_id}', [AdminController::class, 'updateUser']
 Route::delete('/admin/deleteUser/{user_id}', [AdminController::class, 'deleteUser'])->name('admin.deleteuser');
 Route::get('/admin/giveAccess/{user_id}', [AdminController::class, 'giveAccess'])->name('admin.giveaccess');
 Route::get('/admin/removeccess/{user_id}', [AdminController::class, 'removeAccess'])->name('admin.removeaccess');
+
+Route::get('/role', [RoleController::class, 'index'])->name('role.index');
+Route::get('/role/manage/{role_id}', [RoleController::class, 'manage'])->name('role.manage');
 
 Route::get('/center', [CenterController::class, 'index'])->name('center.index');
 Route::get('/center/create', [CenterController::class, 'create'])->name('center.create');

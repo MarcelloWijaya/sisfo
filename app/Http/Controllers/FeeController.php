@@ -16,72 +16,82 @@ class FeeController extends Controller
 
     public function create()
     {
-        $centers = Center::all(); // Untuk menampilkan data center
+        $centers = Center::all();
         return view('fee.create', compact('centers'))->with('title', 'Tambah Biaya');
     }
 
     public function store(Request $request)
     {
-        // Validasi request
         $request->validate([
             'center_id' => 'required|exists:centers,id',
             'academic_year' => 'required|string|max:9',
-            'payment_type' => 'required|in:Monthly,Quarterly,Semester,Yearly',
-            'registration_fee' => 'required|integer',
-            'equipment_fee' => 'required|integer',
-            'course_fee' => 'required|integer',
+            'payment_type' => 'required|in:3 Bulan,6 Bulan,12 Bulan',
+            'registration_fee' => 'required|string',
+            'equipment_fee' => 'required|string',
+            'course_fee' => 'required|string',
             'note' => 'nullable|string|max:255',
         ]);
 
-        // Menyimpan fee baru dengan cara eksplisit
         $fee = new Fee();
         $fee->center_id = $request->center_id;
         $fee->academic_year = $request->academic_year;
         $fee->payment_type = $request->payment_type;
-        $fee->registration_fee = $request->registration_fee;
-        $fee->equipment_fee = $request->equipment_fee;
-        $fee->course_fee = $request->course_fee;
+        $fee->registration_fee = $this->sanitizeRupiah($request->registration_fee);
+        $fee->equipment_fee = $this->sanitizeRupiah($request->equipment_fee);
+        $fee->course_fee = $this->sanitizeRupiah($request->course_fee);
         $fee->note = $request->note;
         $fee->save();
 
-        return redirect()->route('fee.index')->with('success', 'Data fee berhasil ditambahkan.');
+        return redirect()->route('fee.index')->with('success', 'Data biaya berhasil ditambahkan.');
     }
 
-    public function edit(Fee $fee)
+    public function edit($fee_id)
     {
         $centers = Center::all();
-        return view('fee.edit', compact('fee', 'centers'))->with('title', 'Edit Biaya');
+        $fee = Fee::findOrFail($fee_id);
+
+        return view('fee.edit', [
+            'fee' => $fee,
+            'centers' => $centers,
+            'title' => 'Edit Data Cabang',
+        ]);
     }
 
-    public function update(Request $request, Fee $fee)
+    public function update(Request $request, $fee_id)
     {
-        // Validasi request
         $request->validate([
             'center_id' => 'required|exists:centers,id',
             'academic_year' => 'required|string|max:9',
-            'payment_type' => 'required|in:Monthly,Quarterly,Semester,Yearly',
-            'registration_fee' => 'required|integer',
-            'equipment_fee' => 'required|integer',
-            'course_fee' => 'required|integer',
+            'payment_type' => 'required|in:3 Bulan,6 Bulan,12 Bulan',
+            'registration_fee' => 'required|string',
+            'equipment_fee' => 'required|string',
+            'course_fee' => 'required|string',
             'note' => 'nullable|string|max:255',
         ]);
 
-        // Update fee dengan cara eksplisit
+        $fee = Fee::findOrFail($fee_id);
         $fee->center_id = $request->center_id;
         $fee->academic_year = $request->academic_year;
         $fee->payment_type = $request->payment_type;
-        $fee->registration_fee = $request->registration_fee;
-        $fee->equipment_fee = $request->equipment_fee;
-        $fee->course_fee = $request->course_fee;
+        $fee->registration_fee = $this->sanitizeRupiah($request->registration_fee);
+        $fee->equipment_fee = $this->sanitizeRupiah($request->equipment_fee);
+        $fee->course_fee = $this->sanitizeRupiah($request->course_fee);
         $fee->note = $request->note;
         $fee->save();
 
-        return redirect()->route('fee.index')->with('success', 'Data fee berhasil diperbarui.');
+        return redirect()->route('fee.index')->with('success', 'Data biaya berhasil diperbarui.');
     }
 
-    public function destroy(Fee $fee)
+    public function destroy($fee_id)
     {
+        $fee = Fee::findOrFail($fee_id);
         $fee->delete();
-        return redirect()->route('fee.index')->with('success', 'Data fee berhasil dihapus.');
+
+        return redirect()->route('fee.index')->with('success', 'Data biaya berhasil dihapus');
+    }
+
+    private function sanitizeRupiah($value)
+    {
+        return (int) str_replace(['Rp.', ',', '.', ' '], '', $value);
     }
 }

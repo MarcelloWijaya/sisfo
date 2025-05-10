@@ -64,14 +64,13 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        @foreach ($user_roles as $ur)
+                                        @foreach ($roles as $role)
                                             <tr class="text-center">
-                                                <td>{{ $ur->id }}</td>
-                                                <td>{{ $ur->role_name }}</td>
+                                                <td>{{ $role->id }}</td>
+                                                <td>{{ $role->name }}</td>
                                                 <td>
-                                                    <a href="" class="badge badge-warning">Access</a>
-                                                    <a href="" class="badge badge-success">Edit</a>
-                                                    <a href="" class="badge badge-danger">Delete</a>
+                                                    <a href="{{ route('role.manage', $role->id) }}"
+                                                        class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                                 </td>
                                         @endforeach
                                     </tbody>
