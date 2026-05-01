@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Center;
+use App\Models\Branch; // Ganti Center dengan Branch
 use Illuminate\Support\Facades\Validator;
 
 class CenterController extends Controller
 {
     /**
-     * Menampilkan daftar semua center
+     * Menampilkan daftar semua branch/center
      */
     public function index()
     {
-        $centers = Center::all();
+        $centers = Branch::all(); // Ganti Center::all() dengan Branch::all()
 
         return view('center.index', [
             'centers' => $centers,
@@ -22,7 +22,7 @@ class CenterController extends Controller
     }
 
     /**
-     * Menampilkan form untuk membuat center baru
+     * Menampilkan form untuk membuat branch baru
      */
     public function create()
     {
@@ -32,37 +32,42 @@ class CenterController extends Controller
     }
 
     /**
-     * Menyimpan center baru ke database
+     * Menyimpan branch baru ke database
      */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:centers,email',
-            'address' => 'required|string',
-            'phone_number' => 'required|string|max:20',
+            'name' => 'required|string|max:100',
+            'owner_name' => 'nullable|string|max:100',
+            'email' => 'nullable|email|max:100|unique:branches,email', // Ganti centers dengan branches
+            'phone' => 'nullable|string|max:20',
+            'address' => 'nullable|string',
+            'is_active' => 'boolean',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = new Center();
+        $center = new Branch(); // Ganti Center dengan Branch
         $center->name = $request->name;
+        $center->owner_name = $request->owner_name;
         $center->email = $request->email;
+        $center->phone = $request->phone; // Ganti phone_number dengan phone
         $center->address = $request->address;
-        $center->phone_number = $request->phone_number;
+        $center->is_active = $request->is_active ?? 1;
+        $center->created_by = auth()->user()->name ?? 'system';
         $center->save();
 
-        return redirect()->route('center.index')->with('success', 'Center created successfully.');
+        return redirect()->route('center.index')->with('success', 'Cabang berhasil ditambahkan.');
     }
 
     /**
-     * Menampilkan detail center
+     * Menampilkan detail branch
      */
     public function detail($center_id)
     {
-        $center = Center::findOrFail($center_id);
+        $center = Branch::findOrFail($center_id); // Ganti Center dengan Branch
 
         return view('center.detail', [
             'center' => $center,
@@ -71,11 +76,11 @@ class CenterController extends Controller
     }
 
     /**
-     * Menampilkan form untuk mengedit center
+     * Menampilkan form untuk mengedit branch
      */
     public function edit($center_id)
     {
-        $center = Center::findOrFail($center_id);
+        $center = Branch::findOrFail($center_id); // Ganti Center dengan Branch
 
         return view('center.edit', [
             'center' => $center,
@@ -84,38 +89,43 @@ class CenterController extends Controller
     }
 
     /**
-     * Mengupdate data center di database
+     * Mengupdate data branch di database
      */
     public function update(Request $request, $center_id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:centers,email,' . $center_id,
+            'name' => 'required|string|max:100',
+            'owner_name' => 'nullable|string|max:100',
+            'email' => 'nullable|email|max:100|unique:branches,email,' . $center_id, // Ganti centers dengan branches
+            'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
-            'phone_number' => 'required|string|max:20',
+            'is_active' => 'boolean',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $center = Center::findOrFail($center_id);
+        $center = Branch::findOrFail($center_id); // Ganti Center dengan Branch
         $center->name = $request->name;
+        $center->owner_name = $request->owner_name;
         $center->email = $request->email;
+        $center->phone = $request->phone; // Ganti phone_number dengan phone
         $center->address = $request->address;
-        $center->phone_number = $request->phone_number;
+        $center->is_active = $request->is_active ?? 1;
+        $center->updated_by = auth()->user()->name ?? 'system';
         $center->save();
 
         return redirect()->route('center.index')->with('success', 'Data cabang berhasil diperbarui');
     }
 
     /**
-     * Menghapus center dari database
+     * Menghapus branch dari database (soft delete)
      */
     public function destroy($center_id)
     {
-        $center = Center::findOrFail($center_id);
-        $center->delete();
+        $center = Branch::findOrFail($center_id); // Ganti Center dengan Branch
+        $center->delete(); // Soft delete karena pakai SoftDeletes
 
         return redirect()->route('center.index')->with('success', 'Cabang berhasil dihapus');
     }

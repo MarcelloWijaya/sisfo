@@ -2,135 +2,170 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom;
-use App\Models\ManageClassroom;
+use App\Models\Classes; // Ganti Classroom dengan Classes
 use App\Models\Teacher;
+use App\Models\Student;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ClassroomController extends Controller
 {
+    /**
+     * Display a listing of classes
+     */
     public function index()
     {
-        $classrooms = Classroom::all();
+        $classrooms = Classes::with(['teacher', 'branch'])->get(); // Eager loading relasi
 
         $data = [
             'classrooms' => $classrooms,
-            'title' => 'Absensi'
+            'title' => 'Manajemen Kelas',
         ];
 
         return view('classroom.index', $data);
     }
 
-    public function detail()
+    /**
+     * Display class details with students
+     */
+    public function detail($classroom_id)
     {
-        $classrooms = Classroom::all();
+        $classroom = Classes::with(['teacher', 'branch', 'students'])->findOrFail($classroom_id);
 
         $data = [
-            'classrooms' => $classrooms,
-            'title' => 'Absensi'
+            'classroom' => $classroom,
+            'title' => 'Detail Kelas',
         ];
 
         return view('classroom.detail', $data);
     }
 
+    /**
+     * Show form to create new class
+     */
     public function create()
     {
-        $teachers = Teacher::all();
+        $teachers = Teacher::where('is_active', 1)->get();
+        $branches = Branch::where('is_active', 1)->get();
 
         $data = [
             'teachers' => $teachers,
-            'title' => 'Absensi'
+            'branches' => $branches,
+            'title' => 'Tambah Kelas Baru',
         ];
 
         return view('classroom.create', $data);
     }
 
+    /**
+     * Store a new class
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|string|max:100',
+            'teacher_id' => 'nullable|exists:teachers,id',
+            'branch_id' => 'nullable|exists:branches,id',
+            'class_status' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $classroom = new Classroom();
+        $classroom = new Classes();
         $classroom->name = $request->input('name');
+        $classroom->teacher_id = $request->input('teacher_id');
+        $classroom->branch_id = $request->input('branch_id');
+        $classroom->class_status = $request->input('class_status', 'Active');
+        $classroom->is_active = 1;
+        $classroom->created_by = auth()->user()->name ?? 'system';
         $classroom->save();
 
-        $requestData = [
-            'classroom_id' => $classroom->id,
-        ];
-
-        $request = new Request($requestData);
-
-        $ManageClassroomController = new ManageClassroomController();
-        $ManageClassroomController->store($request, $classroom->id);
-
-        return redirect()->route('classroom.index')->with('success', 'Classroom created successfully.');
+        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil ditambahkan.');
     }
 
+    /**
+     * Show form to edit class
+     */
     public function edit($classroom_id)
     {
-        $classroom = Classroom::find($classroom_id);
-        $teachers = Teacher::all();
-
-        if (!$classroom) {
-            return redirect()->route('classroom.index')->withErrors('Classroom not found.');
-        }
+        $classroom = Classes::findOrFail($classroom_id);
+        $teachers = Teacher::where('is_active', 1)->get();
+        $branches = Branch::where('is_active', 1)->get();
 
         $data = [
             'teachers' => $teachers,
+            'branches' => $branches,
             'classroom' => $classroom,
-            'title' => 'Absensi'
+            'title' => 'Edit Kelas',
         ];
 
         return view('classroom.edit', $data);
     }
 
+    /**
+     * Update class data
+     */
     public function update(Request $request, $classroom_id)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|string|max:100',
+            'teacher_id' => 'nullable|exists:teachers,id',
+            'branch_id' => 'nullable|exists:branches,id',
+            'class_status' => 'nullable|string|max:50',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $classroom = Classroom::find($classroom_id);
-
-        if (!$classroom) {
-            return redirect()->route('classroom.index')->withErrors('Classroom not found.');
-        }
-
+        $classroom = Classes::findOrFail($classroom_id);
         $classroom->name = $request->input('name');
+        $classroom->teacher_id = $request->input('teacher_id');
+        $classroom->branch_id = $request->input('branch_id');
+        $classroom->class_status = $request->input('class_status', 'Active');
+        $classroom->updated_by = auth()->user()->name ?? 'system';
         $classroom->save();
 
-        $requestData = [
-            'classroom_id' => $classroom->id,
-        ];
-
-        $request = new Request($requestData);
-
-        $ManageClassroomController = new ManageClassroomController();
-        $ManageClassroomController->store($request, $classroom->id);
-
-        return redirect()->route('classroom.index')->with('success', 'Classroom updated successfully.');
+        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil diperbarui.');
     }
 
+    /**
+     * Delete class (soft delete)
+     */
     public function destroy($classroom_id)
     {
-        $classroom = Classroom::find($classroom_id);
-
-        if (!$classroom) {
-            return redirect()->route('classroom.index')->withErrors('Classroom not found.');
-        }
-
+        $classroom = Classes::findOrFail($classroom_id);
         $classroom->delete();
 
-        return redirect()->route('classroom.index')->with('delete', 'Classroom deleted successfully.');
+        return redirect()->route('classroom.index')->with('success', 'Kelas berhasil dihapus.');
+    }
+
+    /**
+     * Get class schedule
+     */
+    public function schedule($classroom_id)
+    {
+        $classroom = Classes::with(['schedules'])->findOrFail($classroom_id);
+
+        return view('classroom.schedule', [
+            'classroom' => $classroom,
+            'title' => 'Jadwal Kelas',
+        ]);
+    }
+
+    /**
+     * Get students in class
+     */
+    public function getStudents($classroom_id)
+    {
+        $classroom = Classes::with('students')->findOrFail($classroom_id);
+
+        return response()->json([
+            'success' => true,
+            'students' => $classroom->students,
+        ]);
     }
 }

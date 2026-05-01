@@ -2,251 +2,185 @@
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('homepage') }}">
-        <div class="sidebar-brand-text mx-1">Absensi</div>
-        {{-- <img src="{{ asset('template/img/Logo Removed.png') }}" width="100%" alt="..."> --}}
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="sidebar-brand-text mx-1">Bimbel System</div>
     </a>
+
     @auth
-        @if (Auth::user()->role_id == 1)
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+        @php
+            $roleId = Auth::user()->role_id;
 
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('homepage') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
-            </li>
+            // Ambil semua module_name yang dimiliki role ini
+            $userModules = DB::table('role_modules as rm')
+                ->join('modules as m', 'rm.module_id', '=', 'm.id')
+                ->where('rm.role_id', $roleId)
+                ->pluck('m.name')
+                ->toArray();
+        @endphp
 
+        <script>
+            console.log('Role ID: {{ $roleId }}');
+            console.log('User Modules:', @json($userModules));
+            console.log('Modules Count: {{ count($userModules) }}');
+        </script>
+
+        <!-- Dashboard -->
+        <li class="nav-item {{ request()->routeIs('homepage') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('homepage') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <!-- Management Section -->
+
+        <div class="sidebar-heading">Management</div>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('role.index') }}">
+                <i class="fas fa-fw fa-user-tie"></i>
+                <span>Role Management</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('module.index') }}">
+                <i class="fas fa-fw fa-cubes"></i>
+                <span>Module Management</span>
+            </a>
+        </li>
+
+        @if (in_array('view_user', $userModules))
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.role') }}">
-                    <i class="fas fa-fw fa-user-tie"></i>
-                    <span>Role</span></a>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Data Control
-            </div>
-
-            <!-- Data Management -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseData"
-                    aria-expanded="true" aria-controls="collapseData">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Data Management</span>
+                <a class="nav-link" href="{{ route('user.index') }}">
+                    <i class="fas fa-fw fa-users"></i>
+                    <span>User Management</span>
                 </a>
-                <div id="collapseData" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('teacher.index') }}">Data Guru</a>
-                        <a class="collapse-item" href="{{ route('student.index') }}">Data Siswa</a>
-                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data Kelas</a>
-                        <a class="collapse-item" href="{{ route('presence.index') }}">Data Kehadiran</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Main Navigation
-            </div>
-
-            <!-- Role -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRole"
-                    aria-expanded="true" aria-controls="collapseRole">
-                    <i class="fas fa-fw fa-users-cog"></i>
-                    <span>Role</span>
-                </a>
-                <div id="collapseRole" class="collapse" aria-labelledby="headingRole" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('role.index') }}">Data</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Center -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCenter"
-                    aria-expanded="true" aria-controls="collapseCenter">
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Center</span>
-                </a>
-                <div id="collapseCenter" class="collapse" aria-labelledby="headingCenter" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('center.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('center.create') }}">Tambah</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Fee -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFee"
-                    aria-expanded="true" aria-controls="collapseFee">
-                    <i class="fas fa-fw fa-money-bill"></i>
-                    <span>Biaya</span>
-                </a>
-                <div id="collapseFee" class="collapse" aria-labelledby="headingFee" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('fee.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('fee.create') }}">Tambah</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Pembayaran -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePembayaran"
-                    aria-expanded="true" aria-controls="collapsePembayaran">
-                    <i class="fas fa-fw fa-graduation-cap"></i>
-                    <span>Pembayaran</span>
-                </a>
-                <div id="collapsePembayaran" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('payment.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('payment.create') }}">Tambah</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Guru -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuru"
-                    aria-expanded="true" aria-controls="collapseGuru">
-                    <i class="fas fa-fw fa-graduation-cap"></i>
-                    <span>Guru</span>
-                </a>
-                <div id="collapseGuru" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('teacher.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('teacher.create') }}">Tambah</a>
-                        <a class="collapse-item" href="{{ route('classroom.teaching') }}">Jadwal Mengajar</a>
-                        <a class="collapse-item" href="#">Absensi</a>
-                        <a class="collapse-item" href="#">Buat Permintaan Training</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Murid -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMurid"
-                    aria-expanded="true" aria-controls="collapseMurid">
-                    <i class="fas fa-fw fa-child"></i>
-                    <span>Murid</span>
-                </a>
-                <div id="collapseMurid" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('student.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('student.create') }}">Tambah</a>
-                        <a class="collapse-item" href="#">Absensi</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Kelas -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
-                    aria-expanded="true" aria-controls="collapseKelas">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Kelas</span>
-                </a>
-                <div id="collapseKelas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
-                        <a class="collapse-item" href="#">Absensi Hari ini</a>
-                        <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Kehadiran -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKehadiran"
-                    aria-expanded="true" aria-controls="collapseKehadiran">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Kehadiran</span>
-                </a>
-                <div id="collapseKehadiran" class="collapse" aria-labelledby="headingTwo"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('presence.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('presence.create') }}">Absensi</a>
-                        <a class="collapse-item" href="{{ route('presence.report') }}">Laporan</a>
-                    </div>
-                </div>
-            </li>
-        @elseif (Auth::user()->role_id == 2)
-            <!-- Divider -->
-            <hr class="sidebar-divider my-0">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Main Navigation
-            </div>
-
-            <!-- Guru -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGuru"
-                    aria-expanded="true" aria-controls="collapseGuru">
-                    <i class="fas fa-fw fa-graduation-cap"></i>
-                    <span>Guru</span>
-                </a>
-                <div id="collapseGuru" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('teacher.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('teacher.create') }}">Tambah</a>
-                        <a class="collapse-item" href="{{ route('classroom.teaching') }}">Jadwal Mengajar</a>
-                        <a class="collapse-item" href="#">Absensi</a>
-                        <a class="collapse-item" href="#">Buat Permintaan Training</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Murid -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMurid"
-                    aria-expanded="true" aria-controls="collapseMurid">
-                    <i class="fas fa-fw fa-child"></i>
-                    <span>Murid</span>
-                </a>
-                <div id="collapseMurid" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('student.index') }}">Data</a>
-                        <a class="collapse-item" href="{{ route('student.create') }}">Tambah</a>
-                        <a class="collapse-item" href="#">Absensi</a>
-                    </div>
-                </div>
-            </li>
-
-            <!-- Kelas -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseKelas"
-                    aria-expanded="true" aria-controls="collapseKelas">
-                    <i class="fas fa-fw fa-home"></i>
-                    <span>Kelas</span>
-                </a>
-                <div id="collapseKelas" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('classroom.index') }}">Data</a>
-                        <a class="collapse-item" href="#">Absensi Hari ini</a>
-                        <a class="collapse-item" href="{{ route('classroom.manage') }}">Manage Kelas</a>
-                    </div>
-                </div>
             </li>
         @endif
+
+        <!-- Data Master Section -->
+        @if (in_array('view_center', $userModules) ||
+                in_array('view_student', $userModules) ||
+                in_array('view_teacher', $userModules) ||
+                in_array('view_classroom', $userModules))
+            <div class="sidebar-heading">Data Master</div>
+
+            @if (in_array('view_center', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('center.index') }}">
+                        <i class="fas fa-fw fa-building"></i>
+                        <span>Centers</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (in_array('view_student', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('student.index') }}">
+                        <i class="fas fa-fw fa-user-graduate"></i>
+                        <span>Students</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (in_array('view_teacher', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('teacher.index') }}">
+                        <i class="fas fa-fw fa-chalkboard-teacher"></i>
+                        <span>Teachers</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (in_array('view_classroom', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('classroom.index') }}">
+                        <i class="fas fa-fw fa-school"></i>
+                        <span>Classes</span>
+                    </a>
+                </li>
+            @endif
+        @endif
+
+        <!-- Finance Section -->
+        @if (in_array('view_fee', $userModules) || in_array('view_payment', $userModules))
+            <div class="sidebar-heading">Finance</div>
+
+            @if (in_array('view_fee', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('fee.index') }}">
+                        <i class="fas fa-fw fa-money-bill"></i>
+                        <span>Fees</span>
+                    </a>
+                </li>
+            @endif
+
+            @if (in_array('view_payment', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('payment.index') }}">
+                        <i class="fas fa-fw fa-credit-card"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+            @endif
+        @endif
+
+        <!-- Academic Section -->
+        @if (in_array('view_attendance', $userModules))
+            <div class="sidebar-heading">Academic</div>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('presence.index') }}">
+                    <i class="fas fa-fw fa-clipboard-list"></i>
+                    <span>Attendance</span>
+                </a>
+            </li>
+        @endif
+
+        <!-- Report Section -->
+        @if (in_array('view_report', $userModules))
+            <div class="sidebar-heading">Reports</div>
+            @if (in_array('view_attendance', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('presence.report') }}">
+                        <i class="fas fa-fw fa-chart-line"></i>
+                        <span>Attendance Report</span>
+                    </a>
+                </li>
+            @endif
+            @if (in_array('view_payment', $userModules))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('payment.index') }}">
+                        <i class="fas fa-fw fa-chart-pie"></i>
+                        <span>Financial Report</span>
+                    </a>
+                </li>
+            @endif
+        @endif
+
     @endauth
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
+
+    <hr class="sidebar-divider">
+
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('logout') }}"
+            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="fas fa-fw fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+            @csrf
+        </form>
+    </li>
 
 </ul>

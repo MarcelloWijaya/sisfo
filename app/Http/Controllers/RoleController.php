@@ -3,54 +3,110 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
-use App\Models\User; // Pastikan User model sudah ada jika belum di-import
+use App\Models\Module;
+use App\Models\RoleModule;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
-    // Menampilkan semua data role
     public function index()
     {
-        // Mendapatkan semua data role dari database
-        $roles = Role::all();
-
-        // Mengembalikan tampilan dengan data role
-        return view('role.index', compact('roles'));
+        $roles = Role::withCount('users')->get();
+        $modules = Module::all();
+        return view('role.index', compact('roles', 'modules'));
     }
 
-    // Menampilkan form untuk mengelola role pada akun
-    public function manage($role_id)
+    public function create()
     {
-        // Mendapatkan role berdasarkan ID
+        return view('role.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:50|unique:roles,name',
+        ]);
+
+        $role = Role::create([
+            'name' => $request->name,
+            'created_by' => auth()->user()->name,
+        ]);
+
+        return redirect()->route('role.index')->with('success', 'Role created successfully.');
+    }
+
+    public function update(Request $request, $role_id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:50|unique:roles,name,' . $role_id,
+        ]);
+
+        $role = Role::findOrFail($role_id);
+        $role->update([
+            'name' => $request->name,
+            'updated_by' => auth()->user()->name,
+        ]);
+
+        return redirect()->route('role.index')->with('success', 'Role updated successfully.');
+    }
+
+    public function destroy($role_id)
+    {
         $role = Role::findOrFail($role_id);
 
-        // Mendapatkan semua user yang memiliki role ini
-        $users = User::where('role_id', $role_id)->get();
+        if ($role->name == 'super_admin') {
+            return response()->json(['success' => false, 'message' => 'Cannot delete Super Admin role.']);
+        }
 
-        // Mengembalikan tampilan manage dengan data role dan users
-        return view('role.manage', [
-            'role' => $role,
-            'users' => $users,
-            'title' => 'Manage Role: ' . $role->name, // Set title dinamis
-        ]);
+        // Delete related role modules first
+        RoleModule::where('role_id', $role_id)->delete();
+
+        $role->delete();
+        return response()->json(['success' => true]);
     }
 
-    // Mengubah role pengguna (misalnya untuk mengelola role akun)
-    public function updateUserRole(Request $request, $user_id)
+    public function addModule(Request $request, $role_id)
     {
-        // Validasi inputan
+        try {
+            // Log untuk debugging
+            \Log::info('Add module called', ['role_id' => $role_id, 'data' => $request->all()]);
+
+            // Validasi manual
+            if (!$request->has('module_ids') && !$request->has('module_id')) {
+                return response()->json(['success' => false, 'message' => 'No module selected'], 400);
+            }
+
+            // Ambil module_ids (bisa array atau single)
+            $moduleIds = $request->has('module_ids') ? $request->module_ids : [$request->module_id];
+
+            foreach ($moduleIds as $module_id) {
+                // Check if already exists
+                $exists = \App\Models\RoleModule::where('role_id', $role_id)->where('module_id', $module_id)->exists();
+
+                if (!$exists) {
+                    \App\Models\RoleModule::create([
+                        'role_id' => $role_id,
+                        'module_id' => $module_id,
+                        'created_by' => auth()->user()->name,
+                    ]);
+                }
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Log::error('Add module error: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function removeModule(Request $request, $role_id)
+    {
         $request->validate([
-            'role_id' => 'required|exists:roles,id',
+            'module_id' => 'required',
         ]);
 
-        // Mendapatkan user berdasarkan ID
-        $user = User::findOrFail($user_id);
+        \App\Models\RoleModule::where('role_id', $role_id)->where('module_id', $request->module_id)->delete();
 
-        // Menetapkan role baru untuk user
-        $user->role_id = $request->role_id;
-        $user->save();
-
-        // Redirect setelah berhasil mengupdate role
-        return redirect()->route('role.manage', $user->role_id)->with('success', 'Role pengguna berhasil diperbarui.');
+        return response()->json(['success' => true]);
     }
 }
