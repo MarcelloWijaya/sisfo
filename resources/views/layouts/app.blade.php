@@ -2,61 +2,29 @@
 <html lang="en">
 
 <head>
-    @include('templates.header')
-    @stack('styles')
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Anaku Educare - @yield('title', 'Information System')</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body id="page-top">
-    <div id="wrapper">
-        @include('templates.sidebar')
+<body class="bg-gradient-to-br from-gray-50 to-gray-100">
 
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                @include('templates.topbar')
+    <div class="min-h-screen flex">
+        @include('components.sidebar')
 
-                <div class="container-fluid">
-                    <!-- Flash Messages -->
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            <i class="fas fa-check-circle"></i> {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
+        <div class="flex-1 flex flex-col md:ml-72">
+            @include('components.navbar')
 
-                    @if (session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle"></i> {{ session('error') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
+            <main class="flex-1 p-6">
+                @yield('content')
+            </main>
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <i class="fas fa-exclamation-circle"></i>
-                            <ul class="mb-0">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    @endif
-
-                    @yield('content')
-                </div>
-            </div>
-
-            @include('templates.footer')
+            @include('components.footer')
         </div>
     </div>
 
-    @include('templates.script')
     @stack('scripts')
 </body>
 

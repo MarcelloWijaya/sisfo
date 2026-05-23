@@ -2,100 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProfileUpdateRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     /**
-     * Show profile page
+     * Display the user's profile form.
      */
-    public function index()
+    public function edit(Request $request): View
     {
-        $user = Auth::user();
-
-        return view('profile.index', [
-            'user' => $user,
-            'title' => 'My Profile',
+        return view('profile.edit', [
+            'user' => $request->user(),
         ]);
     }
 
     /**
-     * Show settings page
+     * Update the user's profile information.
      */
-    public function settings()
+    public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $user = Auth::user();
+        $request->user()->fill($request->validated());
 
-        return view('profile.settings', [
-            'user' => $user,
-            'title' => 'Account Settings',
-        ]);
-    }
-
-    /**
-     * Update profile
-     */
-    public function update(Request $request)
-    {
-        $user = Auth::user();
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+        if ($request->user()->isDirty('email')) {
+            $request->user()->email_verified_at = null;
         }
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->updated_by = $user->name;
-        $user->save();
+        $request->user()->save();
 
-        return redirect()->back()->with('success', 'Profile updated successfully.');
+        return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
-     * Change password
+     * Delete the user's account.
      */
-    public function changePassword(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
-        $validator = Validator::make($request->all(), [
-            'current_password' => 'required',
-            'new_password' => 'required|min:6|confirmed',
+        $request->validateWithBag('userDeletion', [
+            'password' => ['required', 'current_password'],
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
+        $user = $request->user();
 
-        $user = Auth::user();
+        Auth::logout();
 
-        if (!Hash::check($request->current_password, $user->password)) {
-            return redirect()
-                ->back()
-                ->withErrors(['current_password' => 'Current password is incorrect']);
-        }
+        $user->delete();
 
-        $user->password = Hash::make($request->new_password);
-        $user->save();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        return redirect()->back()->with('success', 'Password changed successfully.');
-    }
-
-    /**
-     * Show activity log
-     */
-    public function activityLog()
-    {
-        // You can create an activity_logs table to track user activities
-        // For now, return view with empty data
-        return view('profile.activity', [
-            'title' => 'Activity Log',
-        ]);
+        return Redirect::to('/');
     }
 }

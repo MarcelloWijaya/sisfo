@@ -2,31 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Teacher extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $table = 'teachers';
-
-    protected $fillable = ['teacher_code', 'name', 'nickname', 'gender', 'birth_place', 'birth_date', 'religion', 'address', 'phone', 'email', 'last_education', 'join_date', 'teacher_level', 'teacher_status', 'photo_url', 'branch_id', 'is_active', 'created_by', 'updated_by'];
+    protected $fillable = ['branch_id', 'user_id', 'teacher_number', 'name', 'nickname', 'gender', 'address', 'place_of_birth', 'date_of_birth', 'phone', 'email', 'last_education', 'join_date', 'salary', 'status'];
 
     protected $casts = [
-        'birth_date' => 'date',
+        'date_of_birth' => 'date',
         'join_date' => 'date',
-        'is_active' => 'boolean',
+        'salary' => 'decimal:2',
     ];
 
     public function branch()
     {
-        return $this->belongsTo(Branch::class, 'branch_id');
+        return $this->belongsTo(Branch::class);
     }
 
-    public function classes()
+    public function user()
     {
-        return $this->hasMany(Classes::class, 'teacher_id');
+        return $this->belongsTo(User::class);
     }
 }

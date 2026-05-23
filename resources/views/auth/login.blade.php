@@ -1,102 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-guest-layout>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-<head>
-    <title>Login</title>
-    @include('templates.header')
-    <style>
-        body {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-        .login-container {
-            margin: auto;
-        }
-
-        .card {
-            margin: 0 auto;
-        }
-    </style>
-</head>
-
-<body class="bg-gradient-primary">
-
-    <div class="container login-container">
-        <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
-            <div class="col-xl-4 col-lg-5 col-md-6">
-                <div class="card o-hidden border-0 shadow-lg">
-                    <div class="card-body p-0">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <i class="fas fa-graduation-cap fa-3x text-primary mb-3"></i>
-                                <h1 class="h3 text-gray-900 mb-4">Welcome Back!</h1>
-                                <p class="text-muted mb-4">Please login to your account</p>
-                            </div>
-
-                            @error('message')
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-exclamation-circle"></i> {{ $message }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @enderror
-
-                            @if (\Session::has('message'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <i class="fas fa-check-circle"></i> {{ \Session::get('message') }}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            @endif
-
-                            <form action="{{ route('login.action') }}" method="POST" class="user">
-                                @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" id="email_or_username"
-                                        name="email_or_username" placeholder="Email or Username"
-                                        value="{{ Cookie::has('loginCookie') ? Cookie::get('loginCookie') : old('email_or_username') }}">
-                                    @error('email_or_username')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" id="password"
-                                        name="password" placeholder="Password">
-                                    @error('password')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    <i class="fas fa-sign-in-alt"></i> Login
-                                </button>
-                            </form>
-
-                            <hr>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
-    </div>
 
-</body>
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
 
-@include('templates.script')
+            <x-text-input id="password" class="block mt-1 w-full"
+                            type="password"
+                            name="password"
+                            required autocomplete="current-password" />
 
-<script>
-    $(document).ready(function() {
-        setTimeout(function() {
-            $('.alert').fadeOut('slow');
-        }, 5000);
-    });
-</script>
-</body>
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
 
-</html>
+        <!-- Remember Me -->
+        <div class="block mt-4">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
+                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+            </label>
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            @if (Route::has('password.request'))
+                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+
+            <x-primary-button class="ms-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>

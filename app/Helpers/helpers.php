@@ -22,7 +22,21 @@ if (!function_exists('getMenuIcon')) {
             'Centers' => 'fa-building',
             'Fees' => 'fa-money-bill',
         ];
-        
+
         return $icons[$menuName] ?? 'fa-circle';
+    }
+}
+
+if (!function_exists('lang_url')) {
+    function lang_url($locale)
+    {
+        return route('lang.switch', ['locale' => $locale]);
+    }
+}
+
+if (!function_exists('current_locale')) {
+    function current_locale()
+    {
+        return app()->getLocale();
     }
 }
