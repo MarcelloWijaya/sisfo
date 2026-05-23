@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class DashboardController extends Controller
 {
     public function index()
@@ -9,29 +11,30 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         if ($user->hasRole('super_admin')) {
-            return redirect('/admin/dashboard');
+            return redirect()->route('admin.dashboard');
         }
 
         if ($user->hasRole('director')) {
-            return redirect('/director/dashboard');
+            return redirect()->route('director.dashboard');
         }
 
         if ($user->hasRole('branch_admin')) {
-            return redirect('/branch/dashboard');
+            return redirect()->route('branch.dashboard');
         }
 
         if ($user->hasRole('teacher')) {
-            return redirect('/teacher/dashboard');
+            return redirect()->route('teacher.dashboard');
         }
 
         if ($user->hasRole('student')) {
-            return redirect('/student/dashboard');
+            return redirect()->route('student.dashboard');
         }
 
         if ($user->hasRole('parent')) {
-            return redirect('/parent/dashboard');
+            return redirect()->route('parent.dashboard');
         }
 
-        abort(403);
+        // fallback
+        return redirect()->route('login');
     }
 }
