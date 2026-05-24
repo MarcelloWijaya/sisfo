@@ -99,7 +99,7 @@ def get_all_blade_files(directory):
     blade_files = []
     for root, dirs, files in os.walk(directory):
         # Skip node_modules, vendor, cache
-        dirs[:] = [d for d in dirs if d not in ['node_modules', 'vendor', 'cache', 'components']]
+        dirs[:] = [d for d in dirs if d not in ['node_modules', 'vendor', 'cache']]
         for file in files:
             if file.endswith('.blade.php'):
                 blade_files.append(Path(root) / file)
@@ -175,6 +175,46 @@ def check_duplicate_translations():
 
     return duplicates_found
 
+def find_hardcoded_text(file_path):
+    hardcoded = []
+
+    with open(file_path, 'r', encoding='utf-8') as f:
+        lines = f.readlines()
+
+    ignore_patterns = [
+        r'{{.*}}',
+        r'@.*',
+        r'<\/',
+        r'<svg',
+        r'<path',
+        r'class=',
+        r'href=',
+        r'route\(',
+        r'url\(',
+        r'__\(',
+        r'@csrf',
+        r'@method',
+    ]
+
+    for line_num, line in enumerate(lines, 1):
+        stripped = line.strip()
+
+        if not stripped:
+            continue
+
+        if any(re.search(pattern, stripped) for pattern in ignore_patterns):
+            continue
+
+        matches = re.findall(r'>([^<>@{}]+)<', stripped)
+
+        for match in matches:
+            text = match.strip()
+
+            if len(text) > 2 and not text.isnumeric():
+                hardcoded.append((line_num, text))
+
+    return hardcoded
+
 def main():
     print(f"{Colors.HEADER}{Colors.BOLD}🔍 Laravel Translation Checker{Colors.END}\n")
 
@@ -239,11 +279,20 @@ def main():
         # Offer to auto-add
         response = input(f"\n{Colors.YELLOW}Do you want to auto-add these keys to en/all.php? (y/n): {Colors.END}")
         if response.lower() == 'y':
-            with open(LANG_EN_FILE, 'a', encoding='utf-8') as f:
-                f.write("\n    // Auto-generated translations\n")
-                for key in sorted(missing_in_en):
-                    guess = key.replace('_', ' ').title()
-                    f.write(f"    '{key}' => '{guess}',\n")
+            with open(LANG_EN_FILE, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            insert_text = "\n    // Auto-generated translations\n"
+
+            for key in sorted(missing_in_en):
+                guess = key.replace('_', ' ').title()
+                insert_text += f"    '{key}' => '{guess}',\n"
+
+            content = content.replace("];", insert_text + "];")
+
+            with open(LANG_EN_FILE, 'w', encoding='utf-8') as f:
+                f.write(content)
+
             print(f"{Colors.GREEN}✅ Added {len(missing_in_en)} keys to en/all.php{Colors.END}")
     else:
         print(f"{Colors.GREEN}✅ All keys are present in en/all.php{Colors.END}")
@@ -268,31 +317,89 @@ def main():
         # Offer to auto-add
         response = input(f"\n{Colors.YELLOW}Do you want to auto-add these keys to id/all.php? (y/n): {Colors.END}")
         if response.lower() == 'y':
-            with open(LANG_ID_FILE, 'a', encoding='utf-8') as f:
-                f.write("\n    // Auto-generated translations\n")
-                for key in sorted(missing_in_id):
-                    guess = key.replace('_', ' ').title()
-                    f.write(f"    '{key}' => '{guess}',\n")
+
+            with open(LANG_ID_FILE, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            insert_text = "\n    // Auto-generated translations\n"
+
+            for key in sorted(missing_in_id):
+                guess = key.replace('_', ' ').title()
+                insert_text += f"    '{key}' => '{guess}',\n"
+
+            content = content.replace("];", insert_text + "];")
+
+            with open(LANG_ID_FILE, 'w', encoding='utf-8') as f:
+                f.write(content)
+
             print(f"{Colors.GREEN}✅ Added {len(missing_in_id)} keys to id/all.php{Colors.END}")
     else:
         print(f"{Colors.GREEN}✅ All keys are present in id/all.php{Colors.END}")
 
     print()
 
-    # Detail per file
+    # =========================================================
+    # DETAIL PER FILE
+    # =========================================================
+
     print(f"{Colors.BLUE}{Colors.BOLD}📋 DETAIL PER FILE:{Colors.END}")
+
     for file_path, keys in sorted(keys_by_file.items()):
+
         missing_in_this_file = []
+
         for key in keys:
             if key not in en_keys or key not in id_keys:
                 missing_in_this_file.append(key)
 
         if missing_in_this_file:
+
             print(f"\n{Colors.YELLOW}📄 {file_path}{Colors.END}")
+
             for key in missing_in_this_file:
+
                 missing_en = "❌EN" if key not in en_keys else "✅EN"
                 missing_id = "❌ID" if key not in id_keys else "✅ID"
+
                 print(f"   • '{key}' - [{missing_en}] [{missing_id}]")
+
+    # =========================================================
+    # HARDCODED TEXT CHECK
+    # =========================================================
+
+    print(f"\n{Colors.RED}{Colors.BOLD}🔎 HARDCODED TEXT CHECK:{Colors.END}")
+
+    found_hardcoded = False
+
+    for blade_file in blade_files:
+
+        hardcoded = find_hardcoded_text(blade_file)
+
+        if hardcoded:
+
+            found_hardcoded = True
+
+            relative_path = blade_file.relative_to(BASE_DIR)
+
+            print(f"\n{Colors.YELLOW}📄 {relative_path}{Colors.END}")
+
+            for line_num, text in hardcoded:
+
+                suggestion = (
+                    text.lower()
+                    .replace(' ', '_')
+                    .replace('-', '_')
+                    .replace('/', '_')
+                )
+
+                print(
+                    f"   Line {line_num}: "
+                    f"\"{text}\" "
+                    f"→ suggestion: __('all.{suggestion}')"
+                )
+
+    if not found_hardcoded:
+        print(f"{Colors.GREEN}✅ No obvious hardcoded text found!{Colors.END}")
 
     # Unused keys (optional)
     print(f"\n{Colors.BLUE}{Colors.BOLD}📦 UNUSED KEYS IN LANG FILES (optional to remove):{Colors.END}")

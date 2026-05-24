@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class, // Ini sudah include branch admin, teacher, student, parent
             TeacherSeeder::class,
             StudentSeeder::class,
-            ClassModelSeeder::class,
             ClassroomSeeder::class,
         ]);
     }

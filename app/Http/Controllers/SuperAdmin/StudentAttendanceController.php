@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Branch;
@@ -44,9 +44,9 @@ class StudentAttendanceController extends Controller
 
         $branches = Branch::where('status', 'active')->get();
         $students = Student::when($branchId, fn($q) => $q->where('branch_id', $branchId))->where('status', 'active')->get();
-        $schedules = Schedule::when($branchId, fn($q) => $q->where('branch_id', $branchId))->where('status', 'active')->get();
+        $classrooms = Classroom::when($branchId, fn($q) => $q->where('branch_id', $branchId))->where('status', 'active')->get();
 
-        return view('attendance.student.index', compact('attendances', 'branches', 'students', 'schedules', 'branchId'));
+        return view('attendance.student.index', compact('attendances', 'branches', 'students', 'classrooms', 'branchId'));
     }
 
     public function create()
@@ -55,7 +55,7 @@ class StudentAttendanceController extends Controller
         $branchId = $user->hasRole('super_admin') || $user->hasRole('director') ? null : $user->branch_id;
 
         $branches = Branch::where('status', 'active')->get();
-        $schedules = Schedule::with(['branch', 'teacher'])
+        $classrooms = Classroom::with(['branch', 'teacher'])
             ->when($branchId, fn($q) => $q->where('branch_id', $branchId))
             ->where('status', 'active')
             ->get();
@@ -64,7 +64,7 @@ class StudentAttendanceController extends Controller
 
         $statuses = StudentAttendance::getStatuses();
 
-        return view('attendance.student.create', compact('branches', 'schedules', 'students', 'statuses', 'branchId'));
+        return view('attendance.student.create', compact('branches', 'classrooms', 'students', 'statuses', 'branchId'));
     }
 
     public function store(Request $request)
@@ -72,7 +72,7 @@ class StudentAttendanceController extends Controller
         $request->validate([
             'branch_id' => 'required|exists:branches,id',
             'student_id' => 'required|exists:students,id',
-            'classroom_id' => 'required|exists:schedules,id',
+            'classroom_id' => 'required|exists:classrooms,id',
             'attendance_date' => 'required|date',
             'status' => 'required|in:present,absent,late,excused',
             'check_in_time' => 'nullable|date_format:H:i',
@@ -106,7 +106,7 @@ class StudentAttendanceController extends Controller
         $branchId = $user->hasRole('super_admin') ? null : $user->branch_id;
 
         $branches = Branch::where('status', 'active')->get();
-        $schedules = Schedule::with(['branch', 'teacher'])
+        $classrooms = Classroom::with(['branch', 'teacher'])
             ->when($branchId, fn($q) => $q->where('branch_id', $branchId))
             ->where('status', 'active')
             ->get();
@@ -115,7 +115,7 @@ class StudentAttendanceController extends Controller
 
         $statuses = StudentAttendance::getStatuses();
 
-        return view('attendance.student.edit', compact('studentAttendance', 'branches', 'schedules', 'students', 'statuses'));
+        return view('attendance.student.edit', compact('studentAttendance', 'branches', 'classrooms', 'students', 'statuses'));
     }
 
     public function update(Request $request, StudentAttendance $studentAttendance)
@@ -123,7 +123,7 @@ class StudentAttendanceController extends Controller
         $request->validate([
             'branch_id' => 'required|exists:branches,id',
             'student_id' => 'required|exists:students,id',
-            'classroom_id' => 'required|exists:schedules,id',
+            'classroom_id' => 'required|exists:classrooms,id',
             'attendance_date' => 'required|date',
             'status' => 'required|in:present,absent,late,excused',
             'check_in_time' => 'nullable|date_format:H:i',
@@ -148,7 +148,7 @@ class StudentAttendanceController extends Controller
         $scheduleId = $request->get('classroom_id');
         $date = $request->get('attendance_date', date('Y-m-d'));
 
-        $schedule = Schedule::with('branch')->findOrFail($scheduleId);
+        $schedule = Classroom::with('branch')->findOrFail($scheduleId);
         $students = Student::where('branch_id', $schedule->branch_id)->where('status', 'active')->orderBy('name')->get();
 
         $statuses = StudentAttendance::getStatuses();
@@ -159,14 +159,14 @@ class StudentAttendanceController extends Controller
     public function bulkStore(Request $request)
     {
         $request->validate([
-            'classroom_id' => 'required|exists:schedules,id',
+            'classroom_id' => 'required|exists:classrooms,id',
             'attendance_date' => 'required|date',
             'attendances' => 'required|array',
             'attendances.*.student_id' => 'required|exists:students,id',
             'attendances.*.status' => 'required|in:present,absent,late,excused',
         ]);
 
-        $schedule = Schedule::find($request->classroom_id);
+        $schedule = Classroom::find($request->classroom_id);
         $recordedBy = Auth::id();
         $attendanceDate = $request->attendance_date;
 
@@ -190,9 +190,9 @@ class StudentAttendanceController extends Controller
     }
 
     // Get students by schedule (AJAX)
-    public function getStudentsBySchedule(Request $request)
+    public function getStudentsByClassroom(Request $request)
     {
-        $schedule = Schedule::findOrFail($request->classroom_id);
+        $schedule = Classroom::findOrFail($request->classroom_id);
         $students = Student::where('branch_id', $schedule->branch_id)
             ->where('status', 'active')
             ->orderBy('name')

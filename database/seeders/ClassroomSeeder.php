@@ -2,19 +2,20 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\Classroom;
 use App\Models\Branch;
 use App\Models\Teacher;
+use App\Models\Classroom;
+use Illuminate\Database\Seeder;
 
 class ClassroomSeeder extends Seeder
 {
     public function run(): void
     {
-        $branches = Branch::all();
+        $branches = Branch::pluck('id', 'code');
+
+        $teachers = Teacher::pluck('id', 'teacher_number');
 
         $classrooms = [
-            // Jakarta Schedules
             [
                 'day' => 'Monday',
                 'start_time' => '10:00:00',
@@ -24,9 +25,10 @@ class ClassroomSeeder extends Seeder
                 'activity' => 'English Conversation',
                 'quota' => 20,
                 'status' => 'active',
-                'branch_id' => $branches->where('code', 'JKT001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-JKT-001')->first()->id ?? 1,
+                'branch_id' => $branches['ABT001'],
+                'teacher_id' => $teachers['TCH-ABT001-001'] ?? 1,
             ],
+
             [
                 'day' => 'Monday',
                 'start_time' => '11:00:00',
@@ -36,11 +38,12 @@ class ClassroomSeeder extends Seeder
                 'activity' => 'English Grammar',
                 'quota' => 20,
                 'status' => 'active',
-                'branch_id' => $branches->where('code', 'JKT001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-JKT-002')->first()->id ?? 1,
+                'branch_id' => $branches['ABT001'],
+                'teacher_id' => $teachers['TCH-ABT001-002'] ?? 1,
             ],
+
             [
-                'day' => 'Monday',
+                'day' => 'Tuesday',
                 'start_time' => '13:30:00',
                 'end_time' => '14:30:00',
                 'room' => 'B-202',
@@ -48,11 +51,12 @@ class ClassroomSeeder extends Seeder
                 'activity' => 'IELTS Preparation',
                 'quota' => 15,
                 'status' => 'active',
-                'branch_id' => $branches->where('code', 'JKT001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-JKT-002')->first()->id ?? 1,
+                'branch_id' => $branches['ABT002'],
+                'teacher_id' => $teachers['TCH-ABT002-001'] ?? 1,
             ],
+
             [
-                'day' => 'Tuesday',
+                'day' => 'Wednesday',
                 'start_time' => '10:00:00',
                 'end_time' => '11:00:00',
                 'room' => 'C-303',
@@ -60,52 +64,22 @@ class ClassroomSeeder extends Seeder
                 'activity' => 'Mathematics Basic',
                 'quota' => 20,
                 'status' => 'active',
-                'branch_id' => $branches->where('code', 'JKT001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-JKT-001')->first()->id ?? 1,
-            ],
-            [
-                'day' => 'Wednesday',
-                'start_time' => '16:00:00',
-                'end_time' => '17:00:00',
-                'room' => 'A-101',
-                'level' => 'Intermediate',
-                'activity' => 'Science Class',
-                'quota' => 25,
-                'status' => 'active',
-                'branch_id' => $branches->where('code', 'JKT001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-JKT-003')->first()->id ?? 1,
-            ],
-            // Bandung Schedules
-            [
-                'day' => 'Monday',
-                'start_time' => '10:00:00',
-                'end_time' => '11:00:00',
-                'room' => 'D-404',
-                'level' => 'Beginner',
-                'activity' => 'English Class',
-                'quota' => 20,
-                'status' => 'active',
-                'branch_id' => $branches->where('code', 'BDG001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-BDG-001')->first()->id ?? 2,
-            ],
-            [
-                'day' => 'Wednesday',
-                'start_time' => '15:00:00',
-                'end_time' => '16:00:00',
-                'room' => 'E-505',
-                'level' => 'Intermediate',
-                'activity' => 'Sports Class',
-                'quota' => 30,
-                'status' => 'active',
-                'branch_id' => $branches->where('code', 'BDG001')->first()->id,
-                'teacher_id' => Teacher::where('teacher_id', 'TCH-BDG-002')->first()->id ?? 2,
+                'branch_id' => $branches['ABT003'],
+                'teacher_id' => $teachers['TCH-ABT003-001'] ?? 1,
             ],
         ];
 
         foreach ($classrooms as $classroom) {
-            Classroom::create($classroom);
+            Classroom::updateOrCreate(
+                [
+                    'day' => $classroom['day'],
+                    'start_time' => $classroom['start_time'],
+                    'room' => $classroom['room'],
+                ],
+                $classroom,
+            );
         }
 
-        $this->command->info('✅ Classrooms (schedules) seeded successfully!');
+        $this->command->info('✅ Classrooms seeded successfully!');
     }
 }

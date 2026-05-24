@@ -1,29 +1,48 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+@php
+    if (session()->has('locale')) {
+        app()->setLocale(session('locale'));
+    }
+@endphp
+
+@section('title', __('all.profile'))
+@section('header', __('all.profile'))
+
+@section('content')
+    <div class="max-w-4xl mx-auto">
+        <div class="space-y-6">
+            <!-- Update Profile Information -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('all.profile_information') }}</h3>
+                    <p class="text-sm text-gray-500 mb-6">{{ __('all.update_profile_description') }}</p>
+
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
+            <!-- Update Password -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('all.update_password') }}</h3>
+                    <p class="text-sm text-gray-500 mb-6">{{ __('all.update_password_description') }}</p>
+
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
+            <!-- Delete Account (hanya untuk role tertentu) -->
+            @if (auth()->user()->hasRole('student') || auth()->user()->hasRole('parent'))
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ __('all.delete_account') }}</h3>
+                        <p class="text-sm text-gray-500 mb-6">{{ __('all.delete_account_description') }}</p>
+
+                        @include('profile.partials.delete-user-form')
+                    </div>
                 </div>
-            </div>
+            @endif
         </div>
     </div>
-</x-app-layout>
+@endsection
