@@ -4,6 +4,8 @@
     if (session()->has('locale')) {
         app()->setLocale(session('locale'));
     }
+
+    $isDirector = auth()->user()->hasRole('director');
 @endphp
 
 @section('title', __('all.pricing_details'))
@@ -33,7 +35,7 @@
                     {{ __("all.{$branchPricing->payment_type}") }}</p>
             </div>
 
-            <!-- Pricing Items (Seperti gambar) -->
+            <!-- Pricing Items -->
             <div class="p-6">
                 <div class="space-y-4">
                     <!-- Registration Fee -->
@@ -123,23 +125,41 @@
 
             <!-- Footer Actions -->
             <div class="px-6 py-4 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-                <a href="{{ route('branch-pricings.index') }}"
-                    class="inline-flex items-center text-gray-600 hover:text-gray-800">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                    </svg>
-                    {{ __('all.back') }}
-                </a>
+                {{-- Back button - bedakan route berdasarkan role --}}
+                @if ($isDirector)
+                    <a href="{{ route('director.pricing.index') }}"
+                        class="inline-flex items-center text-gray-600 hover:text-gray-800">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        {{ __('all.back') }}
+                    </a>
+                @else
+                    <a href="{{ route('branch-pricings.index') }}"
+                        class="inline-flex items-center text-gray-600 hover:text-gray-800">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        {{ __('all.back') }}
+                    </a>
+                @endif
 
-                @if (!$isDirector)
-                    <div class="flex gap-3">
+                {{-- Tombol Edit untuk Director (bisa edit fee fields) dan Super Admin/Branch Admin --}}
+                <div class="flex gap-3">
+                    @if ($isDirector)
+                        <a href="{{ route('director.pricing.edit', $branchPricing) }}"
+                            class="bg-[#90C74A] hover:bg-[#7db33e] text-white px-4 py-2 rounded-lg transition">
+                            {{ __('all.edit_pricing') }}
+                        </a>
+                    @else
                         <a href="{{ route('branch-pricings.edit', $branchPricing) }}"
                             class="bg-[#90C74A] hover:bg-[#7db33e] text-white px-4 py-2 rounded-lg transition">
                             {{ __('all.edit_pricing') }}
                         </a>
-                    </div>
-                @endif
+                    @endif
+                </div>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | Branch
+            | Branch Relation
             |--------------------------------------------------------------------------
             */
 
@@ -20,7 +20,7 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | User Account
+            | User Account Relation
             |--------------------------------------------------------------------------
             */
 
@@ -28,29 +28,20 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | Student Information
+            | Student Personal Information
             |--------------------------------------------------------------------------
             */
 
-            $table->string('student_number')->unique();
-
+            $table->string('student_code')->unique(); // Kode unik siswa (STD-JKT-001)
             $table->string('name');
-
             $table->enum('gender', ['male', 'female']);
-
             $table->text('address')->nullable();
-
             $table->string('place_of_birth')->nullable();
-
             $table->date('date_of_birth')->nullable();
-
             $table->string('religion')->nullable();
-
             $table->string('phone')->nullable();
-
             $table->string('school_name')->nullable();
-
-            $table->string('grade_level')->nullable();
+            $table->string('class')->nullable(); // kelas / grade level
 
             /*
             |--------------------------------------------------------------------------
@@ -59,21 +50,17 @@ return new class extends Migration {
             */
 
             $table->string('parent_name')->nullable();
-
             $table->string('parent_phone')->nullable();
-
             $table->string('parent_email')->nullable();
 
             /*
             |--------------------------------------------------------------------------
-            | Academic
+            | Academic Information
             |--------------------------------------------------------------------------
             */
 
             $table->date('registration_date')->nullable();
-
             $table->date('join_date')->nullable();
-
             $table->string('book_level')->nullable();
 
             /*
@@ -86,11 +73,23 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | Metadata
+            | Audit Trail
             |--------------------------------------------------------------------------
             */
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Indexes for Performance
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index(['branch_id', 'status']);
+            $table->index('student_code');
+            $table->index('name');
         });
     }
 

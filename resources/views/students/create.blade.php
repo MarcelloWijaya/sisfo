@@ -4,6 +4,10 @@
     if (session()->has('locale')) {
         app()->setLocale(session('locale'));
     }
+
+    $user = auth()->user();
+    $isDirector = $user->hasRole('director');
+    $routePrefix = $isDirector ? 'director.students' : 'students';
 @endphp
 
 @section('title', __('all.add_student'))
@@ -12,7 +16,7 @@
 @section('content')
     <div class="max-w-3xl mx-auto">
         <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-            <form action="{{ url('/students') }}" method="POST">
+            <form action="{{ route($routePrefix . '.store') }}" method="POST">
                 @csrf
 
                 <div class="p-6 space-y-6">

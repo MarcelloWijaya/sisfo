@@ -362,4 +362,77 @@ return [
     'director' => 'Director',
     'parent' => 'Parent',
     'super_admin' => 'Super Admin',
+
+    // Auto-generated translations
+    '$roleName' => '$Rolename',
+    'Monday' => 'Senin',
+    'Tuesday' => 'Selasa',
+    'Wednesday' => 'Rabu',
+    'Thursday' => 'Kamis',
+    'Friday' => 'Jumat',
+    'Saturday' => 'Sabtu',
+    'Sunday' => 'Minggu',
+
+    // Auto-generated translations
+    'attendance_today' => 'Attendance Today',
+    'book_fee' => 'Book Fee',
+    'branch_data' => 'Branch Data',
+    'class_data' => 'Class Data',
+    'classes' => 'Classes',
+    'director_dashboard' => 'Director Dashboard',
+    'manage_class' => 'Manage Class',
+    'manage_classes' => 'Manage Classes',
+    'monthly_fee' => 'Monthly Fee',
+    'new_student_registration' => 'New Student Registration',
+    'no_classes_today' => 'No Classes Today',
+    'payments' => 'Payments',
+    'pending_payments' => 'Pending Payments',
+    'recent_students' => 'Recent Students',
+    'register_new_student' => 'Register New Student',
+    'request_training' => 'Request Training',
+    'student_data' => 'Student Data',
+    'student_grades' => 'Student Grades',
+    'take_attendance' => 'Take Attendance',
+    'teacher_data' => 'Teacher Data',
+    'teacher_schedule' => 'Teacher Schedule',
+    'today_attendance' => 'Today Attendance',
+    'todays_classes' => 'Todays Classes',
+    'total_branches' => 'Total Branches',
+    'total_classes' => 'Total Classes',
+    'total_revenue' => 'Total Revenue',
+    'total_students' => 'Total Students',
+    'total_teachers' => 'Total Teachers',
+    'view_all' => 'View All',
+    'view_branch_pricing' => 'View Branch Pricing',
+    'view_students' => 'View Students',
+    'view_teachers' => 'View Teachers',
+
+    // Days
+
+    // Delete confirmation
+
+    // Menus
+
+    // Reports
+
+    // Auto-generated translations
+    'basic_info' => 'Basic Info',
+    'buy_replacement_book' => 'Buy Replacement Book',
+    'director_can_edit_fees' => 'Director Can Edit Fees',
+    'first_registration' => 'First Registration',
+    'move_class' => 'Move Class',
+    'payment' => 'Payment',
+    'view_attendance' => 'View Attendance',
+    'view_class' => 'View Class',
+    'view_invoice' => 'View Invoice',
+
+    // Auto-generated translations
+    'date_of_birth' => 'Date Of Birth',
+    'incentive' => 'Incentive',
+    'incentive_data' => 'Incentive Data',
+    'last_education' => 'Last Education',
+    'nickname' => 'Nickname',
+    'place_of_birth' => 'Place Of Birth',
+    'view_incentive' => 'View Incentive',
+    'view_schedule' => 'View Schedule',
 ];

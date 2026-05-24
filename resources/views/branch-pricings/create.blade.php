@@ -4,6 +4,14 @@
     if (session()->has('locale')) {
         app()->setLocale(session('locale'));
     }
+
+    $user = auth()->user();
+    $isDirector = $user->hasRole('director');
+
+    // Director tidak boleh akses halaman create
+    if ($isDirector) {
+        abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+    }
 @endphp
 
 @section('title', __('all.add_pricing'))
@@ -24,16 +32,26 @@
                         <label class="block mb-2 text-sm font-medium text-gray-700">
                             {{ __('all.branch') }} <span class="text-red-500">*</span>
                         </label>
-                        <select name="branch_id"
-                            class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]" required>
-                            <option value="">{{ __('all.select_branch') }}</option>
-                            @foreach ($branches as $branch)
-                                <option value="{{ $branch->id }}"
-                                    {{ old('branch_id', $branchId) == $branch->id ? 'selected' : '' }}>
-                                    {{ $branch->name }}
-                                </option>
-                            @endforeach
-                        </select>
+
+                        {{-- Super Admin bisa pilih semua branch, Branch Admin hanya lihat branch sendiri --}}
+                        @if (auth()->user()->hasRole('super_admin'))
+                            <select name="branch_id"
+                                class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]"
+                                required>
+                                <option value="">{{ __('all.select_branch') }}</option>
+                                @foreach ($branches as $branch)
+                                    <option value="{{ $branch->id }}"
+                                        {{ old('branch_id', $branchId) == $branch->id ? 'selected' : '' }}>
+                                        {{ $branch->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        @else
+                            <input type="text" class="w-full rounded-xl border-gray-300 bg-gray-100"
+                                value="{{ $branches->firstWhere('id', $branchId)->name ?? '' }}" readonly disabled>
+                            <input type="hidden" name="branch_id" value="{{ $branchId }}">
+                        @endif
+
                         @error('branch_id')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror

@@ -29,4 +29,10 @@ class Branch extends Model
     {
         return $this->hasMany(Teacher::class);
     }
+
+    // TAMBAHKAN RELASI INI
+    public function classrooms()
+    {
+        return $this->hasMany(Classroom::class);
+    }
 }

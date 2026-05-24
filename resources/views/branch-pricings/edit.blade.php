@@ -16,78 +16,40 @@
                 {{ __('all.edit_pricing') }}
             </h1>
 
-            <form method="POST" action="{{ route('branch-pricings.update', $branchPricing->id) }}">
+            <div class="mb-6 bg-blue-50 border-l-4 border-blue-400 p-4 rounded-lg">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span class="text-blue-700">{{ __('all.director_can_edit_fees') }}</span>
+                </div>
+            </div>
+
+            <form method="POST" action="{{ route('director.pricing.update', $branchPricing->id) }}">
                 @csrf
                 @method('PUT')
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">
-                            {{ __('all.branch') }} <span class="text-red-500">*</span>
-                        </label>
-                        <select name="branch_id"
-                            class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]" required>
-                            <option value="">{{ __('all.select_branch') }}</option>
-                            @foreach ($branches as $branch)
-                                <option value="{{ $branch->id }}"
-                                    {{ old('branch_id', $branchPricing->branch_id) == $branch->id ? 'selected' : '' }}>
-                                    {{ $branch->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('branch_id')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                <!-- Read-only fields -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('all.branch') }}</label>
+                        <p class="text-gray-800 font-semibold">{{ $branchPricing->branch->name }}</p>
                     </div>
 
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">
-                            {{ __('all.academic_year') }} <span class="text-red-500">*</span>
-                        </label>
-                        <select name="academic_year"
-                            class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]" required>
-                            <option value="">{{ __('all.select_academic_year') }}</option>
-                            @foreach ($academicYears as $key => $year)
-                                <option value="{{ $key }}"
-                                    {{ old('academic_year', $branchPricing->academic_year) == $key ? 'selected' : '' }}>
-                                    {{ $year }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('academic_year')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('all.academic_year') }}</label>
+                        <p class="text-gray-800 font-semibold">{{ $branchPricing->academic_year }}</p>
                     </div>
 
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">
-                            {{ __('all.payment_type') }} <span class="text-red-500">*</span>
-                        </label>
-                        <select name="payment_type"
-                            class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]" required>
-                            <option value="">{{ __('all.select_payment_type') }}</option>
-                            <option value="monthly"
-                                {{ old('payment_type', $branchPricing->payment_type) == 'monthly' ? 'selected' : '' }}>
-                                {{ __('all.monthly') }}
-                            </option>
-                            <option value="quarterly"
-                                {{ old('payment_type', $branchPricing->payment_type) == 'quarterly' ? 'selected' : '' }}>
-                                {{ __('all.quarterly') }}
-                            </option>
-                            <option value="semester"
-                                {{ old('payment_type', $branchPricing->payment_type) == 'semester' ? 'selected' : '' }}>
-                                {{ __('all.semester') }}
-                            </option>
-                            <option value="yearly"
-                                {{ old('payment_type', $branchPricing->payment_type) == 'yearly' ? 'selected' : '' }}>
-                                {{ __('all.yearly') }}
-                            </option>
-                        </select>
-                        @error('payment_type')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
+                    <div class="bg-gray-50 rounded-xl p-4">
+                        <label class="block text-sm font-medium text-gray-500 mb-1">{{ __('all.payment_type') }}</label>
+                        <p class="text-gray-800 font-semibold">{{ __("all.{$branchPricing->payment_type}") }}</p>
                     </div>
+                </div>
 
+                <!-- Editable fields -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">
                             {{ __('all.registration_fee') }}
@@ -123,22 +85,22 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="md:col-span-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-700">
-                            {{ __('all.description') }}
-                        </label>
-                        <textarea name="description" rows="4"
-                            class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]"
-                            placeholder="{{ __('all.description_placeholder') }}">{{ old('description', $branchPricing->description) }}</textarea>
-                        @error('description')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                        @enderror
-                    </div>
+                <div class="mt-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-700">
+                        {{ __('all.description') }}
+                    </label>
+                    <textarea name="description" rows="4"
+                        class="w-full rounded-xl border-gray-300 focus:ring-[#90C74A] focus:border-[#90C74A]"
+                        placeholder="{{ __('all.description_placeholder') }}">{{ old('description', $branchPricing->description) }}</textarea>
+                    @error('description')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3">
-                    <a href="{{ route('branch-pricings.index') }}"
+                    <a href="{{ route('director.pricing.show', $branchPricing) }}"
                         class="px-6 py-3 rounded-xl border border-gray-300 text-gray-700 hover:bg-gray-100 transition">
                         {{ __('all.cancel') }}
                     </a>

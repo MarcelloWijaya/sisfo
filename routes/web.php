@@ -13,6 +13,14 @@ use App\Http\Controllers\SuperAdmin\InvoiceController;
 use App\Http\Controllers\SuperAdmin\EnrollmentController;
 use App\Http\Controllers\SuperAdmin\BranchPricingController;
 use App\Http\Controllers\SuperAdmin\CouponController;
+use App\Http\Controllers\Director\DirectorController;
+use App\Http\Controllers\Director\BranchController as DirectorBranchController;
+use App\Http\Controllers\Director\BranchPricingController as DirectorBranchPricingController;
+use App\Http\Controllers\Director\TeacherController as DirectorTeacherController;
+use App\Http\Controllers\Director\StudentController as DirectorStudentController;
+use App\Http\Controllers\Director\ClassroomController as DirectorClassroomController;
+use App\Http\Controllers\Director\PaymentController as DirectorPaymentController;
+use App\Http\Controllers\Director\SearchController as DirectorSearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -89,38 +97,61 @@ Route::middleware(['auth', 'role:super_admin'])->group(function () {
 // ============================================
 // DIRECTOR (HANYA BISA LIHAT - READ ONLY)
 // ============================================
-Route::middleware(['auth', 'role:director'])->group(function () {
-    // Dashboard
-    Route::view('/director/dashboard', 'director.dashboard')->name('director.dashboard');
+// ============================================
+// DIRECTOR (HANYA BISA LIHAT - READ ONLY)
+// ============================================
+Route::middleware(['auth', 'role:director'])
+    ->prefix('director')
+    ->name('director.')
+    ->group(function () {
+        // Dashboard
+        Route::get('/dashboard', [DirectorController::class, 'dashboard'])->name('dashboard');
+        Route::get('/', [DirectorController::class, 'dashboard'])->name('index');
 
-    // Students (hanya lihat)
-    Route::get('students', [StudentController::class, 'index'])->name('students.index');
-    Route::get('students/{student}', [StudentController::class, 'show'])->name('students.show');
+        // Branches
+        Route::get('branches', [App\Http\Controllers\Director\BranchController::class, 'index'])->name('branches.index');
+        Route::get('branches/{branch}', [App\Http\Controllers\Director\BranchController::class, 'show'])->name('branches.show');
 
-    // Teachers (hanya lihat)
-    Route::get('teachers', [TeacherController::class, 'index'])->name('teachers.index');
-    Route::get('teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
+        // BRANCH PRICINGS - PAKAI FULL NAMESPACE
+        Route::get('pricing', [App\Http\Controllers\Director\BranchPricingController::class, 'index'])->name('pricing.index');
+        Route::get('pricing/{branchPricing}/edit', [App\Http\Controllers\Director\BranchPricingController::class, 'edit'])->name('pricing.edit');
+        Route::put('pricing/{branchPricing}', [App\Http\Controllers\Director\BranchPricingController::class, 'update'])->name('pricing.update');
+        Route::get('pricing/{branchPricing}', [App\Http\Controllers\Director\BranchPricingController::class, 'show'])->name('pricing.show');
+        // Teachers
+        Route::get('teachers', [DirectorTeacherController::class, 'index'])->name('teachers.index');
+        Route::get('teachers/create', [DirectorTeacherController::class, 'create'])->name('teachers.create');
+        Route::post('teachers', [DirectorTeacherController::class, 'store'])->name('teachers.store');
+        Route::get('teachers/{teacher}', [DirectorTeacherController::class, 'show'])->name('teachers.show');
+        Route::get('teachers/{teacher}/edit', [DirectorTeacherController::class, 'edit'])->name('teachers.edit'); // TAMBAHKAN
+        Route::put('teachers/{teacher}', [DirectorTeacherController::class, 'update'])->name('teachers.update'); // TAMBAHKAN
+        Route::delete('teachers/{teacher}', [DirectorTeacherController::class, 'destroy'])->name('teachers.destroy'); // TAMBAHKAN (opsional)
+        Route::get('teachers/{teacher}/schedule', [DirectorTeacherController::class, 'schedule'])->name('teachers.schedule');
+        Route::get('teachers/{teacher}/attendance', [DirectorTeacherController::class, 'attendance'])->name('teachers.attendance');
 
-    // Classrooms (hanya lihat)
-    Route::get('classrooms', [ClassroomController::class, 'index'])->name('classrooms.index');
-    Route::get('classrooms/{classroom}', [ClassroomController::class, 'show'])->name('classrooms.show');
+        // Students
+        Route::get('students', [DirectorStudentController::class, 'index'])->name('students.index');
+        Route::get('students/create', [DirectorStudentController::class, 'create'])->name('students.create');
+        Route::post('students', [DirectorStudentController::class, 'store'])->name('students.store');
+        Route::get('students/{student}', [DirectorStudentController::class, 'show'])->name('students.show');
+        Route::get('students/{student}/edit', [DirectorStudentController::class, 'edit'])->name('students.edit'); // TAMBAHKAN
+        Route::put('students/{student}', [DirectorStudentController::class, 'update'])->name('students.update'); // TAMBAHKAN
+        Route::delete('students/{student}', [DirectorStudentController::class, 'destroy'])->name('students.destroy'); // TAMBAHKAN (opsional)
+        Route::get('students/{student}/grades', [DirectorStudentController::class, 'grades'])->name('students.grades');
+        Route::get('students-attendance', [DirectorStudentController::class, 'attendanceIndex'])->name('students.attendance');
+        Route::get('students/{student}/attendance-detail', [DirectorStudentController::class, 'attendanceDetail'])->name('students.attendance-detail');
+        // Classes
+        Route::get('classes', [DirectorClassroomController::class, 'index'])->name('classes.index');
+        Route::get('classes/manage', [DirectorClassroomController::class, 'manage'])->name('classes.manage');
+        Route::get('classes/today-attendance', [DirectorClassroomController::class, 'todayAttendance'])->name('classes.today-attendance');
+        Route::post('classes/today-attendance', [DirectorClassroomController::class, 'storeTodayAttendance'])->name('classes.today-attendance.store');
 
-    // Schedules (hanya lihat)
-    Route::get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
-    Route::get('schedules/{schedule}', [ScheduleController::class, 'show'])->name('schedules.show');
+        // Payments
+        Route::get('payments/monthly', [DirectorPaymentController::class, 'monthly'])->name('payments.monthly');
+        Route::get('payments/book', [DirectorPaymentController::class, 'book'])->name('payments.book');
 
-    // Attendance Reports (hanya lihat laporan)
-    Route::get('attendance/student', [StudentAttendanceController::class, 'index'])->name('attendance.student.index');
-    Route::get('attendance/teacher', [TeacherAttendanceController::class, 'index'])->name('attendance.teacher.index');
-
-    // Invoices (hanya lihat)
-    Route::get('invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-    Route::get('invoices/{invoice}', [InvoiceController::class, 'show'])->name('invoices.show');
-
-    // Branch Pricings (hanya lihat detail via dropdown)
-    Route::get('director/pricing', [BranchPricingController::class, 'directorIndex'])->name('director.pricing');
-    Route::get('director/pricing/{branchPricing}', [BranchPricingController::class, 'show'])->name('director.pricing.show');
-});
+        // Search
+        Route::get('search', [DirectorSearchController::class, 'index'])->name('search');
+    });
 
 // ============================================
 // BRANCH ADMIN (MANAGE OWN BRANCH ONLY)
@@ -159,13 +190,13 @@ Route::middleware(['auth', 'role:branch_admin'])->group(function () {
     // Enrollments
     Route::resource('enrollments', EnrollmentController::class)->except(['show', 'edit', 'update']);
 
-    // Invoices (create & index, tidak bisa edit/hapus)
+    // Invoices
     Route::resource('invoices', InvoiceController::class)->except(['edit', 'update', 'destroy']);
     Route::post('invoices/{invoice}/confirm-payment', [InvoiceController::class, 'confirmPayment'])->name('invoices.confirm-payment');
-    Route::post('invoices/generate-for-enrollment', [InvoiceController::class, 'generateForEnrollment'])->name('invoices.generate-enrollment');
+    Route::post('invoices/generate-for-enrollment', [InvoiceController::class, 'generateEnrollment'])->name('invoices.generate-enrollment');
     Route::get('invoices/enrollments-by-student', [InvoiceController::class, 'getEnrollmentsByStudent'])->name('invoices.enrollments-by-student');
 
-    // Coupons (hanya lihat)
+    // Coupons
     Route::get('coupons/{coupon}', [CouponController::class, 'show'])->name('coupons.show');
     Route::get('coupons/{coupon}/print', [CouponController::class, 'print'])->name('coupons.print');
 
@@ -202,10 +233,10 @@ Route::middleware(['auth', 'role:student'])->group(function () {
     Route::get('schedules', [ScheduleController::class, 'studentIndex'])->name('student.schedules.index');
 
     // Lihat absensi sendiri
-    Route::get('attendance/student', [StudentAttendanceController::class, 'myAttendance'])->name('student.attendance.index');
+    Route::get('my-attendance', [StudentAttendanceController::class, 'myAttendance'])->name('student.attendance.index');
 
     // Lihat invoice sendiri
-    Route::get('invoices', [InvoiceController::class, 'studentInvoices'])->name('student.invoices.index');
+    Route::get('my-invoices', [InvoiceController::class, 'studentInvoices'])->name('student.invoices.index');
 });
 
 // ============================================
@@ -215,13 +246,13 @@ Route::middleware(['auth', 'role:parent'])->group(function () {
     Route::view('/parent/dashboard', 'parent.dashboard')->name('parent.dashboard');
 
     // Lihat jadwal anak
-    Route::get('schedules', [ScheduleController::class, 'parentIndex'])->name('parent.schedules.index');
+    Route::get('child-schedules', [ScheduleController::class, 'parentIndex'])->name('parent.schedules.index');
 
     // Lihat absensi anak
-    Route::get('attendance/student', [StudentAttendanceController::class, 'parentIndex'])->name('parent.attendance.index');
+    Route::get('child-attendance', [StudentAttendanceController::class, 'parentIndex'])->name('parent.attendance.index');
 
     // Lihat invoice anak
-    Route::get('invoices', [InvoiceController::class, 'parentInvoices'])->name('parent.invoices.index');
+    Route::get('child-invoices', [InvoiceController::class, 'parentInvoices'])->name('parent.invoices.index');
 });
 
 // ============================================

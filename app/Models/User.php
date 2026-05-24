@@ -34,12 +34,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Student::class, 'parent_students', 'parent_id', 'student_id');
     }
 
-    public function getBranchIdAttribute($value)
-    {
-        if ($this->hasRole('super_admin') || $this->hasRole('director')) {
-            return null;
-        }
-
-        return $value;
-    }
+    // HAPUS ATAU COMMENT ACCESSOR INI
+    // public function getBranchIdAttribute($value)
+    // {
+    //     if ($this->hasRole('super_admin') || $this->hasRole('director')) {
+    //         return null;
+    //     }
+    //
+    //     return $value;
+    // }
 }

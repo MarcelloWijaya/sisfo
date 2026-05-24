@@ -12,55 +12,37 @@ return new class extends Migration {
 
             /*
             |--------------------------------------------------------------------------
-            | Branch
+            | Branch & User Relation
             |--------------------------------------------------------------------------
             */
 
             $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete();
-
-            /*
-            |--------------------------------------------------------------------------
-            | User Account
-            |--------------------------------------------------------------------------
-            */
-
             $table->foreignId('user_id')->nullable()->constrained('users')->nullOnDelete();
 
             /*
             |--------------------------------------------------------------------------
-            | Teacher Information
+            | Teacher Personal Information
             |--------------------------------------------------------------------------
             */
 
-            $table->string('teacher_number')->unique();
-
-            $table->string('name');
-
-            $table->string('nickname')->nullable();
-
+            $table->string('teacher_code')->unique(); // Kode unik guru (TCH-JKT-001)
+            $table->string('name'); // Nama lengkap guru
+            $table->string('nickname')->nullable(); // Nama panggilan
             $table->enum('gender', ['male', 'female'])->nullable();
-
             $table->text('address')->nullable();
-
             $table->string('place_of_birth')->nullable();
-
             $table->date('date_of_birth')->nullable();
-
             $table->string('phone')->nullable();
-
-            $table->string('email')->nullable();
+            $table->string('email')->nullable()->unique();
 
             /*
             |--------------------------------------------------------------------------
-            | Education & Employment
+            | Education & Qualification
             |--------------------------------------------------------------------------
             */
 
-            $table->string('last_education')->nullable();
-
-            $table->date('join_date')->nullable();
-
-            $table->decimal('salary', 15, 2)->nullable();
+            $table->string('last_education')->nullable(); // Pendidikan terakhir
+            $table->string('qualification')->nullable(); // Kualifikasi/Sertifikasi
 
             /*
             |--------------------------------------------------------------------------
@@ -68,15 +50,28 @@ return new class extends Migration {
             |--------------------------------------------------------------------------
             */
 
-            $table->enum('status', ['active', 'inactive', 'resigned'])->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('active');
 
             /*
             |--------------------------------------------------------------------------
-            | Metadata
+            | Audit Trail
             |--------------------------------------------------------------------------
             */
 
+            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
+
+            /*
+            |--------------------------------------------------------------------------
+            | Indexes
+            |--------------------------------------------------------------------------
+            */
+
+            $table->index(['branch_id', 'status']);
+            $table->index('teacher_code');
+            $table->index('name');
+            $table->index('email');
         });
     }
 
