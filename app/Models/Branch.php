@@ -2,50 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Branch extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $table = 'branches';
-
-    protected $fillable = ['name', 'owner_name', 'email', 'phone', 'address', 'is_active', 'created_by', 'updated_by'];
+    protected $fillable = ['name', 'code', 'address', 'phone', 'email', 'operational_hours', 'status'];
 
     protected $casts = [
-        'is_active' => 'boolean',
+        'operational_hours' => 'array',
     ];
 
-    // Relasi
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function students()
     {
-        return $this->hasMany(Student::class, 'branch_id');
+        return $this->hasMany(Student::class);
     }
 
     public function teachers()
     {
-        return $this->hasMany(Teacher::class, 'branch_id');
+        return $this->hasMany(Teacher::class);
     }
 
-    public function classes()
+    // TAMBAHKAN RELASI INI
+    public function classrooms()
     {
-        return $this->hasMany(Classes::class, 'branch_id');
-    }
-
-    public function branchFees()
-    {
-        return $this->hasMany(BranchFee::class, 'branch_id');
-    }
-
-    public function users()
-    {
-        return $this->hasMany(User::class, 'branch_id');
-    }
-
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class, 'branch_id');
+        return $this->hasMany(Classroom::class);
     }
 }

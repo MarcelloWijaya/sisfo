@@ -2,46 +2,28 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Student extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
-    protected $table = 'students';
-
-    protected $fillable = ['student_code', 'registration_number', 'name', 'gender', 'birth_place', 'birth_date', 'religion', 'address', 'phone', 'school_name', 'father_name', 'mother_name', 'parent_email', 'parent_phone', 'entry_level', 'join_date', 'student_status', 'photo_url', 'branch_id', 'is_active', 'created_by', 'updated_by'];
+    protected $fillable = ['branch_id', 'user_id', 'student_number', 'name', 'gender', 'address', 'place_of_birth', 'date_of_birth', 'religion', 'phone', 'school_name', 'grade_level', 'parent_name', 'parent_phone', 'parent_email', 'registration_date', 'join_date', 'book_level', 'status'];
 
     protected $casts = [
-        'birth_date' => 'date',
+        'date_of_birth' => 'date',
+        'registration_date' => 'date',
         'join_date' => 'date',
-        'is_active' => 'boolean',
     ];
 
     public function branch()
     {
-        return $this->belongsTo(Branch::class, 'branch_id');
+        return $this->belongsTo(Branch::class);
     }
 
-    public function classes()
+    public function user()
     {
-        return $this->belongsToMany(Classes::class, 'class_enrollments', 'student_id', 'class_id')->withPivot('join_date', 'is_active')->withTimestamps();
-    }
-
-    public function invoices()
-    {
-        return $this->hasMany(Invoice::class, 'student_id');
-    }
-
-    public function payments()
-    {
-        return $this->hasManyThrough(Payment::class, Invoice::class, 'student_id', 'invoice_id');
-    }
-
-    public function presences()
-    {
-        return $this->hasMany(Presence::class, 'student_id');
+        return $this->belongsTo(User::class);
     }
 }
